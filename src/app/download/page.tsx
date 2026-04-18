@@ -3,12 +3,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DownloadSection from "@/components/Download";
+import SmartScreenNotice from "@/components/SmartScreenNotice";
 import LottieIcon from "@/components/LottieIcon";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 const downloadFeatures = [
-  { title: "Verified & Safe", lottiePath: "/animated-icons/security.json", text: "All our installers are digitally signed and verified to be safe for your device." },
+  { title: "Clean & Open", lottiePath: "/animated-icons/security.json", text: "Every build is scanned and hosted on our own CDN. Open-source roots, no bundled trackers or adware." },
   { title: "Fast Installation", lottiePath: "/animated-icons/sync.json", text: "Get up and running in less than a minute. Our lightweight app is built for speed." },
   { title: "Automatic Updates", lottiePath: "/animated-icons/platform.json", text: "Stay current with the latest features and security improvements, delivered seamlessly." }
 ];
@@ -31,6 +32,8 @@ export default function DownloadPage() {
         </motion.div>
 
         <DownloadSection />
+
+        <SmartScreenNotice />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-20">
           {downloadFeatures.map((feature, i) => (
