@@ -69,8 +69,8 @@ function PlatformCard({ platform, index }: PlatformCardProps) {
           animate={isHovered ? { y: -5, boxShadow: "0 20px 40px -10px rgba(34,197,94,0.5)" } : {}}
         >
           <motion.div
-            animate={isHovered ? { scale: [1, 1.1, 1], rotate: [0, 10, -10, 0] } : {}}
-            transition={{ duration: 0.5 }}
+            animate={isHovered ? { scale: 1.1 } : {}}
+            transition={{ duration: 0.3 }}
             className="relative w-10 h-10 md:w-12 md:h-12"
           >
             <Image 

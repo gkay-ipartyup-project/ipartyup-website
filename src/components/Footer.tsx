@@ -95,7 +95,6 @@ export default function Footer() {
     product: [
       { name: "Download", href: "/download" },
       { name: "Pricing", href: "/pricing" },
-      { name: "Updates", href: "/updates" },
       { name: "FAQ", href: "/faq" }
     ],
     company: [
@@ -170,9 +169,11 @@ export default function Footer() {
               </motion.div>
             ))}
           </div>
-          
-          {/* Subscribe Section */}
-          <SubscribeSection />
+
+          {/* Subscribe — mobile only (below social icons) */}
+          <div className="lg:hidden">
+            <SubscribeSection />
+          </div>
         </div>
 
         <div>
@@ -245,6 +246,10 @@ export default function Footer() {
         </div>
       </motion.div>
 
+      {/* Subscribe Section — desktop centered */}
+      <div className="hidden lg:block">
+        <SubscribeSection />
+      </div>
 
       {/* Copyright */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-xs font-black uppercase tracking-widest text-white/20 text-center">

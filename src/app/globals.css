@@ -9,16 +9,16 @@
 }
 
 :root {
-  --background: #020203;
+  --background: #121212;
   --foreground: #ffffff;
   --primary: #22c55e;
   --primary-foreground: #000000;
   --secondary: #a855f7;
-  --muted: #0a0a0b;
+  --muted: #1a1a1a;
   --muted-foreground: #71717a;
-  --card: #0a0a0b;
+  --card: #1a1a1a;
   --card-foreground: #ffffff;
-  --border: #18181b;
+  --border: #262626;
 }
 
 @theme inline {

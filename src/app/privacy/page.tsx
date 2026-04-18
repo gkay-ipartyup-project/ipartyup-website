@@ -3,52 +3,106 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { Shield, Eye, Lock, Trash2, UserCheck, Globe } from "lucide-react";
+
+const commitments = [
+  { icon: Shield, title: "We Never Sell Your Data", description: "Your personal information is never sold, rented, or traded to third parties. Period." },
+  { icon: Eye, title: "No Tracking or Profiling", description: "We don't track what you watch, build advertising profiles, or monitor your viewing habits." },
+  { icon: Lock, title: "Encrypted by Default", description: "All data is encrypted in transit and at rest using industry-standard protocols." },
+];
 
 export default function PrivacyPage() {
   const sections = [
     {
-      title: "1. Information We Collect",
-      content: "When you create an iPartyUp account, we collect the information you provide directly, such as your name, email address, and profile picture. If you sign in using Google, we receive your basic profile information from Google. We also automatically collect certain technical information when you use our app, including your device type, operating system, IP address, and general usage statistics (such as app opens and session duration). We do not track, log, or store your viewing history or the specific content you watch."
+      title: "1. Our Privacy Commitment",
+      content: `At iPartyUp, your privacy isn't just a policy — it's a core principle. We built iPartyUp to be a streaming platform that respects its users. We have no interest in collecting, monetizing, or exploiting your personal data. We don't run ads, we don't build behavioral profiles, and we don't sell your information to anyone. Collecting your data offers us zero value — so we simply don't do it beyond what's strictly necessary to make the app work.`
     },
     {
-      title: "2. How We Use Your Information",
-      content: "We use the information we collect to: provide, maintain, and improve our services; create and manage your account; enable social features like watch rooms and friend connections; send you important updates about the service, security alerts, and support messages; detect and prevent fraud, abuse, or security incidents. We do not use your data for targeted advertising and we do not build advertising profiles based on your activity."
+      title: "2. Information We Collect",
+      content: `We collect only the minimum information required to provide our services:
+
+• Account Information: Your name, email address, and profile picture — provided when you create an account or sign in via Google.
+• Authentication Data: Secure tokens to keep you logged in and verify your identity.
+• Basic Technical Data: Device type and operating system for compatibility and troubleshooting purposes.
+
+We do NOT collect:
+• Your viewing history or what content you watch
+• Your location data (beyond what your IP address may generally indicate)
+• Keystroke data, screen recordings, or device identifiers for tracking
+• Any data for advertising or marketing profiling purposes`
     },
     {
-      title: "3. Information Sharing & Disclosure",
-      content: "We do not sell, rent, or trade your personal information to third parties. We may share limited information with: service providers who help us operate the platform (such as authentication and hosting providers), but only as necessary to provide our services; law enforcement or government authorities when required by law, court order, or to protect the safety of our users; other users, but only the profile information you choose to make visible (such as your display name and avatar in watch rooms)."
+      title: "3. How We Use Your Information",
+      content: `The information we collect is used exclusively to:
+
+• Create and manage your iPartyUp account
+• Enable core features such as watch rooms, friend connections, and real-time sync
+• Authenticate your identity and secure your account
+• Send essential service communications (security alerts, critical updates)
+• Detect and prevent fraud, abuse, or unauthorized access
+
+We do not use your information for targeted advertising, behavioral analytics, or any purpose unrelated to delivering our service to you.`
     },
     {
-      title: "4. Data Retention",
-      content: "We retain your account information for as long as your account is active. If you delete your account, we will remove your personal data from our systems within 30 days, except where we are required by law to retain certain records. Anonymous, aggregated data (such as total user counts) may be retained indefinitely as it cannot be linked back to you."
+      title: "4. Information Sharing & Third Parties",
+      content: `We do not sell, rent, or trade your personal information. We may share limited data only in these circumstances:
+
+• Service Providers: We use trusted third-party services for authentication (Google Sign-In) and cloud infrastructure (hosting, database). These providers receive only the minimum data necessary to operate, and are contractually bound to protect your information.
+• Legal Requirements: We may disclose information if required by law, court order, or to protect the safety and security of our users.
+• Your Choices: Your display name and avatar are visible to other users in watch rooms. You control what profile information is shared.
+
+We carefully vet every third-party service we use and share only what is strictly necessary.`
     },
     {
-      title: "5. Your Privacy Rights",
-      content: "You have the right to: access the personal information we hold about you; correct any inaccurate information; delete your account and associated data; export your data in a portable format; withdraw consent for optional data processing at any time. To exercise any of these rights, contact us through the Contact page on our website. We will respond within 30 days."
+      title: "5. Data Retention & Deletion",
+      content: `We retain your account data only as long as your account remains active. When you delete your account:
+
+• Your personal data is permanently removed from our systems within 30 days
+• Any content associated with your account (watch rooms, friend lists) is deleted
+• Anonymous, aggregated statistics (such as total user counts) may be retained as they cannot be traced back to you
+
+You can request complete deletion of your data at any time through the app or by contacting us.`
     },
     {
-      title: "6. Cookies & Local Storage",
-      content: "iPartyUp is a desktop application and does not use browser cookies. We use local storage on your device to save your preferences, authentication tokens, and app settings. This data stays on your device and is not transmitted to our servers unless necessary for authentication or syncing your account settings."
+      title: "6. Your Privacy Rights",
+      content: `Regardless of where you live, we provide all users with the following rights:
+
+• Access: Request a copy of the personal information we hold about you
+• Correction: Update or correct any inaccurate information
+• Deletion: Delete your account and all associated personal data
+• Portability: Export your data in a standard, machine-readable format
+• Withdrawal: Withdraw consent for optional data processing at any time
+• Objection: Object to any processing of your personal information
+
+For users in the European Economic Area (EEA), we comply with the General Data Protection Regulation (GDPR). For California residents, we comply with the California Consumer Privacy Act (CCPA). To exercise any of these rights, contact us at ipartyup.party/contact. We respond within 30 days.`
     },
     {
-      title: "7. Children's Privacy",
-      content: "iPartyUp is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If we discover that we have collected information from a child under 13, we will promptly delete that information. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately."
+      title: "7. Cookies & Local Storage",
+      content: `iPartyUp is a desktop application and does not use browser cookies or web tracking technologies. We use local storage on your device solely to save your preferences, authentication tokens, and app settings. This data remains on your device and is not transmitted to our servers unless necessary for authentication.`
     },
     {
-      title: "8. Third-Party Services",
-      content: "iPartyUp uses third-party services for authentication (such as Google Sign-In) and cloud infrastructure. These services have their own privacy policies, and we encourage you to review them. We select our service providers carefully and only share the minimum information necessary for them to provide their services to us."
+      title: "8. Children's Privacy",
+      content: `iPartyUp is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If we discover that we have inadvertently collected information from a child under 13, we will delete that information immediately. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.`
     },
     {
       title: "9. Data Security",
-      content: "We implement industry-standard security measures to protect your information, including encryption of data in transit and at rest, secure authentication protocols, and regular security reviews. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security."
+      content: `We implement industry-standard security measures to protect your information, including:
+
+• TLS/SSL encryption for all data in transit
+• Encryption at rest for stored personal data
+• Secure authentication protocols with session management
+• Regular security audits and vulnerability assessments
+• Access controls limiting employee access to user data on a need-to-know basis
+
+While no system is 100% secure, we are committed to protecting your data with the best available technology and practices.`
     },
     {
       title: "10. Changes to This Policy",
-      content: "We may update this Privacy Policy from time to time. When we make significant changes, we will notify you through the app or by email. We encourage you to review this page periodically. Your continued use of iPartyUp after any changes indicates your acceptance of the updated policy."
+      content: `We may update this Privacy Policy from time to time. When we make significant changes, we will notify you through the app and update the "Last updated" date at the top of this page. Your continued use of iPartyUp after changes are posted constitutes acceptance of the updated policy. We encourage you to review this page periodically.`
     },
     {
       title: "11. Contact Us",
-      content: "If you have any questions about this Privacy Policy or our data practices, please reach out to us through the Contact page on our website at ipartyup.party/contact. We take your privacy questions seriously and will respond as quickly as possible."
+      content: `If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us through our Contact page at ipartyup.party/contact. We take every privacy inquiry seriously and will respond as quickly as possible.`
     }
   ];
 
@@ -63,32 +117,48 @@ export default function PrivacyPage() {
           className="text-center mb-6"
         >
           <h1 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-4">Privacy <span className="text-primary">Policy</span></h1>
-          <p className="text-xl text-white/40 font-medium text-center">Your privacy is our top priority. Learn how iPartyUp handles your data.</p>
+          <p className="text-xl text-white/40 font-medium text-center max-w-2xl mx-auto">Your data is yours. We don&apos;t collect it, we don&apos;t sell it, and we have no reason to.</p>
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-center text-white/30 text-sm mb-16"
+          className="text-center text-white/30 text-sm mb-12"
         >
-          Last updated: April 15, 2026
+          Last updated: April 18, 2026
         </motion.p>
 
-        <div className="space-y-8">
+        {/* Privacy Commitments Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16"
+        >
+          {commitments.map((item, i) => (
+            <div key={i} className="p-6 rounded-2xl bg-primary/5 border border-primary/15 text-center">
+              <item.icon className="w-8 h-8 text-primary mx-auto mb-3" strokeWidth={1.5} />
+              <h3 className="font-bold text-sm mb-2 text-white">{item.title}</h3>
+              <p className="text-xs text-white/40 leading-relaxed">{item.description}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <div className="space-y-6">
           {sections.map((section, index) => (
             <motion.section 
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              className="p-8 rounded-3xl bg-muted/20 border border-white/5 shadow-lg"
+              transition={{ delay: index * 0.03 }}
+              className="p-8 rounded-3xl bg-white/[0.02] border border-white/5"
             >
-              <h2 className="text-xl font-bold mb-4 text-primary">{section.title}</h2>
-              <p className="text-muted-foreground leading-relaxed text-base">
+              <h2 className="text-lg font-bold mb-4 text-primary">{section.title}</h2>
+              <div className="text-white/50 leading-relaxed text-[15px] whitespace-pre-line">
                 {section.content}
-              </p>
+              </div>
             </motion.section>
           ))}
         </div>

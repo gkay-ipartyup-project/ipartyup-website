@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import LottieIcon from "./LottieIcon";
 
@@ -15,7 +15,6 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 
   useEffect(() => {
     if (isInView) {
-      // Delay start for dramatic effect
       const timeout = setTimeout(() => {
         motionValue.set(value);
       }, 500);
@@ -33,63 +32,6 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
   }, [springValue, suffix]);
 
   return <span ref={ref} />;
-}
-
-// Shockwave effect on hover
-function Shockwave({ trigger }: { trigger: boolean }) {
-  return (
-    <AnimatePresence>
-      {trigger && (
-        <>
-          <motion.div
-            className="absolute inset-0 rounded-full border-2 border-primary/50"
-            initial={{ scale: 0.5, opacity: 1 }}
-            animate={{ scale: 2, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          />
-          <motion.div
-            className="absolute inset-0 rounded-full border border-primary/30"
-            initial={{ scale: 0.5, opacity: 1 }}
-            animate={{ scale: 2.5, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-          />
-        </>
-      )}
-    </AnimatePresence>
-  );
-}
-
-// Animated Lottie icon wrapper with shockwave
-function AnimatedLottieIcon({ path, isHovered, onHover }: { path: string; isHovered: boolean; onHover: () => void }) {
-  return (
-    <motion.div
-      className="relative flex items-center justify-center"
-      animate={isHovered ? { 
-        scale: [1, 1.2, 1],
-      } : {}}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      onMouseEnter={onHover}
-    >
-      <motion.div
-        className="absolute inset-0 bg-primary/40 blur-2xl rounded-full"
-        animate={isHovered ? { 
-          scale: [1, 1.8, 1],
-          opacity: [0.3, 0.8, 0.3]
-        } : { scale: 1, opacity: 0.2 }}
-        transition={{ duration: 0.8, repeat: isHovered ? Infinity : 0 }}
-      />
-      <motion.div
-        animate={isHovered ? {
-          rotate: [0, -10, 10, 0],
-        } : {}}
-        transition={{ duration: 0.5 }}
-      >
-        <LottieIcon path={path} size={56} isHovered={isHovered} />
-      </motion.div>
-    </motion.div>
-  );
 }
 
 const stats = [
@@ -128,56 +70,28 @@ const stats = [
 ];
 
 export default function Stats() {
-  const containerRef = useRef(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [shockwaveTrigger, setShockwaveTrigger] = useState<number | null>(null);
-
-  const handleHover = (index: number) => {
-    setHoveredIndex(index);
-    setShockwaveTrigger(index);
-    setTimeout(() => setShockwaveTrigger(null), 800);
-  };
 
   return (
-    <section ref={containerRef} className="py-24 px-6 relative overflow-hidden">
-      {/* Animated background glow with more intensity */}
+    <section className="py-24 px-6 relative overflow-hidden">
+      {/* Subtle gradient divider */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      
+      {/* Animated background glow */}
       <motion.div 
         className="absolute inset-0"
         animate={{
           background: [
-            "radial-gradient(ellipse at 20% 50%, rgba(34,197,94,0.12) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 80% 50%, rgba(34,197,94,0.12) 0%, transparent 50%)",
-            "radial-gradient(ellipse at 20% 50%, rgba(34,197,94,0.12) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 20% 50%, rgba(34,197,94,0.08) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 80% 50%, rgba(34,197,94,0.08) 0%, transparent 50%)",
+            "radial-gradient(ellipse at 20% 50%, rgba(34,197,94,0.08) 0%, transparent 50%)",
           ],
         }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
       
-      {/* Floating particles */}
-      {[...Array(8)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-primary/40 rounded-full"
-          style={{
-            left: `${10 + i * 12}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: 3 + i * 0.5,
-            repeat: Infinity,
-            delay: i * 0.3,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-      
       <div className="max-w-7xl mx-auto relative z-10 px-4">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
@@ -189,19 +103,29 @@ export default function Stats() {
                 delay: index * 0.1,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              onMouseEnter={() => handleHover(index)}
+              onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className="group text-center relative cursor-pointer p-2 overflow-visible"
+              className="group text-center relative cursor-pointer p-2"
             >
-              
-              <div className="mb-4 md:mb-6 relative">
-                <AnimatedLottieIcon 
-                  path={stat.lottiePath} 
-                  isHovered={hoveredIndex === index}
-                  onHover={() => {}}
+              {/* Icon with glow */}
+              <div className="mb-4 md:mb-6 relative flex items-center justify-center">
+                <motion.div
+                  className="absolute inset-0 bg-primary/30 blur-2xl rounded-full"
+                  animate={hoveredIndex === index ? { 
+                    scale: [1, 1.5, 1],
+                    opacity: [0.2, 0.5, 0.2]
+                  } : { scale: 1, opacity: 0.15 }}
+                  transition={{ duration: 1, repeat: hoveredIndex === index ? Infinity : 0 }}
                 />
+                <motion.div
+                  animate={hoveredIndex === index ? { scale: [1, 1.1, 1] } : {}}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  <LottieIcon path={stat.lottiePath} size={52} isHovered={hoveredIndex === index} />
+                </motion.div>
               </div>
               
+              {/* Number with gradient */}
               <motion.div 
                 className="text-xl sm:text-2xl md:text-4xl lg:text-6xl font-black italic mb-1 md:mb-2 overflow-visible whitespace-nowrap pr-2"
                 style={{

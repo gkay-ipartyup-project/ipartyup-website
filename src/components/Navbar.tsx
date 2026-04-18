@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
-import { Menu, X, Users, FileText, HelpCircle, Download, ArrowUpRight, Tag } from "lucide-react";
+import { Menu, X, Users, HelpCircle, Download, ArrowUpRight, Tag } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -61,7 +61,7 @@ export default function Navbar() {
 
       {/* Desktop Nav */}
       <div className="hidden md:flex items-center gap-8">
-        {["About", "Pricing", "Updates", "FAQ"].map((item, i) => (
+        {["About", "Pricing", "FAQ"].map((item, i) => (
           <motion.div
             key={item}
             initial={{ opacity: 0, y: -20 }}
@@ -151,7 +151,6 @@ export default function Navbar() {
               {[
                 { name: "About", icon: Users, href: "/about" },
                 { name: "Pricing", icon: Tag, href: "/pricing" },
-                { name: "Updates", icon: FileText, href: "/updates" },
                 { name: "FAQ", icon: HelpCircle, href: "/faq" },
               ].map((item, i) => (
                 <motion.div
