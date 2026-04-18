@@ -55,8 +55,8 @@ const stats = [
     lottiePath: "/animated-icons/flash.json",
     value: 50,
     suffix: "ms",
-    label: "Sync Latency",
-    description: "Ultra low lag",
+    label: "Instant Room Creation",
+    description: "Ultra fast",
     color: "#22c55e",
   },
   {

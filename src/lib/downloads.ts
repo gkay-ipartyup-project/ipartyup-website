@@ -68,6 +68,18 @@ export function formatReleaseDate(iso: string | null | undefined): string {
     return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 }
 
+/** Format an ISO date into "Apr 18, 2026" exact-day style label. */
+export function formatExactReleaseDate(iso: string | null | undefined): string {
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
+}
+
 /** Prefix a version string with "v" if it doesn't already start with one. */
 export function formatVersion(v: string | null | undefined): string {
     if (!v) return "";

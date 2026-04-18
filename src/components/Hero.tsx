@@ -34,17 +34,15 @@ export default function Hero() {
         className="max-w-5xl mx-auto text-center z-10"
       >
         {/* Main Headline */}
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter uppercase italic leading-[0.95] mb-6 md:mb-8 px-2"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight italic leading-[1.1] mb-6 md:mb-8 px-2"
+          style={{ fontFamily: "var(--font-poppins), sans-serif" }}
         >
-          <span className="block mb-1">Watch in Sync on</span>
-          <span className="block mt-2">
-            <span className="text-white">iParty</span>
-            <span className="text-primary drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">Up</span>
-          </span>
+          <span className="block">Watch together</span>
+          <span className="block text-primary drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">even when apart.</span>
         </motion.h1>
 
         {/* Tagline */}

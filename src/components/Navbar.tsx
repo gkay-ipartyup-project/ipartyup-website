@@ -48,12 +48,13 @@ export default function Navbar() {
             loading="eager"
           />
         </motion.div>
-        <Image 
-          src="/logo-text.png" 
-          alt="iPartyUp" 
-          width={70}
-          height={18}
-          className="h-3 md:h-4 w-auto object-contain"
+        <Image
+          src="/logo-text.png"
+          alt="iPartyUp"
+          width={200}
+          height={50}
+          className="h-4 md:h-5 w-auto object-contain"
+          sizes="(max-width: 768px) 100px, 140px"
           priority
           loading="eager"
         />

@@ -1,13 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Monitor, Apple, LucideIcon, Lock } from "lucide-react";
+import { Monitor, Apple, LucideIcon, Lock, FileText } from "lucide-react";
 import LottieIcon from "./LottieIcon";
+import DownloadConfirmModal from "./DownloadConfirmModal";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
     getLatestDownloads,
-    formatReleaseDate,
+    formatExactReleaseDate,
     formatVersion,
     type LatestDownloads,
     type PlatformDownload,
@@ -26,9 +28,10 @@ interface Platform {
 interface PlatformCardProps {
     platform: Platform;
     index: number;
+    onRequestDownload: (p: Platform) => void;
 }
 
-function PlatformCard({ platform, index }: PlatformCardProps) {
+function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps) {
     const cardRef = useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -46,7 +49,7 @@ function PlatformCard({ platform, index }: PlatformCardProps) {
 
     const available = !!platform.download;
     const version = platform.download ? formatVersion(platform.download.version) : null;
-    const dateLabel = platform.download ? formatReleaseDate(platform.download.published_at) : "";
+    const dateLabel = platform.download ? formatExactReleaseDate(platform.download.published_at) : "";
     const isBackVersion =
         available &&
         platform.latestVersion &&
@@ -144,13 +147,27 @@ function PlatformCard({ platform, index }: PlatformCardProps) {
                     )}
                 </div>
 
-                <DownloadButton platform={platform} />
+                <DownloadButton platform={platform} onRequestDownload={onRequestDownload} />
+
+                <Link
+                    href="/updates"
+                    className="mt-2 w-full py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 border border-white/5 bg-white/[0.02] text-white/45 hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-300"
+                >
+                    <FileText size={12} />
+                    <span>View Update Notes</span>
+                </Link>
             </div>
         </motion.div>
     );
 }
 
-function DownloadButton({ platform }: { platform: Platform }) {
+function DownloadButton({
+    platform,
+    onRequestDownload,
+}: {
+    platform: Platform;
+    onRequestDownload: (p: Platform) => void;
+}) {
     const [isHovered, setIsHovered] = useState(false);
     const disabled = platform.loading || !platform.download;
 
@@ -166,13 +183,10 @@ function DownloadButton({ platform }: { platform: Platform }) {
         );
     }
 
-    const fileName = platform.download!.url.split("/").pop() ?? undefined;
-
     return (
-        <motion.a
-            href={platform.download!.url}
-            download={fileName}
-            rel="noopener"
+        <motion.button
+            type="button"
+            onClick={() => onRequestDownload(platform)}
             className="mt-auto w-full py-4 bg-white/5 hover:bg-primary hover:text-primary-foreground transition-all duration-500 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 border border-white/5 hover:border-primary group/btn overflow-hidden relative"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -189,13 +203,14 @@ function DownloadButton({ platform }: { platform: Platform }) {
                 <LottieIcon path="/animated-icons/inbox.json" size={18} isHovered={isHovered} />
             </div>
             <span className="relative z-10">Download</span>
-        </motion.a>
+        </motion.button>
     );
 }
 
 export default function DownloadSection() {
     const [data, setData] = useState<LatestDownloads | null>(null);
     const [loading, setLoading] = useState(true);
+    const [modalPlatform, setModalPlatform] = useState<Platform | null>(null);
 
     useEffect(() => {
         const ctrl = new AbortController();
@@ -256,10 +271,22 @@ export default function DownloadSection() {
                     style={{ perspective: "1000px" }}
                 >
                     {platforms.map((platform, index) => (
-                        <PlatformCard key={platform.key} platform={platform} index={index} />
+                        <PlatformCard
+                            key={platform.key}
+                            platform={platform}
+                            index={index}
+                            onRequestDownload={setModalPlatform}
+                        />
                     ))}
                 </div>
             </div>
+
+            <DownloadConfirmModal
+                open={!!modalPlatform}
+                onClose={() => setModalPlatform(null)}
+                platformName={(modalPlatform?.name as "Windows" | "macOS") ?? "Windows"}
+                download={modalPlatform?.download ?? null}
+            />
         </section>
     );
 }

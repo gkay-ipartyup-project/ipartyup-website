@@ -21,12 +21,13 @@ function SubscribeSection() {
       <div className="flex flex-col items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-white text-sm font-black uppercase tracking-wider">Subscribe to</span>
-          <Image 
-            src="/logo-text.png" 
-            alt="iPartyUp" 
-            width={60}
-            height={15}
-            className="h-3 w-auto object-contain"
+          <Image
+            src="/logo-text.png"
+            alt="iPartyUp"
+            width={180}
+            height={45}
+            className="h-3.5 w-auto object-contain"
+            sizes="100px"
           />
         </div>
         
@@ -136,12 +137,13 @@ export default function Footer() {
                 className="w-auto h-auto object-contain"
               />
             </motion.div>
-            <Image 
-              src="/logo-text.png" 
-              alt="iPartyUp" 
-              width={70}
-              height={18}
-              className="h-3 md:h-4 w-auto object-contain"
+            <Image
+              src="/logo-text.png"
+              alt="iPartyUp"
+              width={200}
+              height={50}
+              className="h-4 md:h-5 w-auto object-contain"
+              sizes="(max-width: 768px) 100px, 140px"
             />
           </Link>
           <p className="text-white/40 text-lg max-w-sm mb-10 font-medium leading-relaxed">
