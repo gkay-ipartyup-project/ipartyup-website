@@ -74,11 +74,11 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
             }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={handleMouseLeave}
-            className="group relative p-6 md:p-8 rounded-3xl md:rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500 overflow-hidden shadow-2xl"
+            className="group relative p-6 md:p-8 rounded-3xl md:rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:border-primary/30 max-md:border-transparent transition-all duration-500 overflow-hidden shadow-2xl max-md:shadow-[0_0_30px_rgba(34,197,94,0.15)]"
         >
             {/* Shine effect */}
             <motion.div
-                className="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute inset-0 rounded-[2.5rem] opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-500"
                 style={{
                     background:
                         "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, transparent 100%)",
@@ -86,13 +86,12 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
             />
 
             {/* Glow border */}
-            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-700" />
 
             <div className="relative z-10 flex flex-col items-center text-center h-full">
                 <motion.div
-                    className="w-16 h-16 md:w-20 md:h-20 bg-white/5 rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-6 group-hover:bg-primary transition-all duration-500 shadow-2xl overflow-hidden"
-                    animate={isHovered ? { y: -5, boxShadow: "0 20px 40px -10px rgba(34,197,94,0.5)" } : {}}
-                >
+                    className="w-16 h-16 md:w-20 md:h-20 bg-white/5 rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-6 group-hover:bg-primary max-md:bg-primary transition-all duration-500 shadow-2xl max-md:shadow-[0_10px_30px_-5px_rgba(34,197,94,0.4)] overflow-hidden"
+                    animate={isHovered ? { y: -5, boxShadow: "0 20px 40px -10px rgba(34,197,94,0.5)" } : {}}>
                     <motion.div
                         animate={isHovered ? { scale: 1.1 } : {}}
                         transition={{ duration: 0.3 }}
@@ -104,9 +103,7 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
                             fill
                             className="object-contain transition-all duration-500"
                             style={{
-                                filter: isMobile
-                                    ? "brightness(0) invert(1)"
-                                    : isHovered
+                                filter: isMobile || isHovered
                                     ? "brightness(0)"
                                     : "brightness(0) invert(1)",
                             }}
@@ -125,7 +122,7 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
                                 ? "bg-white/[0.03] text-white/30 border-white/5"
                                 : isBackVersion
                                 ? "bg-amber-500/10 text-amber-300/80 border-amber-500/20"
-                                : "bg-white/5 text-white/40 border-white/5 group-hover:text-primary group-hover:border-primary/20"
+                                : "bg-white/5 text-white/40 border-white/5 group-hover:text-primary group-hover:border-primary/20 max-md:text-primary max-md:border-primary/20"
                         }`}
                     >
                         {tag}
@@ -147,11 +144,11 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
                     )}
                 </div>
 
-                <DownloadButton platform={platform} onRequestDownload={onRequestDownload} />
+                <DownloadButton platform={platform} onRequestDownload={onRequestDownload} isMobile={isMobile} />
 
                 <Link
                     href="/updates"
-                    className="mt-2 w-full py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 border border-white/5 bg-white/[0.02] text-white/45 hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-300"
+                    className="mt-2 w-full py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-2 border border-white/5 bg-white/[0.02] text-white/45 hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] max-md:text-primary max-md:border-primary/30 max-md:bg-primary/[0.04] transition-all duration-300"
                 >
                     <FileText size={12} />
                     <span>View Update Notes</span>
@@ -164,9 +161,11 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
 function DownloadButton({
     platform,
     onRequestDownload,
+    isMobile,
 }: {
     platform: Platform;
     onRequestDownload: (p: Platform) => void;
+    isMobile: boolean;
 }) {
     const [isHovered, setIsHovered] = useState(false);
     const disabled = platform.loading || !platform.download;
@@ -187,7 +186,7 @@ function DownloadButton({
         <motion.button
             type="button"
             onClick={() => onRequestDownload(platform)}
-            className="mt-auto w-full py-4 bg-white/5 hover:bg-primary hover:text-primary-foreground transition-all duration-500 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 border border-white/5 hover:border-primary group/btn overflow-hidden relative"
+            className="mt-auto w-full py-4 bg-white/5 hover:bg-primary max-md:bg-primary hover:text-primary-foreground max-md:text-primary-foreground transition-all duration-500 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-3 border border-white/5 hover:border-primary max-md:border-primary group/btn overflow-hidden relative"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onMouseEnter={() => setIsHovered(true)}
@@ -199,8 +198,8 @@ function DownloadButton({
                 whileHover={{ x: "200%" }}
                 transition={{ duration: 0.8 }}
             />
-            <div style={{ filter: isHovered ? "brightness(0)" : "brightness(0) invert(1)" }}>
-                <LottieIcon path="/animated-icons/inbox.json" size={18} isHovered={isHovered} />
+            <div style={{ filter: isMobile || isHovered ? "brightness(0)" : "brightness(0) invert(1)" }}>
+                <LottieIcon path="/animated-icons/inbox.json" size={18} isHovered={isHovered || isMobile} />
             </div>
             <span className="relative z-10">Download</span>
         </motion.button>

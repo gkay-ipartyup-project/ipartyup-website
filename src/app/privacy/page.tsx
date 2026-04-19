@@ -15,7 +15,7 @@ export default function PrivacyPage() {
   const sections = [
     {
       title: "1. Our Privacy Commitment",
-      content: `At iPartyUp, your privacy isn't just a policy — it's a core principle. We built iPartyUp to be a streaming platform that respects its users. We have no interest in collecting, monetizing, or exploiting your personal data. We don't run ads, we don't build behavioral profiles, and we don't sell your information to anyone. Collecting your data offers us zero value — so we simply don't do it beyond what's strictly necessary to make the app work.`
+      content: `At iPartyUp, your privacy isn't just a policy — it's a core principle. We built iPartyUp to be a streaming platform that respects its users. We have no interest in collecting, monetizing, or exploiting your personal data. We don't build behavioral profiles, and we don't sell your information to anyone. Collecting your data offers us zero value — so we simply don't do it beyond what's strictly necessary to make the app work.`
     },
     {
       title: "2. Information We Collect",

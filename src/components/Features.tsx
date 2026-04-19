@@ -47,11 +47,11 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className="group relative rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-150 overflow-hidden"
+      className="group relative rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/30 max-md:border-primary/30 transition-all duration-150 overflow-hidden"
     >
-      {/* Mouse-following glow */}
+      {/* Mouse-following glow - desktop only */}
       <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+        className="absolute w-[300px] h-[300px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-150 max-md:hidden"
         style={{
           x: glowX,
           y: glowY,
@@ -60,10 +60,18 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
           background: `radial-gradient(circle, ${feature.color}20 0%, transparent 70%)`,
         }}
       />
+
+      {/* Static glow for mobile */}
+      <div
+        className="absolute inset-0 rounded-[2rem] pointer-events-none md:hidden"
+        style={{
+          background: `radial-gradient(ellipse at center, ${feature.color}15 0%, transparent 60%)`,
+        }}
+      />
       
       {/* Border glow on hover */}
-      <div 
-        className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+      <div
+        className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 max-md:opacity-100 transition-opacity duration-150"
         style={{
           background: `linear-gradient(135deg, ${feature.color}20, transparent, ${feature.color}10)`,
         }}
@@ -71,15 +79,15 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
       
       <div className="relative z-10 p-5 md:p-8 h-full">
         <div className="mb-5 md:mb-8">
-          <LottieIcon 
-            path={feature.lottiePath} 
-            size={48} 
+          <LottieIcon
+            path={feature.lottiePath}
+            size={48}
             isHovered={isHovered}
           />
         </div>
         
         <h3 className="text-2xl md:text-3xl font-black uppercase italic mb-3 md:mb-4 tracking-tight">{feature.title}</h3>
-        <p className="text-base md:text-lg text-white/50 leading-relaxed font-medium group-hover:text-white/70 transition-colors duration-150">
+        <p className="text-base md:text-lg text-white/50 leading-relaxed font-medium group-hover:text-white/70 max-md:text-white/70 transition-colors duration-150">
           {feature.description}
         </p>
       </div>

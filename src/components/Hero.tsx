@@ -112,10 +112,10 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1 + i * 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-300 group-hover:border-primary/30 group-hover:bg-primary/5">
+              <div className="p-3 md:p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-300 group-hover:border-primary/30 group-hover:bg-primary/5 max-md:border-primary/30 max-md:bg-primary/5">
                 <div className="relative w-6 h-6 md:w-7 md:h-7">
-                  <Image 
-                    src={item.image} 
+                  <Image
+                    src={item.image}
                     alt={item.label}
                     fill
                     className="object-contain"
@@ -123,7 +123,7 @@ export default function Hero() {
                   />
                 </div>
               </div>
-              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/30 group-hover:text-white/60 transition-colors duration-300">{item.label}</span>
+              <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-white/30 group-hover:text-white/60 max-md:text-white/60 transition-colors duration-300">{item.label}</span>
             </motion.div>
           ))}
         </motion.div>

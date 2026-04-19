@@ -1,95 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Twitter, Instagram, Youtube, Mail, ArrowUpRight, Check, Sparkles } from "lucide-react";
+import { Github, Twitter, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
-
-function SubscribeSection() {
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="mt-10 w-full max-w-sm mx-auto"
-    >
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-white text-sm font-black uppercase tracking-wider">Subscribe to</span>
-          <Image
-            src="/logo-text.png"
-            alt="iPartyUp"
-            width={180}
-            height={45}
-            className="h-3.5 w-auto object-contain"
-            sizes="100px"
-          />
-        </div>
-        
-        <form 
-          onSubmit={async (e) => {
-            e.preventDefault();
-            if (!email || isSubscribed) return;
-            setIsSubmitting(true);
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            setIsSubmitting(false);
-            setIsSubscribed(true);
-            setEmail("");
-          }}
-          className={`flex items-center gap-2 backdrop-blur-sm border rounded-full p-1.5 pl-4 w-full transition-all duration-500 ${
-            isSubscribed 
-              ? "bg-green-500/10 border-green-500/30" 
-              : "bg-white/[0.03] border-white/10 active:border-green-500/30 active:bg-white/[0.05]"
-          }`}
-        >
-          <input 
-            type="email" 
-            placeholder={isSubscribed ? "You're subscribed!" : "your@email.com"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={isSubscribed}
-            className={`flex-1 bg-transparent placeholder:text-white/30 focus:outline-none text-sm min-w-[100px] transition-all duration-300 ${
-              isSubscribed ? "text-green-500" : "text-white"
-            }`}
-          />
-          <button
-            type="submit"
-            disabled={isSubmitting || !email || isSubscribed}
-            className={`relative px-4 py-2 rounded-full font-black uppercase tracking-wider text-xs whitespace-nowrap overflow-hidden transition-all duration-500 active:scale-95 ${
-              isSubscribed
-                ? "bg-green-500 text-black"
-                : "bg-primary text-primary-foreground active:bg-green-500"
-            }`}
-          >
-            <span className="relative z-10 flex items-center gap-1.5">
-              {isSubmitting ? (
-                <span className="w-3.5 h-3.5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-              ) : isSubscribed ? (
-                <>
-                  <Check size={14} strokeWidth={3} />
-                  Subscribed
-                </>
-              ) : (
-                "Subscribe"
-              )}
-            </span>
-            
-            {isSubscribed && (
-              <span className="absolute inset-0 rounded-full bg-green-500/50 animate-ping" />
-            )}
-          </button>
-        </form>
-        
-        <p className="text-center text-white/30 text-xs font-medium">Get latest updates & news</p>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Footer() {
   const links = {
@@ -172,10 +86,6 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Subscribe — mobile only (below social icons) */}
-          <div className="lg:hidden">
-            <SubscribeSection />
-          </div>
         </div>
 
         <div>
@@ -247,11 +157,6 @@ export default function Footer() {
           </ul>
         </div>
       </motion.div>
-
-      {/* Subscribe Section — desktop centered */}
-      <div className="hidden lg:block">
-        <SubscribeSection />
-      </div>
 
       {/* Copyright */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-xs font-black uppercase tracking-widest text-white/20 text-center">

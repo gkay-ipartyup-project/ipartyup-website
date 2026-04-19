@@ -54,7 +54,7 @@ export default function ScrollToTop() {
           onClick={scrollToTop}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="fixed bottom-8 right-8 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center group"
+          className="fixed bottom-8 right-8 z-[100] w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center group max-md:hidden"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
         >
