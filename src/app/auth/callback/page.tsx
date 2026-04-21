@@ -9,6 +9,7 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 export default function AuthCallbackPage() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [tickData, setTickData] = useState<object | null>(null);
+  const [deepLinkUrl, setDeepLinkUrl] = useState("ipartyup://");
   const lottieRef = useRef<any>(null);
 
   useEffect(() => {
@@ -23,11 +24,22 @@ export default function AuthCallbackPage() {
     const params = new URLSearchParams(window.location.search);
 
     if (hash && hash.includes("access_token")) {
+      // Convert hash fragment to query string for the deep link.
+      // Windows URL protocol handlers strip the # fragment when passing
+      // URLs as command-line arguments, so we must use ? query params instead.
+      const queryString = hash.substring(1); // Remove the leading #
+      const fullDeepLink = `ipartyup://auth/callback?${queryString}`;
+      setDeepLinkUrl(fullDeepLink);
       setStatus("success");
+
+      // Auto-attempt to open the app after a short delay
+      const timer = setTimeout(() => {
+        window.location.href = fullDeepLink;
+      }, 2500);
+      return () => clearTimeout(timer);
     } else if (params.get("error")) {
       setStatus("error");
     } else {
-      // Could be a direct visit or token passed differently
       setStatus("success");
     }
   }, []);
@@ -261,7 +273,7 @@ export default function AuthCallbackPage() {
                 style={{ animation: "fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both" }}
               >
                 <a
-                  href="ipartyup://auth/callback"
+                  href={deepLinkUrl}
                   className="block w-full py-4 rounded-2xl font-bold text-[15px] text-black transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_12px_40px_rgba(34,197,94,0.35)] active:scale-[0.97] relative overflow-hidden no-underline"
                   style={{
                     background: "linear-gradient(145deg, #22c55e 0%, #1db954 50%, #16a34a 100%)",
