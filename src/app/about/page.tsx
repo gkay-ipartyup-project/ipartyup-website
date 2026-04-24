@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const aboutItems = [
-  { title: "All-In-One Entertainment", lottiePath: "/animated-icons/watch-together.json", text: "Movies, TV shows, anime, documentaries — everything you love, all in one place. No more switching between apps or managing multiple subscriptions." },
+  { title: "All-In-One Entertainment", lottiePath: "/animated-icons/watch-together.json", text: "Movies, series, anime, documentaries — everything you love, all in one place. No more switching apps or juggling subscriptions just to finish one show." },
   { title: "Watch Together", lottiePath: "/animated-icons/sync.json", text: "Create rooms, invite friends, and watch in perfect sync. Whether they're across the street or across the globe, it feels like you're on the same couch." },
   { title: "Privacy First", lottiePath: "/animated-icons/security.json", text: "Your viewing habits are your business. We don't track what you watch, and we never sell your data to anyone. Period." },
   { title: "Always Improving", lottiePath: "/animated-icons/play.json", text: "New content, new features, and improvements delivered through automatic updates. Download once, and you're always on the latest version." }
@@ -32,19 +32,22 @@ export default function AboutPage() {
 
         <div className="prose prose-invert max-w-none mb-20 text-white/50 space-y-8 text-lg font-medium leading-relaxed">
           <p>
-            We started iPartyUp because we were tired of the same problem everyone faces — paying for five different 
-            streaming services just to watch the content we love. Netflix for one show, Prime for another, Crunchyroll 
-            for anime, and the list goes on. It adds up fast, and it's frustrating.
+            We started iPartyUp because of one very real problem: subscription fatigue. Paying every month for a handful
+            of streaming services just to watch the shows and movies you actually love adds up fast. One app for that
+            one show, a second for the new movie, a third for the anime, a fourth for the documentary you saw trending.
+            It&apos;s tiring, and honestly, it&apos;s silly.
           </p>
           <p>
-            iPartyUp is the solution. One app gives 
-            you access to a massive library of movies, TV shows, anime, documentaries, and more. But we didn&apos;t stop there — 
-            we built the most seamless watch-together experience so you can enjoy everything with your friends, in perfect sync, 
-            no matter where they are in the world.
+            iPartyUp exists to replace that mess with something simple. One app. One membership. Movies, series,
+            anime, documentaries — everything sitting in one curated library, ready to play. And because the best
+            shows always feel better shared, we built the most seamless watch-together experience on top of it.
+            Frame-perfect sync, real-time chat, voice chat, private rooms. The people you love, one press of play,
+            no hacks required.
           </p>
           <p>
-            Available on Windows and macOS, iPartyUp is designed to be your go-to entertainment hub. Download it once, 
-            and automatic updates keep you on the cutting edge. We&apos;re building something special, and we&apos;d love for you to be part of it.
+            Available on Windows and macOS. Download once and automatic updates keep the app current.
+            The library grows every week, the feature list grows every update, and the whole thing is built
+            around one simple idea: watching stuff together should feel effortless.
           </p>
         </div>
 

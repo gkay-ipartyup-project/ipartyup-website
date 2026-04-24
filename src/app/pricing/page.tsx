@@ -2,52 +2,72 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, X, Crown, Zap, Star, Sparkles, ArrowRight } from "lucide-react";
+import PremiumSupporterModal from "@/components/PremiumSupporterModal";
+import { motion } from "framer-motion";
+import { Check, X, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
-const freeTier = {
-  name: "Free",
+type PlanFeature = { text: string; included: boolean };
+
+type PlanTier = {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  popular: boolean;
+  iconSrc: string;
+  features: PlanFeature[];
+};
+
+const freeTier: PlanTier = {
+  name: "Free Plan",
   price: "$0",
   period: "forever",
-  description: "Get started with the essentials",
+  description: "Start watching together, no card required",
   popular: false,
+  iconSrc: "/Free1.png",
   features: [
-    { text: "Limited content library", included: true },
-    { text: "Standard quality streaming", included: true },
-    { text: "Watch Together (up to 3 friends)", included: true },
-    { text: "Basic text chat in rooms", included: true },
-    { text: "Community support", included: true },
-    { text: "Full content library", included: false },
-    { text: "HD streaming quality", included: false },
-    { text: "Unlimited Watch Together rooms", included: false },
-    { text: "Priority content requests", included: false },
-    { text: "Early access to new features", included: false },
+    { text: "Access to the free tier of the iPartyUp library", included: true },
+    { text: "YouTube, YouTube Live and Google Drive built in", included: true },
+    { text: "Host watch rooms with up to 3 viewers", included: true },
+    { text: "Real-time chat, reactions, and host controls", included: true },
+    { text: "Voice chat inside rooms", included: true },
+    { text: "Content requests (refreshes every 72 hours)", included: true },
+    { text: "Browse New & Upcoming releases", included: true },
   ],
 };
 
-const premiumTier = {
-  name: "Premium",
-  price: "$2.99",
+const premiumTier: PlanTier = {
+  name: "Premium Supporter Plan",
+  price: "$5.99",
   period: "/month",
-  description: "The complete iPartyUp experience",
+  description: "The whole library + every bonus perk",
   popular: true,
+  iconSrc: "/Premim_Supporter.png",
   features: [
-    { text: "Full content library — Movies, TV, Anime & more", included: true },
-    { text: "HD streaming quality", included: true },
-    { text: "Unlimited Watch Together rooms", included: true },
-    { text: "Live chat, emojis & reactions", included: true },
-    { text: "Priority content requests", included: true },
-    { text: "Early access to new features", included: true },
-    { text: "Ad-free experience", included: true },
-    { text: "Priority support", included: true },
-    { text: "Custom room themes", included: true },
-    { text: "Unlimited friends list", included: true },
+    { text: "Full access to the entire iPartyUp content library", included: true },
+    { text: "Priority content request refresh — from 72 hours down to just 24 hours", included: true },
+    { text: "Host watch parties with up to 12 users", included: true },
+    { text: "Invite up to 2 free-tier friends to enjoy premium content with you", included: true },
+    { text: "Floating fullscreen chat panel", included: true },
+    { text: "Dashboard notification panel — never miss an update", included: true },
+    { text: "Continue watching — pick up right where you left off", included: true },
+    { text: "Premium Supporter badge & personal chat with the creator", included: true },
+    { text: "More amazing features + every upcoming perk included", included: true },
   ],
 };
 
-function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) {
+function PricingCard({
+  tier,
+  index,
+  onPremiumClick,
+}: {
+  tier: PlanTier;
+  index: number;
+  onPremiumClick: () => void;
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const isPremium = tier.popular;
 
@@ -62,33 +82,20 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
       className="relative group"
       style={{ perspective: "1000px" }}
     >
-      {/* Popular badge */}
+      {/* Ambient radial glow behind premium card */}
       {isPremium && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="absolute -top-4 left-1/2 -translate-x-1/2 z-20"
-        >
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-primary via-emerald-400 to-primary rounded-full text-xs font-black uppercase tracking-widest text-black shadow-[0_0_20px_rgba(34,197,94,0.5)]"
-          >
-            <Crown size={12} strokeWidth={3} />
-            Most Popular
-            <Sparkles size={12} strokeWidth={3} />
-          </motion.div>
-        </motion.div>
+        <div className="pointer-events-none absolute -inset-10 -z-10 opacity-60">
+          <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl" />
+        </div>
       )}
 
       {/* Card */}
       <motion.div
-        whileHover={{ y: -8, scale: 1.02 }}
+        whileHover={{ y: -10, scale: 1.015 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className={`relative overflow-hidden rounded-[2rem] p-[1px] ${
+        className={`relative overflow-hidden rounded-[2.25rem] p-[1px] ${
           isPremium
-            ? "bg-gradient-to-b from-primary/60 via-primary/20 to-primary/5"
+            ? "bg-gradient-to-b from-primary/70 via-primary/25 to-primary/5"
             : "bg-gradient-to-b from-white/10 via-white/5 to-transparent"
         }`}
       >
@@ -96,38 +103,52 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
         {isPremium && (
           <>
             <motion.div
-              className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              className="absolute inset-0 rounded-[2.25rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{
-                background: "conic-gradient(from 0deg, #22c55e, #16a34a, #15803d, #166534, #22c55e)",
-                filter: "blur(8px)",
+                background:
+                  "conic-gradient(from 0deg, #22c55e, #16a34a, #15803d, #166534, #22c55e)",
+                filter: "blur(10px)",
               }}
               animate={{ rotate: [0, 360] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-              className="absolute -inset-1 rounded-[2rem] -z-10"
+              className="absolute -inset-1 rounded-[2.25rem] -z-10"
               animate={{
                 boxShadow: [
-                  "0 0 30px rgba(34,197,94,0.2)",
-                  "0 0 60px rgba(34,197,94,0.4)",
-                  "0 0 30px rgba(34,197,94,0.2)",
+                  "0 0 40px rgba(34,197,94,0.25)",
+                  "0 0 80px rgba(34,197,94,0.45)",
+                  "0 0 40px rgba(34,197,94,0.25)",
                 ],
               }}
-              transition={{ duration: 3, repeat: Infinity }}
+              transition={{ duration: 3.5, repeat: Infinity }}
             />
           </>
         )}
 
         <div
-          className={`relative rounded-[calc(2rem-1px)] p-8 md:p-10 h-full ${
+          className={`relative rounded-[calc(2.25rem-1px)] p-6 md:p-8 h-full ${
             isPremium
-              ? "bg-gradient-to-b from-[#0a1a0f] via-[#060d08] to-background"
+              ? "bg-gradient-to-b from-[#0a1a0f] via-[#060d08] to-background ring-1 ring-primary/20"
               : "bg-gradient-to-b from-white/[0.03] to-background"
           }`}
         >
+          {/* Subtle diagonal sheen on premium card (luxury accent) */}
+          {isPremium && (
+            <motion.div
+              className="pointer-events-none absolute inset-0 rounded-[calc(2.25rem-1px)] overflow-hidden"
+              aria-hidden
+            >
+              <motion.div
+                className="absolute -inset-[50%] bg-gradient-to-br from-transparent via-primary/[0.04] to-transparent"
+                animate={{ x: ["-30%", "30%"], y: ["-30%", "30%"] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", repeatType: "mirror" }}
+              />
+            </motion.div>
+          )}
           {/* Floating particles for premium */}
           {isPremium && (
-            <div className="absolute inset-0 overflow-hidden rounded-[2rem]">
+            <div className="absolute inset-0 overflow-hidden rounded-[2.25rem] pointer-events-none">
               {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
@@ -153,57 +174,102 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
           )}
 
           {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="relative mb-6">
+            <div className="flex items-center gap-4 mb-5">
               <motion.div
-                animate={isPremium ? { rotate: [0, 10, -10, 0] } : {}}
-                transition={{ duration: 4, repeat: Infinity }}
-                className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+                whileHover={{ scale: 1.06 }}
+                transition={{ duration: 0.3 }}
+                className={`shrink-0 ${
                   isPremium
-                    ? "bg-primary/20 text-primary"
-                    : "bg-white/5 text-white/50"
+                    ? "drop-shadow-[0_8px_24px_rgba(34,197,94,0.4)]"
+                    : "drop-shadow-[0_6px_18px_rgba(0,0,0,0.5)]"
                 }`}
               >
-                {isPremium ? <Crown size={24} /> : <Zap size={24} />}
+                <Image
+                  src={tier.iconSrc}
+                  alt={tier.name}
+                  width={72}
+                  height={72}
+                  className="object-contain w-16 h-16 md:w-[72px] md:h-[72px]"
+                />
               </motion.div>
-              <div>
-                <h3 className={`text-xl font-black uppercase tracking-tight ${isPremium ? "text-primary" : "text-white/80"}`}>
+              <div className="min-w-0">
+                <h3
+                  className={`text-xl font-black uppercase tracking-tight leading-tight ${
+                    isPremium ? "text-primary" : "text-white/80"
+                  }`}
+                >
                   {tier.name}
                 </h3>
-                <p className="text-xs text-white/30 font-medium">{tier.description}</p>
+                <p className="text-xs text-white/30 font-medium">
+                  {tier.description}
+                </p>
               </div>
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-1 mb-2">
               <motion.span
-                className={`text-5xl md:text-6xl font-black tracking-tighter ${
-                  isPremium ? "text-white" : "text-white/60"
+                className={`text-5xl font-black tracking-[-0.04em] ${
+                  isPremium
+                    ? "text-white drop-shadow-[0_0_24px_rgba(34,197,94,0.35)]"
+                    : "text-white/60"
                 }`}
                 animate={isPremium && isHovered ? { scale: [1, 1.05, 1] } : {}}
                 transition={{ duration: 0.4 }}
               >
                 {tier.price}
               </motion.span>
-              <span className="text-lg text-white/30 font-medium">{tier.period}</span>
+              <span className="text-lg text-white/30 font-medium">
+                {tier.period}
+              </span>
             </div>
-            
+
             {isPremium && (
-              <motion.p
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-sm text-primary/60 font-medium"
+                className="flex items-center gap-2 mt-1.5"
               >
-                Cancel anytime — no contracts
-              </motion.p>
+                <Image
+                  src="/Patreon1.png"
+                  alt="Patreon"
+                  width={22}
+                  height={22}
+                  className="shrink-0 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]"
+                />
+                <p className="text-[12.5px] text-white/80 font-semibold tracking-wide">
+                  Secure payment via Patreon
+                </p>
+              </motion.div>
             )}
           </div>
 
-          {/* Divider */}
-          <div className={`h-px mb-8 ${isPremium ? "bg-gradient-to-r from-transparent via-primary/30 to-transparent" : "bg-white/5"}`} />
+          {/* Divider with center dot accent */}
+          <div className="relative mb-6 flex items-center justify-center">
+            <div
+              className={`flex-1 h-px ${
+                isPremium
+                  ? "bg-gradient-to-r from-transparent to-primary/30"
+                  : "bg-gradient-to-r from-transparent to-white/10"
+              }`}
+            />
+            <div
+              className={`mx-2 w-1 h-1 rounded-full ${
+                isPremium ? "bg-primary/60" : "bg-white/20"
+              }`}
+            />
+            <div
+              className={`flex-1 h-px ${
+                isPremium
+                  ? "bg-gradient-to-l from-transparent to-primary/30"
+                  : "bg-gradient-to-l from-transparent to-white/10"
+              }`}
+            />
+          </div>
 
           {/* Features */}
-          <ul className="space-y-4 mb-10">
+          <ul className="space-y-3 mb-8">
             {tier.features.map((feature, i) => (
               <motion.li
                 key={i}
@@ -218,18 +284,22 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
                   className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
                     feature.included
                       ? isPremium
-                        ? "bg-primary/20 text-primary"
+                        ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                         : "bg-white/10 text-white/60"
                       : "bg-white/5 text-white/20"
                   }`}
                 >
-                  {feature.included ? <Check size={12} strokeWidth={3} /> : <X size={12} strokeWidth={3} />}
+                  {feature.included ? (
+                    <Check size={12} strokeWidth={3} />
+                  ) : (
+                    <X size={12} strokeWidth={3} />
+                  )}
                 </motion.div>
                 <span
                   className={`text-sm font-medium leading-relaxed ${
                     feature.included
                       ? isPremium
-                        ? "text-white/80"
+                        ? "text-white/85"
                         : "text-white/50"
                       : "text-white/20 line-through"
                   }`}
@@ -241,31 +311,27 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
           </ul>
 
           {/* CTA Button */}
-          <Link href="/download">
+          {isPremium ? (
             <motion.button
+              onClick={onPremiumClick}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className={`w-full py-4 rounded-2xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 ${
-                isPremium
-                  ? "bg-gradient-to-r from-primary to-emerald-500 text-black shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:shadow-[0_0_50px_rgba(34,197,94,0.5)]"
-                  : "bg-white/5 text-white/60 border border-white/10 hover:bg-white/10 hover:text-white/80"
-              }`}
+              className="w-full py-4 rounded-2xl font-bold uppercase tracking-wider text-sm flex items-center justify-center transition-all duration-300 bg-gradient-to-r from-primary to-emerald-500 text-black shadow-[0_0_30px_rgba(34,197,94,0.3)] hover:shadow-[0_0_50px_rgba(34,197,94,0.5)]"
             >
-              {isPremium ? (
-                <>
-                  Get Premium
-                  <motion.div animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                    <ArrowRight size={16} strokeWidth={3} />
-                  </motion.div>
-                </>
-              ) : (
-                <>
-                  Download Free
-                  <ArrowRight size={16} />
-                </>
-              )}
+              Get Premium
             </motion.button>
-          </Link>
+          ) : (
+            <Link href="/download">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="w-full py-4 rounded-2xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all duration-300 bg-white/5 text-white/60 border border-white/10 hover:bg-white/10 hover:text-white/80"
+              >
+                Download Free
+                <ArrowRight size={16} />
+              </motion.button>
+            </Link>
+          )}
         </div>
       </motion.div>
     </motion.div>
@@ -273,6 +339,8 @@ function PricingCard({ tier, index }: { tier: typeof freeTier; index: number }) 
 }
 
 export default function PricingPage() {
+  const [supporterModalOpen, setSupporterModalOpen] = useState(false);
+
   return (
     <main className="min-h-screen bg-background pt-32 px-6">
       <Navbar />
@@ -283,46 +351,29 @@ export default function PricingPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-6"
+          className="text-center mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 150 }}
-            className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-primary/10 flex items-center justify-center"
-          >
-            <Star size={28} className="text-primary" />
-          </motion.div>
           <h1 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-4">
             Choose Your <span className="text-primary">Plan</span>
           </h1>
           <p className="text-lg md:text-xl text-white/40 font-medium max-w-2xl mx-auto">
-            Start free. Upgrade when you&apos;re ready. No hidden fees, cancel anytime.
+            Start free. Become a supporter when you&apos;re ready. One small monthly
+            instead of a stack of separate subscriptions. No hidden fees, pause anytime.
           </p>
-        </motion.div>
-
-        {/* Savings badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.4 }}
-          className="flex justify-center mb-16"
-        >
-          <motion.div
-            animate={{ y: [0, -3, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/[0.08] border border-primary/20 text-primary text-sm font-bold"
-          >
-            <Sparkles size={14} />
-            Save hundreds vs. multiple streaming subscriptions
-            <Sparkles size={14} />
-          </motion.div>
         </motion.div>
 
         {/* Pricing cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
-          <PricingCard tier={freeTier} index={0} />
-          <PricingCard tier={premiumTier} index={1} />
+          <PricingCard
+            tier={freeTier}
+            index={0}
+            onPremiumClick={() => setSupporterModalOpen(true)}
+          />
+          <PricingCard
+            tier={premiumTier}
+            index={1}
+            onPremiumClick={() => setSupporterModalOpen(true)}
+          />
         </div>
 
         {/* Bottom FAQ teaser */}
@@ -332,7 +383,9 @@ export default function PricingPage() {
           viewport={{ once: true }}
           className="text-center mt-20"
         >
-          <p className="text-white/30 text-sm mb-4 font-medium">Have questions about our plans?</p>
+          <p className="text-white/30 text-sm mb-4 font-medium">
+            Have questions about our plans?
+          </p>
           <Link href="/faq">
             <motion.span
               whileHover={{ scale: 1.05 }}
@@ -346,6 +399,11 @@ export default function PricingPage() {
       </div>
 
       <Footer />
+
+      <PremiumSupporterModal
+        open={supporterModalOpen}
+        onClose={() => setSupporterModalOpen(false)}
+      />
     </main>
   );
 }

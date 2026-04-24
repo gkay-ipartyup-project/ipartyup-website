@@ -6,16 +6,16 @@ import { motion } from "framer-motion";
 import { Shield, Eye, Lock, Trash2, UserCheck, Globe } from "lucide-react";
 
 const commitments = [
-  { icon: Shield, title: "We Never Sell Your Data", description: "Your personal information is never sold, rented, or traded to third parties. Period." },
-  { icon: Eye, title: "No Tracking or Profiling", description: "We don't track what you watch, build advertising profiles, or monitor your viewing habits." },
-  { icon: Lock, title: "Encrypted by Default", description: "All data is encrypted in transit and at rest using industry-standard protocols." },
+  { icon: Shield, title: "We Never Sell Your Data", description: "Your personal information is never sold, rented, or traded to third parties. There’s nothing to sell because we don’t collect it for that." },
+  { icon: Eye, title: "No Tracking or Profiling", description: "We don’t track what you watch, build advertising profiles, or monitor your viewing habits. Your choices are yours alone." },
+  { icon: Lock, title: "Encrypted by Default", description: "Everything is encrypted in transit and at rest using industry-standard protocols, with strict internal access controls." },
 ];
 
 export default function PrivacyPage() {
   const sections = [
     {
       title: "1. Our Privacy Commitment",
-      content: `At iPartyUp, your privacy isn't just a policy — it's a core principle. We built iPartyUp to be a streaming platform that respects its users. We have no interest in collecting, monetizing, or exploiting your personal data. We don't build behavioral profiles, and we don't sell your information to anyone. Collecting your data offers us zero value — so we simply don't do it beyond what's strictly necessary to make the app work.`
+      content: `At iPartyUp, your privacy isn’t a marketing bullet point — it’s a core principle baked into how the app is built. We have zero interest in collecting, monetizing, or exploiting your personal data. We don’t build behavioural profiles, we don’t run ads, and we don’t sell your information to anyone. Collecting your data offers us zero value — so we simply don’t, beyond the minimum required to actually make the app work.`
     },
     {
       title: "2. Information We Collect",
@@ -126,7 +126,7 @@ While no system is 100% secure, we are committed to protecting your data with th
           transition={{ delay: 0.2 }}
           className="text-center text-white/30 text-sm mb-12"
         >
-          Last updated: April 18, 2026
+          Last updated: April 24, 2026
         </motion.p>
 
         {/* Privacy Commitments Banner */}

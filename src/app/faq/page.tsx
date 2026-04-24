@@ -9,43 +9,55 @@ import { useState } from "react";
 const faqs = [
   {
     question: "What is iPartyUp?",
-    answer: "iPartyUp is an all-in-one streaming platform that brings movies, TV shows, anime, documentaries, and more into a single app. Instead of juggling multiple subscriptions across different services, iPartyUp gives you access to a massive content library — plus the ability to watch synchronized with friends in real-time."
+    answer: "iPartyUp is an all-in-one streaming app that brings movies, series, anime, documentaries, and more into a single place. Instead of paying for a handful of separate memberships just to watch the things you love, iPartyUp gives you one curated library — and the best watch-together experience anywhere, so you can enjoy it all in sync with your friends, your partner, or your family."
   },
   {
-    question: "What content is available on iPartyUp?",
-    answer: "iPartyUp offers a wide variety of content including movies, TV series, anime, documentaries, and more. Our library is continuously growing with new titles added regularly. You can also request specific content through the app, and we'll do our best to make it available."
+    question: "What's included in the library?",
+    answer: "iPartyUp's own library covers movies, full series and seasons, a massive anime catalogue with sub and dub options, and documentaries — with new titles added every week. You can also plug in public YouTube videos, YouTube Live streams, and your own Google Drive uploads. If something is missing, you can request it right from the app."
+  },
+  {
+    question: "How is this different from just watching the same link on a call?",
+    answer: "Very different. iPartyUp syncs playback frame-perfectly to every viewer automatically — no \"press play in 3, 2, 1\", no drifting out of sync, no laggy screen-share. Hosts can pause, rewind, and skip for the whole room with one tap. There's a dedicated chat panel and optional voice chat built right next to the video, so reacting and talking feels natural instead of awkward."
+  },
+  {
+    question: "Do my friends need to pay to join?",
+    answer: "No. Anyone with a free account can join your rooms. Free users can host rooms up to 3 people, and Premium Supporters can host rooms up to 12 and even invite free-tier friends into premium-only content with them."
   },
   {
     question: "How much does iPartyUp cost?",
-    answer: "iPartyUp offers a free tier with limited access. For the full experience — unlimited content, watch parties, and premium features — our subscription is just $2.99/month. That's one subscription instead of paying for Netflix, Prime, Disney+, Hulu, and Crunchyroll separately."
+    answer: "Free forever with the core library and watch-together features. If you want the entire library unlocked plus the bonus features, the Premium Supporter Plan is $5.99/month and you join through our Patreon. Just download iPartyUp, tap the Support Developer button on the dashboard, and your perks unlock the moment you join. You can pause or end the membership anytime from Patreon."
   },
   {
-    question: "How does Watch Together work?",
-    answer: "It's simple: create a room in the app, share the invite link or room code with your friends, and start watching. iPartyUp syncs playback to the exact millisecond for everyone in the room. You can chat in real-time, react to moments together, and control playback — all in sync."
+    question: "What extra do Premium Supporters get?",
+    answer: "The entire content library unlocked, rooms up to 12 viewers, the ability to invite up to 2 free-tier friends into premium content with you, a floating fullscreen chat panel, a dashboard notification panel, continue-watching across sessions, a Premium Supporter badge, personal chat with the creator, faster content-request refresh (24h instead of 72h), and every upcoming perk as it ships."
   },
   {
-    question: "Which platforms does iPartyUp support?",
-    answer: "iPartyUp is currently available on Windows and macOS desktop. We're focused on delivering the best desktop experience first. Mobile support may be considered in the future based on community demand."
+    question: "Which devices does iPartyUp run on?",
+    answer: "iPartyUp is currently available on Windows and macOS desktop. We're focused on nailing the desktop experience first. Mobile may come later based on community demand."
   },
   {
-    question: "How do I get updates?",
-    answer: "Updates are delivered automatically. Once you download and install iPartyUp, the app checks for updates and installs them seamlessly. You'll always have the latest features, bug fixes, and content without lifting a finger."
+    question: "Do you track what I watch?",
+    answer: "No. We do not track your viewing habits for advertising or profiling. We don't run ads and we don't sell your data — there's nothing to sell because we don't collect it. The only data we store is what's strictly needed to run the app (your account, your rooms, your friends list). You can delete everything anytime from the app."
   },
   {
-    question: "Is my data safe with iPartyUp?",
-    answer: "Absolutely. We take privacy seriously. We don't track your viewing habits, we don't sell your personal information, and we use industry-standard encryption to protect your account data. Your entertainment choices are your business, not ours."
-  },
-  {
-    question: "Can I request content that's not available?",
-    answer: "Yes! iPartyUp has a built-in content request feature. You can submit requests directly through the app, and our team reviews them regularly. We have a 24-hour cooldown between requests to keep things fair for everyone."
+    question: "Can I request content that isn't in the library?",
+    answer: "Yes. Use the Request Content feature inside the app. Free users can submit a request every 72 hours, Premium Supporters every 24 hours. Requests are reviewed regularly and fulfilled when possible."
   },
   {
     question: "Can I watch with friends in different countries?",
-    answer: "Yes, iPartyUp works globally. You can create a watch room and invite friends from anywhere in the world. Our low-latency sync technology ensures everyone stays perfectly in sync regardless of their location."
+    answer: "Yes. iPartyUp works anywhere. Create a room, share the room code, and everyone joins in seconds. Our sync keeps the whole room on the same frame regardless of distance."
   },
   {
-    question: "How do I report a problem or get help?",
-    answer: "You can reach us through the Contact page on our website. We aim to respond within 24 hours. For common issues, check this FAQ page first — most questions are answered here."
+    question: "Is there voice chat?",
+    answer: "Yes, in-room voice chat is built in. Tap into voice whenever you'd rather actually talk with the room instead of typing. It's optional — text chat, reactions, and emojis are always available too."
+  },
+  {
+    question: "How do I get updates?",
+    answer: "Updates are automatic. Once installed, iPartyUp checks for new versions and installs them quietly in the background. You'll always have the latest features, fixes, and content without lifting a finger."
+  },
+  {
+    question: "How do I report a bug or request a feature?",
+    answer: "Use the Reports & Feedback section inside the app — every message is read personally. You can also reach out through the Contact page on this website. Expect a reply within about 24 hours."
   }
 ];
 

@@ -53,10 +53,10 @@ export default function Hero() {
           className="mb-10 md:mb-14 max-w-2xl mx-auto px-4"
         >
           <p className="text-base md:text-xl text-white/40 font-medium leading-relaxed mb-3">
-            Tired of paying for Netflix, Prime, Hulu, and Crunchyroll separately?
+            Tired of juggling five different subscriptions every month?
           </p>
           <p className="text-base md:text-lg font-bold text-white/80">
-            One app. <span className="text-primary">Unlimited content.</span> Watch together.
+            One app. <span className="text-primary">Everything inside.</span> Watch together.
           </p>
         </motion.div>
 

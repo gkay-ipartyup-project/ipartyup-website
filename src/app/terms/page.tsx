@@ -35,15 +35,15 @@ Content availability may vary by region and is subject to change without prior n
 You must be at least 13 years old to create an account. If you are between 13 and 18, you represent that you have obtained your parent or legal guardian's consent to use the Service.`
     },
     {
-      title: "4. Subscription & Pricing",
+      title: "4. Premium Supporter Membership",
       content: `iPartyUp offers the following plans:
 
-• Free Tier: Limited access to the content library and basic features
-• Premium Plan: Full, unlimited access to all content and features at $2.99/month
+• Free Plan: Limited access to the content library and basic features
+• Premium Supporter Plan: Full access to the entire library and all supporter perks, available through a $5.99/month membership via Patreon
 
-Premium subscriptions are billed monthly and renew automatically unless cancelled before the end of the current billing period. You may cancel at any time — cancellation takes effect at the end of your current billing cycle. We do not offer prorated refunds for partial months. Refund requests for exceptional circumstances are handled on a case-by-case basis.
+The Premium Supporter Plan is provided through Patreon's membership platform. The membership recurs monthly through Patreon and may be paused or ended at any time from your Patreon account; any change takes effect at the end of your current membership period. iPartyUp does not process payments directly. All membership billing and management is handled by Patreon under their Terms of Use.
 
-We reserve the right to modify pricing with at least 30 days' advance notice. Continued use after a price change constitutes acceptance of the new pricing.`
+We reserve the right to adjust Premium Supporter Plan pricing with at least 30 days' advance notice. Continued participation in the membership after a price change constitutes acceptance of the new amount.`
     },
     {
       title: "5. Acceptable Use & Prohibited Conduct",
@@ -140,7 +140,7 @@ Your continued use of iPartyUp after updated Terms are posted constitutes your a
           transition={{ delay: 0.2 }}
           className="text-center text-white/30 text-sm mb-16"
         >
-          Last updated: April 18, 2026
+          Last updated: April 24, 2026
         </motion.p>
 
         <div className="space-y-6">

@@ -9,9 +9,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const downloadFeatures = [
-  { title: "Clean & Open", lottiePath: "/animated-icons/security.json", text: "Every build is scanned and hosted on our own CDN. Open-source roots, no bundled trackers or adware." },
-  { title: "Fast Installation", lottiePath: "/animated-icons/sync.json", text: "Get up and running in less than a minute. Our lightweight app is built for speed." },
-  { title: "Automatic Updates", lottiePath: "/animated-icons/platform.json", text: "Stay current with the latest features and security improvements, delivered seamlessly." }
+  { title: "Clean & Safe", lottiePath: "/animated-icons/security.json", text: "Every build is signed and scanned before release. No bundled trackers, no adware, no shady extras — just the app." },
+  { title: "Fast Installation", lottiePath: "/animated-icons/sync.json", text: "Up and running in under a minute. iPartyUp is lightweight by design so it stays out of your way." },
+  { title: "Automatic Updates", lottiePath: "/animated-icons/platform.json", text: "New features, fresh content, and security improvements roll in quietly in the background." }
 ];
 
 export default function DownloadPage() {
