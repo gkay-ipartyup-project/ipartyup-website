@@ -33,16 +33,12 @@ const ICON_MAP: Record<FooterSocial["platform"], LucideIcon> = {
   twitch: Twitch,
 };
 
-/** Hardcoded fallback used if the Supabase fetch fails or returns empty. */
-const FALLBACK_SOCIALS: FooterSocial[] = [
-  { id: "fb-1", platform: "twitter", url: "#", icon_size: 20, visible: true, order_index: 0, created_at: "", updated_at: "" },
-  { id: "fb-2", platform: "instagram", url: "#", icon_size: 20, visible: true, order_index: 1, created_at: "", updated_at: "" },
-  { id: "fb-3", platform: "youtube", url: "#", icon_size: 20, visible: true, order_index: 2, created_at: "", updated_at: "" },
-  { id: "fb-4", platform: "github", url: "#", icon_size: 20, visible: true, order_index: 3, created_at: "", updated_at: "" },
-];
-
 export default function Footer() {
-  const [socials, setSocials] = useState<FooterSocial[]>(FALLBACK_SOCIALS);
+  // Start empty so the footer never flashes hardcoded icons before the
+  // admin-driven list resolves from Supabase. If Supabase ever fails, the
+  // icon row simply doesn't render — preferable to showing stale links
+  // with no real destinations.
+  const [socials, setSocials] = useState<FooterSocial[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,7 +49,12 @@ export default function Footer() {
         .eq("visible", true)
         .order("order_index", { ascending: true });
       if (cancelled) return;
-      if (!error && data && data.length > 0) {
+      // IMPORTANT: an empty array is a *legitimate* admin-driven state
+      // ("all icons hidden" / "none configured yet"). Falling back to
+      // FALLBACK_SOCIALS in that case re-introduces the hidden icons on
+      // every refresh — exactly the bug reported. Only keep the fallback
+      // when the request itself failed.
+      if (!error && data) {
         setSocials(data as FooterSocial[]);
       }
     })();
@@ -242,7 +243,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-xs font-black uppercase tracking-widest text-white/20 text-center">
-        <p className="hover:text-white/40 transition-colors">© 2026 iPartyUp Inc. Crafted for communities.</p>
+        <p className="hover:text-white/40 transition-colors">© 2026 iPartyUp. Crafted for communities.</p>
       </div>
     </footer>
   );
