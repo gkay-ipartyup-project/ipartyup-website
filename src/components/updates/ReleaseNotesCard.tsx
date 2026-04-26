@@ -6,10 +6,12 @@ import { Calendar } from "lucide-react";
 import TriangleParticles from "./TriangleParticles";
 import {
     formatExactReleaseDate,
+    isRichDoc,
     sectionFontSizePx,
     type Release,
     type ReleaseNoteSection,
 } from "@/lib/releaseNotes";
+import RichNoteRenderer from "./RichNoteRenderer";
 
 interface ReleaseNotesCardProps {
     release: Release;
@@ -219,25 +221,50 @@ function Section({
             ? "text-right"
             : "text-left";
 
+    /* Heading: prefer the rich `category_doc` when the admin authored a styled
+       heading via the in-app RichNoteEditor; fall back to the legacy plain
+       `category` string otherwise. */
+    const hasRichCategory = isRichDoc(section.category_doc);
+
     return (
         <div>
-            {/* Section header — no icons, just styled text */}
+            {/* Section header */}
             <div className={`${headerClass} mb-3`}>
-                <span
-                    className="uppercase tracking-wider"
-                    style={{
-                        fontSize: fSize,
-                        fontWeight: fWeight,
-                        color: "#1db954",
-                    }}
-                >
-                    {section.category}
-                </span>
+                {hasRichCategory ? (
+                    <RichNoteRenderer
+                        doc={section.category_doc}
+                        style={{
+                            fontSize: fSize,
+                            fontWeight: fWeight,
+                            color: "#1db954",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                        }}
+                    />
+                ) : (
+                    <span
+                        className="uppercase tracking-wider"
+                        style={{
+                            fontSize: fSize,
+                            fontWeight: fWeight,
+                            color: "#1db954",
+                        }}
+                    >
+                        {section.category}
+                    </span>
+                )}
             </div>
 
-            {/* Items */}
+            {/* Items — each can be a plain string (legacy) or a TipTap doc
+                (new rich-text format). isRichDoc() picks the right renderer
+                so React error #31 ("object as child") never fires. */}
             <div className="space-y-2">
                 {section.items.map((item, j) => {
+                    const itemContent = isRichDoc(item) ? (
+                        <RichNoteRenderer doc={item} />
+                    ) : (
+                        item
+                    );
                     const Content = (
                         <div className="flex items-start gap-2.5 ml-1">
                             <span
@@ -249,7 +276,7 @@ function Section({
                                 }}
                             />
                             <span className="text-[13px] sm:text-[14px] text-white/65 leading-relaxed">
-                                {item}
+                                {itemContent}
                             </span>
                         </div>
                     );

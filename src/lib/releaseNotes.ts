@@ -4,10 +4,37 @@
  * the in-app PostUpdateModal so the web renderer mirrors it exactly.
  */
 
+/**
+ * TipTap JSON document shape — produced by the desktop RichNoteEditor.
+ * Loosely typed because the full ProseMirror schema is wide; the renderer
+ * walks `content` recursively without needing exhaustive typings.
+ */
+export interface RichDoc {
+    type: "doc";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    content?: any[];
+}
+
+/** Type-guard — distinguishes legacy plain-string items from new rich docs. */
+export function isRichDoc(v: unknown): v is RichDoc {
+    return !!v && typeof v === "object" && (v as { type?: string }).type === "doc";
+}
+
 export interface ReleaseNoteSection {
+    /**
+     * Legacy plain-string category heading. Still written for backwards
+     * compatibility but `category_doc` is preferred when present.
+     */
     category: string;
+    /** NEW — rich category heading. When present, takes precedence over `category`. */
+    category_doc?: RichDoc | null;
     icon: string;
-    items: string[];
+    /**
+     * Each item is either a legacy plain-string OR a TipTap JSON doc emitted
+     * by the in-app RichNoteEditor. The renderer auto-detects via isRichDoc().
+     */
+    items: (string | RichDoc)[];
+    /** Legacy section-level styling — only applied to plain-string items. */
     fontWeight?: number;
     textAlign?: "left" | "center" | "right";
     fontSize?: "sm" | "md" | "lg";
