@@ -74,7 +74,7 @@ You can request complete deletion of your data at any time through the app or by
 • Withdrawal: Withdraw consent for optional data processing at any time
 • Objection: Object to any processing of your personal information
 
-For users in the European Economic Area (EEA), we comply with the General Data Protection Regulation (GDPR). For California residents, we comply with the California Consumer Privacy Act (CCPA). To exercise any of these rights, contact us at ipartyup.party/contact. We respond within 30 days.`
+For users in the European Economic Area (EEA), we comply with the General Data Protection Regulation (GDPR). For California residents, we comply with the California Consumer Privacy Act (CCPA). To exercise any of these rights, contact us at contact@ipartyup.party. We respond within 30 days.`
     },
     {
       title: "7. Cookies & Local Storage",
@@ -102,7 +102,7 @@ While no system is 100% secure, we are committed to protecting your data with th
     },
     {
       title: "11. Contact Us",
-      content: `If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us through our Contact page at ipartyup.party/contact. We take every privacy inquiry seriously and will respond as quickly as possible.`
+      content: `If you have any questions, concerns, or requests regarding this Privacy Policy or your personal data, please reach out to us at contact@ipartyup.party. We take every privacy inquiry seriously and will respond as quickly as possible.`
     }
   ];
 

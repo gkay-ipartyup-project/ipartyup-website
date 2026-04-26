@@ -3,6 +3,16 @@
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import LottieIcon from "./LottieIcon";
+import { supabase } from "@/lib/supabase";
+
+/* ─── Live user count config ─── */
+// Each real Supabase profile counts as 2 in the display, with a 50+ floor.
+// Floor is shown until real users >= 25 (since 25 × 2 = 50). After that the
+// number ticks up by 2 per new signup: 52+, 54+, 56+, …
+const USER_COUNT_FLOOR = 50;
+const USER_COUNT_MULTIPLIER = 2;
+// Re-fetch every minute so the homepage stays fresh without hammering the DB.
+const USER_COUNT_REFRESH_MS = 60_000;
 
 function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -34,43 +44,72 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
   return <span ref={ref} />;
 }
 
-const stats = [
-  {
-    lottiePath: "/animated-icons/users.json",
-    value: 1000,
-    suffix: "+",
-    label: "Active Users",
-    description: "Growing community",
-    color: "#22c55e",
-  },
-  {
-    lottiePath: "/animated-icons/globe.json",
-    value: 150,
-    suffix: "+",
-    label: "Countries",
-    description: "Global reach",
-    color: "#16a34a",
-  },
-  {
-    lottiePath: "/animated-icons/flash.json",
-    value: 50,
-    suffix: "ms",
-    label: "Instant Room Creation",
-    description: "Ultra fast",
-    color: "#22c55e",
-  },
-  {
-    lottiePath: "/animated-icons/tick-circle.json",
-    value: 99.9,
-    suffix: "%",
-    label: "Uptime",
-    description: "Reliable service",
-    color: "#15803d",
-  },
-];
+function buildStats(activeUsers: number) {
+  return [
+    {
+      lottiePath: "/animated-icons/users.json",
+      value: activeUsers,
+      suffix: "+",
+      label: "Active Users",
+      description: "Growing community",
+      color: "#22c55e",
+    },
+    {
+      lottiePath: "/animated-icons/globe.json",
+      value: 190,
+      suffix: "+",
+      label: "Countries",
+      description: "Global reach",
+      color: "#16a34a",
+    },
+    {
+      lottiePath: "/animated-icons/flash.json",
+      value: 50,
+      suffix: "ms",
+      label: "Instant Room Creation",
+      description: "Ultra fast",
+      color: "#22c55e",
+    },
+    {
+      lottiePath: "/animated-icons/tick-circle.json",
+      value: 99.9,
+      suffix: "%",
+      label: "Uptime",
+      description: "Reliable service",
+      color: "#15803d",
+    },
+  ];
+}
 
 export default function Stats() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeUsers, setActiveUsers] = useState<number>(USER_COUNT_FLOOR);
+
+  // Pull live user count from Supabase via the public RPC, apply floor + multiplier.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchCount() {
+      const { data, error } = await supabase.rpc("get_public_user_count");
+      if (cancelled) return;
+      if (error || typeof data !== "number") {
+        // Fail-safe: keep showing the floor if the RPC ever errors out.
+        setActiveUsers(USER_COUNT_FLOOR);
+        return;
+      }
+      const display = Math.max(USER_COUNT_FLOOR, data * USER_COUNT_MULTIPLIER);
+      setActiveUsers(display);
+    }
+
+    fetchCount();
+    const interval = setInterval(fetchCount, USER_COUNT_REFRESH_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
+
+  const stats = buildStats(activeUsers);
 
   return (
     <section className="py-24 px-6 relative overflow-hidden">

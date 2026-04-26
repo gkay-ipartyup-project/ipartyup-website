@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Download } from "lucide-react";
+import { Download, Crown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
@@ -58,6 +58,36 @@ export default function Hero() {
           <p className="text-base md:text-lg font-bold text-white/80">
             One app. <span className="text-primary">Everything inside.</span> Watch together.
           </p>
+        </motion.div>
+
+        {/* 24h Premium Trial Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: 0.7, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 md:mb-8 flex justify-center px-4"
+        >
+          <div
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(40,28,5,0.6) 0%, rgba(60,40,8,0.65) 50%, rgba(40,28,5,0.6) 100%)",
+              border: "1px solid rgba(232,165,48,0.30)",
+              boxShadow: "0 4px 20px rgba(232,165,48,0.12), inset 0 1px 0 rgba(255,211,110,0.10)",
+            }}
+          >
+            <Crown size={12} style={{ color: "#FFD36E" }} strokeWidth={2.5} />
+            <span
+              className="text-[11px] md:text-[12px] font-bold uppercase tracking-[0.12em]"
+              style={{ color: "#FFD36E" }}
+            >
+              Sign up free
+            </span>
+            <span className="text-[11px] md:text-[12px] text-white/55">·</span>
+            <span className="text-[11px] md:text-[12px] text-white/75 font-medium">
+              Get <strong className="text-white">24 hours of Premium</strong> instantly
+            </span>
+          </div>
         </motion.div>
 
         {/* CTA Buttons */}

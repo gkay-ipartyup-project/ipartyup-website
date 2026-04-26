@@ -88,8 +88,7 @@ export default function Footer() {
       { name: "FAQ", href: "/faq" }
     ],
     company: [
-      { name: "About", href: "/about" },
-      { name: "Contact", href: "/contact" }
+      { name: "About", href: "/about" }
     ],
     legal: [
       { name: "Privacy", href: "/privacy" },

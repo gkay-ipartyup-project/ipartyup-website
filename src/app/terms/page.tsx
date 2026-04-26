@@ -116,7 +116,7 @@ Your continued use of iPartyUp after updated Terms are posted constitutes your a
     },
     {
       title: "13. Contact Information",
-      content: `If you have any questions or concerns about these Terms of Service, please contact us through our Contact page at ipartyup.party/contact. We are committed to resolving any concerns promptly and will respond as quickly as possible.`
+      content: `If you have any questions or concerns about these Terms of Service, please reach out to us at contact@ipartyup.party. We are committed to resolving any concerns promptly and will respond as quickly as possible.`
     }
   ];
 

@@ -12,6 +12,10 @@ const faqs = [
     answer: "iPartyUp is an all-in-one streaming app that brings movies, series, anime, documentaries, and more into a single place. Instead of paying for a handful of separate memberships just to watch the things you love, iPartyUp gives you one curated library — and the best watch-together experience anywhere, so you can enjoy it all in sync with your friends, your partner, or your family."
   },
   {
+    question: "Do I get anything for free when I sign up?",
+    answer: "Yes! Every new account gets 24 hours of full Premium access the moment you sign up — no payment, no card, nothing to cancel. You can explore the entire content library, host bigger watch parties, invite free-tier friends into premium content with you, and try every premium feature. After 24 hours you go to the standard free tier and can support the developer for permanent Premium any time."
+  },
+  {
     question: "What's included in the library?",
     answer: "iPartyUp's own library covers movies, full series and seasons, a massive anime catalogue with sub and dub options, and documentaries — with new titles added every week. You can also plug in public YouTube videos, YouTube Live streams, and your own Google Drive uploads. If something is missing, you can request it right from the app."
   },
@@ -57,7 +61,7 @@ const faqs = [
   },
   {
     question: "How do I report a bug or request a feature?",
-    answer: "Use the Reports & Feedback section inside the app — every message is read personally. You can also reach out through the Contact page on this website. Expect a reply within about 24 hours."
+    answer: "Use the Reports & Feedback section inside the app — every message is read personally and typically gets a reply within about 24 hours."
   }
 ];
 
