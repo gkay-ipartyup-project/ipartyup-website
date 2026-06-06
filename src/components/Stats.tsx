@@ -2,7 +2,7 @@
 
 import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import LottieIcon from "./LottieIcon";
+import { Users, Globe, Zap, CheckCircle, LucideIcon } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 /* ─── Live user count config ─── */
@@ -47,36 +47,40 @@ function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string
 function buildStats(activeUsers: number) {
   return [
     {
-      lottiePath: "/animated-icons/users.json",
+      icon: Users,
       value: activeUsers,
       suffix: "+",
       label: "Active Users",
       description: "Growing community",
       color: "#22c55e",
+      hoverClass: "group-hover:scale-110 group-hover:rotate-3"
     },
     {
-      lottiePath: "/animated-icons/globe.json",
+      icon: Globe,
       value: 190,
       suffix: "+",
       label: "Countries",
       description: "Global reach",
       color: "#16a34a",
+      hoverClass: "group-hover:rotate-45"
     },
     {
-      lottiePath: "/animated-icons/flash.json",
+      icon: Zap,
       value: 50,
       suffix: "ms",
       label: "Instant Room Creation",
       description: "Ultra fast",
       color: "#22c55e",
+      hoverClass: "group-hover:scale-110 group-hover:skew-x-3"
     },
     {
-      lottiePath: "/animated-icons/tick-circle.json",
+      icon: CheckCircle,
       value: 99.9,
       suffix: "%",
       label: "Uptime",
       description: "Reliable service",
       color: "#15803d",
+      hoverClass: "group-hover:scale-110 group-hover:rotate-12"
     },
   ];
 }
@@ -159,8 +163,15 @@ export default function Stats() {
                 <motion.div
                   animate={hoveredIndex === index ? { scale: [1, 1.1, 1] } : {}}
                   transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center border transition-all duration-300 relative z-10"
+                  style={{
+                    borderColor: hoveredIndex === index ? `${stat.color}60` : "rgba(255,255,255,0.05)",
+                    backgroundColor: hoveredIndex === index ? `${stat.color}15` : "rgba(255,255,255,0.02)",
+                    color: stat.color,
+                    boxShadow: hoveredIndex === index ? `0 0 20px ${stat.color}40` : "none"
+                  }}
                 >
-                  <LottieIcon path={stat.lottiePath} size={52} isHovered={hoveredIndex === index} />
+                  <stat.icon className={`w-7 h-7 transition-all duration-500 ${stat.hoverClass}`} />
                 </motion.div>
               </div>
               

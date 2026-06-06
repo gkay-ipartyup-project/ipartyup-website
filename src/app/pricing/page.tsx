@@ -353,7 +353,7 @@ export default function PricingPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase italic tracking-tighter mb-4">
             Choose Your <span className="text-primary">Plan</span>
           </h1>
           <p className="text-lg md:text-xl text-white/40 font-medium max-w-2xl mx-auto">

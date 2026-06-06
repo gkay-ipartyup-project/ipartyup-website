@@ -2,15 +2,39 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import LottieIcon from "@/components/LottieIcon";
+import { Tv, Users, Shield, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 const aboutItems = [
-  { title: "All-In-One Entertainment", lottiePath: "/animated-icons/watch-together.json", text: "Movies, series, anime, documentaries — everything you love, all in one place. No more switching apps or juggling subscriptions just to finish one show." },
-  { title: "Watch Together", lottiePath: "/animated-icons/sync.json", text: "Create rooms, invite friends, and watch in perfect sync. Whether they're across the street or across the globe, it feels like you're on the same couch." },
-  { title: "Privacy First", lottiePath: "/animated-icons/security.json", text: "Your viewing habits are your business. We don't track what you watch, and we never sell your data to anyone. Period." },
-  { title: "Always Improving", lottiePath: "/animated-icons/play.json", text: "New content, new features, and improvements delivered through automatic updates. Download once, and you're always on the latest version." }
+  { 
+    title: "All-In-One Entertainment", 
+    icon: Tv, 
+    color: "#22c55e",
+    hoverClass: "group-hover:scale-110",
+    text: "Movies, series, anime, documentaries — everything you love, all in one place. No more switching apps or juggling subscriptions just to finish one show." 
+  },
+  { 
+    title: "Watch Together", 
+    icon: Users, 
+    color: "#16a34a",
+    hoverClass: "group-hover:scale-110 group-hover:rotate-3",
+    text: "Create rooms, invite friends, and watch in perfect sync. Whether they're across the street or across the globe, it feels like you're on the same couch." 
+  },
+  { 
+    title: "Privacy First", 
+    icon: Shield, 
+    color: "#22c55e",
+    hoverClass: "group-hover:scale-110",
+    text: "Your viewing habits are your business. We don't track what you watch, and we never sell your data to anyone. Period." 
+  },
+  { 
+    title: "Always Improving", 
+    icon: Sparkles, 
+    color: "#15803d",
+    hoverClass: "group-hover:rotate-12",
+    text: "New content, new features, and improvements delivered through automatic updates. Download once, and you're always on the latest version." 
+  }
 ];
 
 export default function AboutPage() {
@@ -26,8 +50,8 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter mb-4">ABOUT <span className="text-primary">iPARTYUP</span></h1>
-          <p className="text-xl md:text-2xl text-white/40 font-medium">One platform. Endless entertainment. Together.</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase italic tracking-tighter mb-4">ABOUT <span className="text-primary">iPARTYUP</span></h1>
+          <p className="text-lg md:text-xl text-white/40 font-medium">One platform. Endless entertainment. Together.</p>
         </motion.div>
 
         <div className="prose prose-invert max-w-none mb-20 text-white/50 space-y-8 text-lg font-medium leading-relaxed">
@@ -64,7 +88,17 @@ export default function AboutPage() {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="mb-6">
-                <LottieIcon path={item.lottiePath} size={56} isHovered={hoveredIndex === i} />
+                <div 
+                  className="w-14 h-14 rounded-2xl flex items-center justify-center border transition-all duration-300"
+                  style={{ 
+                    borderColor: hoveredIndex === i ? `${item.color}60` : "rgba(255,255,255,0.05)",
+                    backgroundColor: hoveredIndex === i ? `${item.color}15` : "rgba(255,255,255,0.02)",
+                    color: item.color,
+                    boxShadow: hoveredIndex === i ? `0 0 20px ${item.color}40` : "none"
+                  }}
+                >
+                  <item.icon className={`w-7 h-7 transition-all duration-500 ${item.hoverClass}`} />
+                </div>
               </div>
               <h3 className="text-2xl font-black uppercase italic tracking-tight mb-3">{item.title}</h3>
               <p className="text-white/40 font-medium group-hover:text-white/60 transition-colors">{item.text}</p>

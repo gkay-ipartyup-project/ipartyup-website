@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import LottieIcon from "./LottieIcon";
+import { RefreshCw, Tv, MessageSquare, Monitor, Play, Shield, LucideIcon } from "lucide-react";
 import { useRef, useState } from "react";
 
 interface FeatureCardProps {
@@ -79,15 +79,21 @@ function FeatureCard({ feature, index }: FeatureCardProps) {
       
       <div className="relative z-10 p-5 md:p-8 h-full">
         <div className="mb-5 md:mb-8">
-          <LottieIcon
-            path={feature.lottiePath}
-            size={48}
-            isHovered={isHovered}
-          />
+          <div 
+            className="w-12 h-12 rounded-xl flex items-center justify-center border transition-all duration-300"
+            style={{ 
+              borderColor: `${feature.color}30`,
+              backgroundColor: `${feature.color}10`,
+              color: feature.color,
+              boxShadow: isHovered ? `0 0 20px ${feature.color}40` : 'none'
+            }}
+          >
+            <feature.icon className={`w-6 h-6 transition-all duration-500 ${feature.hoverClass}`} />
+          </div>
         </div>
         
-        <h3 className="text-2xl md:text-3xl font-black uppercase italic mb-3 md:mb-4 tracking-tight">{feature.title}</h3>
-        <p className="text-base md:text-lg text-white/50 leading-relaxed font-medium group-hover:text-white/70 max-md:text-white/70 transition-colors duration-150">
+        <h3 className="text-xl md:text-2xl font-bold tracking-tight mb-3 md:mb-4">{feature.title}</h3>
+        <p className="text-sm md:text-base text-white/50 leading-relaxed font-medium group-hover:text-white/70 max-md:text-white/70 transition-colors duration-200">
           {feature.description}
         </p>
       </div>
@@ -99,38 +105,44 @@ const features = [
   {
     title: "Perfect Sync",
     description: "Watch with friends in real-time — everyone sees the same frame at the same millisecond. No countdowns, no 'are you there yet?' moments.",
-    lottiePath: "/animated-icons/sync.json",
-    color: "#22c55e"
+    icon: RefreshCw,
+    color: "#22c55e",
+    hoverClass: "group-hover:rotate-180"
   },
   {
     title: "All-In-One Library",
     description: "Movies, TV shows, anime, documentaries, and more — all in one place. No more juggling between multiple subscriptions. iPartyUp has it all.",
-    lottiePath: "/animated-icons/watch-together.json",
-    color: "#16a34a"
+    icon: Tv,
+    color: "#16a34a",
+    hoverClass: "group-hover:scale-110"
   },
   {
     title: "Live Chat & Reactions",
     description: "React together in real-time with text chat, emojis, and shared moments. Feel like you're in the same room, no matter the distance.",
-    lottiePath: "/animated-icons/chat.json",
-    color: "#22c55e"
+    icon: MessageSquare,
+    color: "#22c55e",
+    hoverClass: "group-hover:scale-110 -rotate-6 group-hover:rotate-0"
   },
   {
-    title: "Windows & macOS",
-    description: "Available on Windows and macOS. Download once, get automatic updates forever. Your entertainment hub, right on your desktop.",
-    lottiePath: "/animated-icons/platform.json",
-    color: "#15803d"
+    title: "Cross-Platform",
+    description: "Available on Windows, macOS, and coming soon to Android. Download once, get automatic updates. Your entertainment hub, right there.",
+    icon: Monitor,
+    color: "#15803d",
+    hoverClass: "group-hover:-translate-y-1"
   },
   {
     title: "HD Streaming",
     description: "Crystal clear quality with adaptive streaming. Experience your content the way it was meant to be watched — smooth, sharp, and buffer-free.",
-    lottiePath: "/animated-icons/play.json",
-    color: "#22c55e"
+    icon: Play,
+    color: "#22c55e",
+    hoverClass: "group-hover:scale-110 translate-x-[1px]"
   },
   {
     title: "Secure & Private",
     description: "Your data stays yours. We never track your viewing habits or sell your information. Privacy is built into everything we do.",
-    lottiePath: "/animated-icons/security.json",
-    color: "#166534"
+    icon: Shield,
+    color: "#166534",
+    hoverClass: "group-hover:scale-110"
   }
 ];
 
@@ -152,22 +164,22 @@ export default function Features() {
         style={{ scale, opacity }}
         className="max-w-7xl mx-auto"
       >
-        <div className="text-center mb-16 md:mb-32 px-4">
+        <div className="text-center mb-16 md:mb-24 px-4">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase italic tracking-tighter mb-4 md:mb-6 leading-[0.9] md:leading-[0.85]"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 md:mb-6 leading-tight font-display"
           >
-            The Future of <br className="hidden sm:block" /><span className="text-primary drop-shadow-[0_0_20px_rgba(34,197,94,0.2)]">Social Watching</span>
+            The Future of <span className="text-gradient-green">Social Watching</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/40 mx-auto font-medium px-2"
+            className="text-sm sm:text-base md:text-lg text-white/40 mx-auto font-medium max-w-2xl"
           >
             Built from the ground up for the ultimate shared experience.
           </motion.p>

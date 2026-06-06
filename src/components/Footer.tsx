@@ -112,9 +112,9 @@ export default function Footer() {
         className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-12 md:gap-16 mb-16"
       >
         <div className="col-span-2 lg:col-span-2">
-          <Link href="/" className="flex items-center gap-3 mb-10 group">
+          <Link href="/" className="flex items-center gap-2 md:gap-3 mb-8 group">
             <motion.div
-              className="relative w-10 h-10 flex items-center justify-center"
+              className="relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -123,17 +123,12 @@ export default function Footer() {
                 alt="iPartyUp Logo"
                 width={40}
                 height={40}
-                className="w-auto h-auto object-contain"
+                className="w-9 h-9 md:w-10 md:h-10 object-contain"
               />
             </motion.div>
-            <Image
-              src="/logo-text.png"
-              alt="iPartyUp"
-              width={200}
-              height={50}
-              className="h-4 md:h-5 w-auto object-contain"
-              sizes="(max-width: 768px) 100px, 140px"
-            />
+            <span className="font-brolink font-brolink-fallback text-lg md:text-xl tracking-wider text-white select-none">
+              iParty<span className="text-primary">Up</span>
+            </span>
           </Link>
           <p className="text-white/40 text-lg max-w-sm mb-10 font-medium leading-relaxed">
             Your all-in-one streaming platform. Movies, TV shows, anime, and more — watch together with friends, in perfect sync.

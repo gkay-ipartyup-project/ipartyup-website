@@ -1,15 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ShieldCheck, Monitor, Apple } from "lucide-react";
+import { X, ShieldCheck, Monitor, Apple, Smartphone, ArrowDownToLine } from "lucide-react";
 import { useEffect, useState } from "react";
-import LottieIcon from "./LottieIcon";
 import { formatReleaseDate, formatVersion, type PlatformDownload } from "@/lib/downloads";
 
 interface DownloadConfirmModalProps {
     open: boolean;
     onClose: () => void;
-    platformName: "Windows" | "macOS";
+    platformName: "Windows" | "macOS" | "Android";
     download: PlatformDownload | null;
 }
 
@@ -51,7 +50,8 @@ export default function DownloadConfirmModal({
     const fileName = download?.url.split("?")[0].split("/").pop() ?? "";
 
     const isWindows = platformName === "Windows";
-    const PlatformIcon = isWindows ? Monitor : Apple;
+    const isMacOS = platformName === "macOS";
+    const PlatformIcon = isWindows ? Monitor : isMacOS ? Apple : Smartphone;
 
     const handleDownload = () => {
         if (!download) return;
@@ -136,16 +136,20 @@ export default function DownloadConfirmModal({
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-white/40 mb-1 sm:mb-1.5">
-                                            {isWindows ? "If Chrome or Edge blocks it" : "If macOS blocks it"}
+                                            {isWindows ? "If Chrome or Edge blocks it" : isMacOS ? "If macOS blocks it" : "If Android blocks it"}
                                         </div>
                                         <p className="text-[12px] sm:text-[12.5px] md:text-[13px] text-white/60 leading-relaxed">
                                             {isWindows ? (
                                                 <>
                                                     Click <span className="text-white/90 font-semibold">Keep</span> or <span className="text-white/90 font-semibold">Download suspicious file</span>. If SmartScreen appears, click <span className="text-white/90 font-semibold">More info</span> → <span className="text-white/90 font-semibold">Run anyway</span>. You&apos;ll only see this the first time.
                                                 </>
-                                            ) : (
+                                            ) : isMacOS ? (
                                                 <>
                                                     Open the <span className="text-white/90 font-semibold">.dmg</span>, drag iPartyUp to Applications, then <span className="text-white/90 font-semibold">right-click → Open</span> the first time. macOS will remember it from then on.
+                                                </>
+                                            ) : (
+                                                <>
+                                                    Open the downloaded <span className="text-white/90 font-semibold">.apk</span> file. If prompted, allow installation from unknown sources in your browser or file manager settings.
                                                 </>
                                             )}
                                         </p>
@@ -162,7 +166,7 @@ export default function DownloadConfirmModal({
                                 whileTap={{ scale: download ? 0.985 : 1 }}
                                 onMouseEnter={() => setIconHovered(true)}
                                 onMouseLeave={() => setIconHovered(false)}
-                                className={`w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[12px] sm:text-[13px] flex items-center justify-center gap-2.5 sm:gap-3 border relative overflow-hidden transition-all duration-500 ${
+                                className={`group w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl font-black uppercase tracking-widest text-[12px] sm:text-[13px] flex items-center justify-center gap-2.5 sm:gap-3 border relative overflow-hidden transition-all duration-500 ${
                                     download
                                         ? "bg-primary hover:bg-primary/90 text-primary-foreground border-primary shadow-[0_10px_40px_-10px_rgba(34,197,94,0.6)]"
                                         : "bg-white/5 text-white/30 border-white/5 cursor-not-allowed"
@@ -174,15 +178,8 @@ export default function DownloadConfirmModal({
                                     whileHover={download ? { x: "200%" } : {}}
                                     transition={{ duration: 0.8 }}
                                 />
-                                <div
-                                    className="shrink-0"
-                                    style={{ filter: download ? "brightness(0)" : undefined }}
-                                >
-                                    <LottieIcon
-                                        path="/animated-icons/inbox.json"
-                                        size={20}
-                                        isHovered={iconHovered}
-                                    />
+                                <div className="shrink-0 transition-transform duration-300 group-hover:translate-y-0.5">
+                                    <ArrowDownToLine size={20} />
                                 </div>
                                 <span className="relative z-10 whitespace-nowrap">
                                     {download ? `Download Now · ${version}` : "Unavailable"}

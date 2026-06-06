@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Monitor, Apple, LucideIcon, Lock, FileText } from "lucide-react";
-import LottieIcon from "./LottieIcon";
+import { Monitor, Apple, Smartphone, LucideIcon, Lock, FileText, ArrowDownToLine } from "lucide-react";
 import DownloadConfirmModal from "./DownloadConfirmModal";
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
@@ -17,7 +16,7 @@ import {
 
 interface Platform {
     name: string;
-    key: "windows" | "macos";
+    key: "windows" | "macos" | "android";
     icon: LucideIcon;
     image: string;
     download: PlatformDownload | null;
@@ -57,7 +56,7 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
 
     let tag: string;
     if (platform.loading) tag = "Checking latest…";
-    else if (!available) tag = "Coming Soon";
+    else if (!available) tag = platform.key === "android" ? "Being Ready" : "Coming Soon";
     else if (isBackVersion) tag = "Previous Build";
     else tag = "Latest Stable";
 
@@ -111,7 +110,7 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
                     </motion.div>
                 </motion.div>
 
-                <h3 className="text-xl md:text-2xl font-black uppercase italic mb-2 tracking-tighter">
+                <h3 className="text-lg md:text-xl font-bold mb-2 tracking-tight">
                     {platform.name}
                 </h3>
 
@@ -135,7 +134,9 @@ function PlatformCard({ platform, index, onRequestDownload }: PlatformCardProps)
                     ) : platform.loading ? (
                         <span className="text-xs text-white/10 font-bold">&nbsp;</span>
                     ) : (
-                        <span className="text-xs text-white/20 font-bold">No installer available yet</span>
+                        <span className="text-xs text-white/20 font-bold">
+                            {platform.key === "android" ? "APK build compilation ready soon" : "No installer available yet"}
+                        </span>
                     )}
                     {isBackVersion && platform.latestVersion && (
                         <span className="text-[10px] text-amber-300/50 font-semibold tracking-wide">
@@ -198,8 +199,8 @@ function DownloadButton({
                 whileHover={{ x: "200%" }}
                 transition={{ duration: 0.8 }}
             />
-            <div style={{ filter: isMobile || isHovered ? "brightness(0)" : "brightness(0) invert(1)" }}>
-                <LottieIcon path="/animated-icons/inbox.json" size={18} isHovered={isHovered || isMobile} />
+            <div className="transition-transform duration-300 group-hover/btn:translate-y-0.5">
+                <ArrowDownToLine size={18} />
             </div>
             <span className="relative z-10">Download</span>
         </motion.button>
@@ -238,6 +239,15 @@ export default function DownloadSection() {
             latestVersion: data?.latest_version ?? null,
             loading,
         },
+        {
+            name: "Android",
+            key: "android",
+            icon: Smartphone,
+            image: "/android.png",
+            download: null,
+            latestVersion: null,
+            loading,
+        },
     ];
 
     return (
@@ -266,7 +276,7 @@ export default function DownloadSection() {
                 </motion.div>
 
                 <div
-                    className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-2xl mx-auto px-2"
+                    className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto px-2"
                     style={{ perspective: "1000px" }}
                 >
                     {platforms.map((platform, index) => (
@@ -283,7 +293,7 @@ export default function DownloadSection() {
             <DownloadConfirmModal
                 open={!!modalPlatform}
                 onClose={() => setModalPlatform(null)}
-                platformName={(modalPlatform?.name as "Windows" | "macOS") ?? "Windows"}
+                platformName={(modalPlatform?.name as "Windows" | "macOS" | "Android") ?? "Windows"}
                 download={modalPlatform?.download ?? null}
             />
         </section>

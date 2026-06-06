@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
  * Floating triangle particle canvas — web port of the in-app
@@ -23,6 +23,14 @@ export default function TriangleParticles() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const particlesRef = useRef<Particle[]>([]);
     const animFrameRef = useRef(0);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     const initParticles = useCallback((w: number, h: number) => {
         const count = Math.min(35, Math.floor((w * h) / 12000));
@@ -137,6 +145,8 @@ export default function TriangleParticles() {
             if (ro) ro.disconnect();
         };
     }, [initParticles]);
+
+    if (isMobile) return null;
 
     return (
         <canvas
