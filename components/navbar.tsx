@@ -44,8 +44,14 @@ export function Navbar() {
           : "bg-transparent border-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-[1320px] items-center justify-between px-6 py-5">
-        <Link href="/" className="flex items-center" aria-label="iPartyUp home">
+      <nav className={`mx-auto flex max-w-[1320px] items-center justify-between px-6 lg:transition-all lg:duration-300 ${
+        scrolled ? "py-5 lg:py-3" : "py-5"
+      }`}>
+        <Link 
+          href="/" 
+          className="group flex items-center lg:transition-transform lg:duration-300" 
+          aria-label="iPartyUp home"
+        >
           <Logo className="h-8 w-auto text-white" />
         </Link>
 
@@ -57,18 +63,20 @@ export function Navbar() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className={`relative pb-1 transition-colors ${
+                    className={`group relative pb-1 transition-colors duration-300 ${
                       link.green
-                        ? "text-stremio-green hover:text-stremio-green"
+                        ? "text-stremio-green hover:text-stremio-green-light"
                         : active
                           ? "text-white"
-                          : "text-white/90 hover:text-white"
+                          : "text-white/70 hover:text-white"
                     }`}
                   >
                     {link.label}
-                    {active && (
-                      <span className="absolute inset-x-0 -bottom-0.5 h-0.5 rounded bg-white" />
-                    )}
+                    <span 
+                      className={`absolute inset-x-0 -bottom-0.5 h-0.5 rounded bg-current transition-transform duration-300 origin-center ${
+                        active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
                   </Link>
                 </li>
               )
@@ -77,14 +85,15 @@ export function Navbar() {
 
           <a
             href="#"
-            className="rounded-full border-2 border-white px-6 py-2 text-[15px] font-semibold text-white transition-colors hover:bg-white hover:text-stremio-dark"
+            className="rounded-full border-2 border-white px-6 py-2 text-[15px] font-semibold text-white lg:transition-all lg:duration-300 hover:bg-white hover:text-stremio-dark lg:hover:shadow-[0_0_15px_rgba(255,255,255,0.25)]"
           >
             Login
           </a>
 
           <div className="flex items-center gap-2 text-[15px] font-medium">
-            <span className="text-white">EN</span>
-            <span className="text-white/50">BR</span>
+            <button type="button" className="text-white hover:text-stremio-green transition-colors duration-200 cursor-pointer">EN</button>
+            <span className="text-white/30 font-light">|</span>
+            <button type="button" className="text-white/50 hover:text-stremio-green transition-colors duration-200 cursor-pointer">BR</button>
           </div>
         </div>
 

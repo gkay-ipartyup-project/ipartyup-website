@@ -18,19 +18,11 @@ export function WatchEnjoy({ variant = "dark" }: { variant?: "dark" | "green" })
       >
         <div className="text-center">
           <h2 className={`text-4xl font-bold ${isGreen ? "text-white" : "text-stremio-green"}`}>
-            Watch &amp; Enjoy.
+            Watch in Perfect Sync
           </h2>
           <h3 className={`mt-4 text-2xl font-bold ${isGreen ? "text-white/95" : "text-white"}`}>
-            iPartyUp makes it a piece of cake
+            iPartyUp makes synchronized streaming effortless
           </h3>
-          <a
-            href="#"
-            className={`mt-6 inline-block text-base font-medium ${
-              isGreen ? "text-white hover:text-white/80" : "text-stremio-green"
-            } hover:underline`}
-          >
-            All features &gt;
-          </a>
         </div>
 
         <div className="mt-16 grid grid-cols-1 items-center gap-12 md:grid-cols-2">
@@ -60,25 +52,24 @@ export function WatchEnjoy({ variant = "dark" }: { variant?: "dark" | "green" })
           </div>
 
           <div className="max-w-md">
-            <h2 className="text-3xl font-bold text-white">Easy to Use</h2>
+            <h2 className="text-3xl font-bold text-white">Instant Watch Parties</h2>
             <p className={`mt-4 text-lg leading-relaxed ${isGreen ? "text-white/90" : "text-neutral-400"}`}>
-              iPartyUp is designed to be user-friendly and easy to use. With its
-              clean and intuitive interface you can easily navigate and find the
-              content you want to watch.
+              Creating a watch party is as simple as sharing a room code. iPartyUp is designed
+              with a clean, intuitive interface so you and your friends can join rooms,
+              sync playback, and start streaming instantly without any complicated setup.
             </p>
 
             <h2 className="mt-10 text-3xl font-bold text-white">
-              Seamless Across Devices
+              Cross-Platform Support
             </h2>
             <p className={`mt-4 text-lg leading-relaxed ${isGreen ? "text-white/90" : "text-neutral-400"}`}>
-              Available for a wide range of platforms (incl. Windows, Mac, Linux,
-              Android and more), iPartyUp will keep track of your progress across
-              all your devices. Just login and continue watching without having
-              to configure the app again on each new device.
+              Whether you are on a Windows Desktop or laptop, macOS, Android, or even iOS, 
+              iPartyUp keeps your co-watching experience seamlessly aligned. Join rooms
+              from your preferred device and stay perfectly in sync.
             </p>
 
             <a
-              href="#"
+              href="/download"
               className={`mt-8 inline-flex items-center rounded-full border-[3px] border-white px-8 py-3 text-base font-semibold text-white transition-colors ${
                 isGreen
                   ? "hover:bg-white hover:text-stremio-green"

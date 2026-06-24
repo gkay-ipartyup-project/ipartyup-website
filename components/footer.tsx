@@ -1,6 +1,3 @@
-"use client"
-
-import { useState, useEffect } from "react"
 import { Logo } from "./logo"
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -58,28 +55,8 @@ const COLUMNS = [
 ]
 
 export function Footer() {
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const isScrollPastThreshold = window.scrollY > 400
-      const totalPageHeight = document.documentElement.scrollHeight
-      const currentScrollPosition = window.scrollY + window.innerHeight
-      const isNearBottom = currentScrollPosition >= totalPageHeight - 120
-
-      if (isScrollPastThreshold && !isNearBottom) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
   return (
-    <>
-      <footer className="relative bg-[linear-gradient(164deg,#031a0a_0%,#0a3d1a_100%)] pt-16 pb-12 z-0">
+    <footer className="relative bg-[linear-gradient(164deg,#031a0a_0%,#0a3d1a_100%)] pt-16 pb-12 z-0">
         <div className="mx-auto max-w-[1320px] px-6">
           <div className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-4">
             {COLUMNS.map((col) => (
@@ -132,26 +109,5 @@ export function Footer() {
           </div>
         </div>
       </footer>
-
-      {/* Sticky Bottom Footer Bar */}
-      <div
-        className={`fixed bottom-0 inset-x-0 bg-neutral-950/80 backdrop-blur-md border-t border-white/10 px-6 py-4 flex items-center justify-between z-[100] transition-all duration-300 transform ${
-          scrolled ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          <Logo className="h-6 w-auto text-white" />
-          <span className="text-sm text-white/60 hidden sm:inline">Freedom to Stream</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <a
-            href="#"
-            className="bg-stremio-green hover:opacity-90 text-white text-sm font-semibold px-6 py-2 rounded-full transition-opacity shadow-lg shadow-stremio-green/20"
-          >
-            Get iPartyUp for Free
-          </a>
-        </div>
-      </div>
-    </>
   )
 }

@@ -1,6 +1,68 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
 
 export function TvSection() {
+  const [platform, setPlatform] = useState<"windows" | "mac" | "android" | "ios" | "unknown">("windows")
+
+  useEffect(() => {
+    const ua = navigator.userAgent.toLowerCase()
+    if (/ipad|iphone|ipod/.test(ua) && !(window as any).MSStream) {
+      setPlatform("ios")
+    } else if (/android/.test(ua)) {
+      setPlatform("android")
+    } else if (/macintosh|mac os x/.test(ua)) {
+      setPlatform("mac")
+    } else if (/windows|win32|win64/.test(ua)) {
+      setPlatform("windows")
+    } else {
+      setPlatform("windows")
+    }
+  }, [])
+
+  const renderGooglePlayButton = () => {
+    const isApple = platform === "mac" || platform === "ios"
+
+    if (isApple) {
+      return (
+        <div
+          className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow-lg text-neutral-400 cursor-default"
+        >
+          <Image
+            src="/apple-logo.png"
+            alt="Apple logo"
+            width={24}
+            height={24}
+            className="h-6 w-6 object-contain brightness-0 opacity-40"
+          />
+          <div className="flex flex-col items-start text-left leading-none">
+            <span className="text-sm font-bold text-neutral-600">Coming Soon</span>
+            <span className="text-[10px] font-medium text-neutral-400 mt-0.5">for iPhones</span>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <a
+        href="/download"
+        className="inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-neutral-50"
+      >
+        <Image
+          src="/Play-store-colored.png"
+          alt="Google Play Store logo"
+          width={28}
+          height={28}
+          className="h-7 w-7 object-contain"
+        />
+        <div className="flex flex-col items-start text-left leading-none">
+          <span className="text-[10px] uppercase tracking-wider font-semibold text-neutral-500">Android APK</span>
+          <span className="text-sm sm:text-base font-black text-neutral-900 mt-0.5">Google Play</span>
+        </div>
+      </a>
+    )
+  }
   return (
     <>
       <section className="relative overflow-hidden bg-[linear-gradient(135deg,#0a3d1a_0%,#071f0f_55%,#0a0a0a_100%)] [transform:skewY(-4deg)] pt-28 pb-20 lg:pt-36 lg:pb-28 -mt-24 z-10">
@@ -17,21 +79,9 @@ export function TvSection() {
               The iPartyUp app lets you enjoy huge library of content with your friends and family.
             </p>
 
-            <a
-              href="#"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3 shadow-lg transition-transform hover:scale-[1.02]"
-            >
-              <svg viewBox="0 0 24 24" className="h-7 w-7">
-                <path fill="#00D9FF" d="M3 3.5v17l9.5-8.5L3 3.5Z" />
-                <path fill="#00F076" d="M3 3.5 16.5 11 13 12 3 3.5Z" />
-                <path fill="#FFCE00" d="M3 20.5 13 12l3.5 1L3 20.5Z" />
-                <path fill="#FF3A44" d="M16.5 11 21 13.6c.8.5.8 1.3 0 1.8L16.5 13 13 12l3.5-1Z" />
-              </svg>
-              <span className="text-left leading-tight text-neutral-900">
-                <span className="block text-[11px] font-semibold">Android APK</span>
-                <span className="block text-xl font-semibold">Google Play</span>
-              </span>
-            </a>
+            <div className="mt-8 flex justify-center lg:justify-start">
+              {renderGooglePlayButton()}
+            </div>
           </div>
 
           <div className="relative lg:translate-x-12 lg:scale-130">

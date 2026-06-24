@@ -95,7 +95,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${poppins.variable} bg-background`}>
+    <html lang="en" className={`${plusJakarta.variable} ${poppins.variable} bg-background`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -106,7 +106,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(sitelinksSchema) }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <SiteSettingsWrapper>
           {children}
           {process.env.NODE_ENV === 'production' && <Analytics />}
