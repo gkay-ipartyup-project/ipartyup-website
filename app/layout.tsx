@@ -17,9 +17,9 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'iPartyUp - Freedom to Stream',
+  title: 'iPartyUp - Watch Together in Perfect Sync',
   description:
-    'iPartyUp is a modern media center that gives you the freedom to watch everything you want.',
+    'iPartyUp is a premium synchronized streaming app. Watch movies, series, and anime together in frame-perfect sync with friends and family, no matter how far apart you live.',
   generator: 'v0.app',
   icons: {
     icon: '/favicon.png',

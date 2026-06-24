@@ -1,6 +1,12 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Check } from "lucide-react"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iPartyUp Pricing - Free Tier & Premium Supporter Plans",
+  description: "Explore iPartyUp subscription plans. Start watching for free, or become a Premium Supporter for just $5.99/month to unlock our entire curated content library and extra room perks.",
+}
 
 export default function PricingPage() {
   return (

@@ -2,6 +2,12 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { FileText, ArrowLeft, Monitor, Apple, Smartphone } from "lucide-react"
 import Link from "next/link"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "iPartyUp Release Notes - What's New & App Updates",
+  description: "Stay updated with the latest iPartyUp releases. View detailed logs of new streaming features, bug fixes, performance improvements, and additions as we ship them.",
+}
 
 export default function UpdatesPage() {
   return (

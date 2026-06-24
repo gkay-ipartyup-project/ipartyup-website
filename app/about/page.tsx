@@ -1,6 +1,12 @@
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import Image from "next/image"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About iPartyUp - Curated Library & Sync Experience",
+  description: "Discover the story and values behind iPartyUp. We replace subscription fatigue with one curated library and a seamless watch-together experience for friends and couples.",
+}
 
 export default function AboutPage() {
   return (
