@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPartyUp — Rewarded Ad</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a1a;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+  .container {
+    text-align: center;
+    padding: 32px;
+    max-width: 420px;
+    z-index: 1;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    color: #1db954;
+  }
+  .timer {
+    font-size: 64px;
+    font-weight: 800;
+    color: #7c3aed;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .label {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 24px;
+  }
+  .progress-bar {
+    width: 100%;
+    max-width: 320px;
+    height: 6px;
+    background: #1e1e3a;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0 auto 20px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 3px;
+    transition: width 1s linear;
+    width: 0%;
+  }
+  .status {
+    font-size: 13px;
+    color: #64748b;
+    min-height: 20px;
+  }
+  .done-container {
+    display: none;
+    text-align: center;
+    padding: 32px;
+  }
+  .done-container.show { display: block; }
+  .done-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+  }
+  .done-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1db954;
+    margin-bottom: 8px;
+  }
+  .done-text {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .done-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #1db954, #1ed760);
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.1s;
+  }
+  .done-btn:hover { transform: scale(1.03); }
+  .done-btn:active { transform: scale(0.97); }
+  .brand {
+    position: fixed;
+    bottom: 12px;
+    font-size: 11px;
+    color: #334155;
+  }
+</style>
+</head>
+<body>
+
+<!-- Countdown / Ad phase -->
+<div class="container" id="countdown-phase">
+  <div class="logo">iPARTYUP</div>
+  <div class="timer" id="timer">15</div>
+  <div class="label">Please watch the ad to earn tokens</div>
+  <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+  <div class="status" id="status">Loading ad...</div>
+</div>
+
+<!-- Done phase -->
+<div class="done-container" id="done-phase">
+  <div class="done-icon">✅</div>
+  <div class="done-title">Ad Complete!</div>
+  <div class="done-text">Your reward is ready. Click below to return to iPartyUp and claim your tokens.</div>
+  <a class="done-btn" id="return-btn" href="#">Return to iPartyUp</a>
+  <p style="margin-top:16px;font-size:11px;color:#64748b;">If the button doesn't work, switch back to the iPartyUp app manually.</p>
+</div>
+
+<div class="brand">iPartyUp — Rewarded Ad</div>
+
+<script>
+(function() {
+  // Read zone, domain, and token from URL params
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+  var zoneId = "11109440"; // Your Monetag Zone ID fallback
+  var domain = "libtl.com"; // Your Monetag Script Domain fallback
+  
+  if (!token) {
+    document.getElementById('status').textContent = 'Error: Missing session token.';
+    return;
+  }
+
+  // Load the Monetag SDK script dynamically
+  var script = document.createElement('script');
+  script.src = 'https://' + domain + '/sdk.js';
+  script.dataset.zone = zoneId;
+  script.dataset.sdk = 'show_' + zoneId;
+  script.async = true;
+  document.head.appendChild(script);
+
+  var DURATION = 15;
+  var secondsLeft = DURATION;
+  var timerEl = document.getElementById('timer');
+  var progressEl = document.getElementById('progress');
+  var statusEl = document.getElementById('status');
+  var countdownPhase = document.getElementById('countdown-phase');
+  var donePhase = document.getElementById('done-phase');
+  var returnBtn = document.getElementById('return-btn');
+  var completed = false;
+
+  // Countdown timer
+  var iv = setInterval(function() {
+    secondsLeft--;
+    if (secondsLeft <= 0) secondsLeft = 0;
+    timerEl.textContent = secondsLeft;
+    progressEl.style.width = ((DURATION - secondsLeft) / DURATION * 100) + '%';
+    if (secondsLeft <= 0) {
+      clearInterval(iv);
+      statusEl.textContent = 'Completing...';
+      markComplete();
+    }
+  }, 1000);
+
+  // Try to trigger the Monetag ad overlay
+  var adTriggered = false;
+  function tryTrigger() {
+    var fn = window['show_' + zoneId];
+    if (typeof fn === 'function' && !adTriggered) {
+      adTriggered = true;
+      statusEl.textContent = 'Ad is playing...';
+      fn().catch(function() {});
+    }
+  }
+  var attempts = 0;
+  var sc = setInterval(function() {
+    attempts++;
+    tryTrigger();
+    if (adTriggered || attempts > 20) clearInterval(sc);
+  }, 500);
+
+  // Submit completion to Supabase Edge Function
+  function markComplete() {
+    if (completed) return;
+    completed = true;
+
+    fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, action: 'complete' })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      // Show the done phase
+      countdownPhase.style.display = 'none';
+      donePhase.classList.add('show');
+
+      // Set the deep link URL
+      var deepLinkUrl = 'ipartyup://ad-complete?token=' + token;
+      returnBtn.href = deepLinkUrl;
+
+      // Auto-trigger deep link
+      setTimeout(function() {
+        window.location.href = deepLinkUrl;
+      }, 1000);
+    })
+    .catch(function(err) {
+      statusEl.textContent = 'Error: ' + err.message;
+      countdownPhase.style.display = 'none';
+      donePhase.classList.add('show');
+      returnBtn.href = 'ipartyup://ad-complete?token=' + token;
+    });
+  }
+})();
+</script>
+</body>
+</html>
