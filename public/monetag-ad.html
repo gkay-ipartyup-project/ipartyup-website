@@ -100,28 +100,6 @@
     margin-bottom: 16px;
     animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .btn-return {
-    display: inline-block;
-    width: 100%;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, #1db954, #1ed760);
-    color: #000;
-    font-size: 15px;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
-    transition: all 0.2s ease;
-  }
-  .btn-return:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
-  }
-  .btn-return:active {
-    transform: translateY(0);
-  }
   .brand {
     position: fixed;
     bottom: 16px;
@@ -159,9 +137,10 @@
   <div id="phase-done" style="display: none;">
     <div class="done-icon">✅</div>
     <div class="title" style="color: #1db954; margin-bottom: 12px;">Ad Complete!</div>
-    <div class="desc" style="margin-bottom: 24px;">Your tokens have been ready. Click below to return to the app.</div>
-    <a class="btn-return" id="return-btn" href="#">Return to iPartyUp</a>
-    <p style="margin-top: 16px; font-size: 11px; color: #4b5563;">If the button doesn't respond, switch back to the app manually.</p>
+    <div class="desc" style="margin-bottom: 0px; line-height: 1.6;">
+      Your tokens have been successfully added to your balance.<br>
+      You can close this tab and return to the iPartyUp app now.
+    </div>
   </div>
 </div>
 
@@ -178,9 +157,9 @@
     return;
   }
 
-  // Fallback Monetag direct link if not provided in URL
   if (!adUrl) {
-    adUrl = "https://bb8time.com/pk/wheel/1/?af=120397&s2=6a42e09e1f25833f37e04127&noreg=true";
+    document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Error</div><div class="desc">Ad URL is not configured. Please contact the administrator.</div>';
+    return;
   }
 
   var startBtn = document.getElementById('start-btn');
@@ -193,7 +172,6 @@
   var timerEl = document.getElementById('timer');
   var progressEl = document.getElementById('progress');
   var statusEl = document.getElementById('status');
-  var returnBtn = document.getElementById('return-btn');
   var completed = false;
 
   // Handle clicking "Watch Ad Now"
@@ -239,21 +217,11 @@
       // Switch UI to done phase
       phaseCountdown.style.display = 'none';
       phaseDone.style.display = 'block';
-
-      // Set deep link
-      var deepLinkUrl = 'ipartyup://ad-complete?token=' + token;
-      returnBtn.href = deepLinkUrl;
-
-      // Auto-trigger deep link redirect
-      setTimeout(function() {
-        window.location.href = deepLinkUrl;
-      }, 1200);
     })
     .catch(function(err) {
       statusEl.textContent = 'Error: ' + err.message;
       phaseCountdown.style.display = 'none';
       phaseDone.style.display = 'block';
-      returnBtn.href = 'ipartyup://ad-complete?token=' + token;
     });
   }
 })();
