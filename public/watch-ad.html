@@ -4,7 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>iPartyUp — Watch Ad</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/favicon.png">
 <style>
+  @font-face {
+    font-family: 'Brolink';
+    src: url('/fonts/Brolink-Demo.otf') format('opentype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0a0a1a;
@@ -30,13 +36,14 @@
     z-index: 1;
   }
   .logo {
+    font-family: 'Brolink', 'Montserrat', sans-serif;
     font-size: 20px;
     font-weight: 800;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 24px;
     letter-spacing: 2px;
-    margin-bottom: 20px;
-    background: linear-gradient(90deg, #1db954, #1ed760);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
   }
   .title {
     font-size: 18px;
@@ -102,7 +109,7 @@
 <body>
 
 <div class="card">
-  <div class="logo">iPARTYUP</div>
+  <div class="logo">iPARTY<span style="color: #1ed765;">UP</span></div>
 
   <!-- PHASE 1: Click to Watch -->
   <div id="phase-watch">
