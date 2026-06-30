@@ -141,19 +141,31 @@
     return;
   }
 
-  // 0. Ad Blocker Detection
-  var bait = document.createElement('div');
-  bait.className = 'ad-banner advertisement adsbox ad-placement';
-  bait.style.position = 'absolute';
-  bait.style.left = '-9999px';
-  bait.style.height = '1px';
-  document.body.appendChild(bait);
+  // 0. Robust Ad Blocker Detection
+  var adBlockerDetected = false;
 
+  function showAdBlockError() {
+    if (adBlockerDetected) return;
+    adBlockerDetected = true;
+    document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Ad Blocker Detected</div><div class="desc" style="font-size:14px;">Please disable your ad blocker (e.g. AdblockPlus, uBlock) for this site and refresh the page to watch the ad and earn your reward.</div>';
+  }
+
+  // Method A: Check if ads.js loaded successfully
   setTimeout(function() {
-    if (bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none') {
-      document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Ad Blocker Detected</div><div class="desc">Please disable your ad blocker to watch the ad and earn your reward.</div>';
+    if (typeof window.canShowAds === 'undefined' || window.canShowAds !== true) {
+      showAdBlockError();
     }
-  }, 100);
+  }, 200);
+
+  // Method B: Try fetching a known ad URL
+  fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+    method: 'HEAD',
+    mode: 'no-cors',
+    cache: 'no-store'
+  }).catch(function(e) {
+    // If the network request is intercepted/fails, an adblocker is active
+    showAdBlockError();
+  });
 
   var startBtn = document.getElementById('start-btn');
   var phaseWatch = document.getElementById('phase-watch');
