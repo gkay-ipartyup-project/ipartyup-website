@@ -54,9 +54,9 @@
     filter: drop-shadow(0 4px 8px rgba(30, 215, 101, 0.2));
   }
   .logo {
-    font-family: 'Brolink', sans-serif;
+    font-family: 'Brolink', sans-serif !important;
     font-size: 24px;
-    font-weight: normal;
+    font-weight: normal !important;
     color: #ffffff;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -73,15 +73,50 @@
     transform: scale(1.1);
   }
 
+  /* Layout container for side ads */
+  .layout-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: calc(100vh - 100px);
+    padding: 20px 0;
+  }
+
+  .sidebar-ad {
+    width: 160px;
+    background: rgba(161, 161, 170, 0.05);
+    border: 2px dashed rgba(161, 161, 170, 0.3);
+    border-radius: 8px;
+    display: none; /* hidden on small screens */
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--desc-color);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  @media (min-width: 1024px) {
+    .sidebar-ad {
+      display: flex;
+    }
+  }
+
   /* Main Content Area */
   main {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 100px);
-    padding: 20px;
+    padding: 0 20px;
     text-align: center;
+    max-width: 800px;
   }
 
   .ad-placeholder {
@@ -195,56 +230,68 @@
   <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
 </header>
 
-<!-- Main Content Area -->
-<main>
-  <!-- Top Ad Placeholder -->
-  <div class="ad-placeholder" style="background: none; border: none; height: auto;">
-    <script>
-      atOptions = {
-        'key' : '9ebd0eaf001f78f0136ef9d2c00bbd05',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="https://www.highperformanceformat.com/9ebd0eaf001f78f0136ef9d2c00bbd05/invoke.js"></script>
+<div class="layout-container">
+  <!-- Left Sidebar Ad Placeholder -->
+  <div class="sidebar-ad">
+    Left Skyscraper Ad Space<br>(160x600)
   </div>
 
-  <!-- PHASE 1: Click to Watch -->
-  <div id="phase-watch">
-    <div class="title">Watch Ad to Earn Tokens</div>
-    <div class="desc">Click the button below to launch the ad. The iPartyUp app will track your progress and grant your reward automatically.</div>
-    <button class="btn-watch" id="start-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-      <i data-lucide="play-circle"></i> Watch Ad Now
-    </button>
-  </div>
-
-  <!-- PHASE 2: Ad Launched -->
-  <div id="phase-done" style="display: none;">
-    <div class="done-icon"><i data-lucide="check-circle" style="width: 64px; height: 64px; color: #1db954;"></i></div>
-    <div class="title" style="color: #1db954;">Ad Launched!</div>
-    <div class="desc" style="max-width: 450px;">
-      The ad has opened in a new tab.<br>
-      Switch back to the <strong>iPartyUp app</strong> to see your reward countdown.<br><br>
-      <span style="font-size: 13px; color: var(--desc-color);">You can close this tab now.</span>
+  <!-- Main Content Area -->
+  <main>
+    <!-- Top Ad Placeholder -->
+    <div class="ad-placeholder" style="background: none; border: none; height: auto;">
+      <script>
+        atOptions = {
+          'key' : '9ebd0eaf001f78f0136ef9d2c00bbd05',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/9ebd0eaf001f78f0136ef9d2c00bbd05/invoke.js"></script>
     </div>
-  </div>
 
-  <!-- Bottom Ad Placeholder -->
-  <div class="ad-placeholder" style="background: none; border: none; height: auto;">
-    <script>
-      atOptions = {
-        'key' : '9ebd0eaf001f78f0136ef9d2c00bbd05',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
-      };
-    </script>
-    <script src="https://www.highperformanceformat.com/9ebd0eaf001f78f0136ef9d2c00bbd05/invoke.js"></script>
+    <!-- PHASE 1: Click to Watch -->
+    <div id="phase-watch">
+      <div class="title">Watch Ad to Earn Tokens</div>
+      <div class="desc">Click the button below to launch the ad. The iPartyUp app will track your progress and grant your reward automatically.</div>
+      <button class="btn-watch" id="start-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+        <i data-lucide="play-circle"></i> Watch Ad Now
+      </button>
+    </div>
+
+    <!-- PHASE 2: Ad Launched -->
+    <div id="phase-done" style="display: none;">
+      <div class="done-icon"><i data-lucide="check-circle" style="width: 64px; height: 64px; color: #1db954;"></i></div>
+      <div class="title" style="color: #1db954;">Ad Launched!</div>
+      <div class="desc" style="max-width: 450px;">
+        The ad has opened in a new tab.<br>
+        Switch back to the <strong>iPartyUp app</strong> to see your reward countdown.<br><br>
+        <span style="font-size: 13px; color: var(--desc-color);">You can close this tab now.</span>
+      </div>
+    </div>
+
+    <!-- Bottom Ad Placeholder -->
+    <div class="ad-placeholder" style="background: none; border: none; height: auto;">
+      <script>
+        atOptions = {
+          'key' : '9ebd0eaf001f78f0136ef9d2c00bbd05',
+          'format' : 'iframe',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highperformanceformat.com/9ebd0eaf001f78f0136ef9d2c00bbd05/invoke.js"></script>
+    </div>
+  </main>
+
+  <!-- Right Sidebar Ad Placeholder -->
+  <div class="sidebar-ad">
+    Right Skyscraper Ad Space<br>(160x600)
   </div>
-</main>
+</div>
 
 <div class="brand-footer">iPartyUp — Rewarded Ad</div>
 
