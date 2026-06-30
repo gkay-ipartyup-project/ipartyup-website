@@ -153,9 +153,14 @@
     startBtn.textContent = 'Launching ad...';
 
     // 1. Signal the Edge Function that the ad has been started
+    var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oc2l3cGt5a2tnbWF4c2l2aHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjMyNjEsImV4cCI6MjA4Njg5OTI2MX0.Qpwr6C53oIGjCfqNhBneVQm93kzfB8IQcdnzVA5zD9I';
     fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + ANON_KEY,
+        'apikey': ANON_KEY
+      },
       body: JSON.stringify({ token: token, action: 'start' })
     })
     .then(function(res) { return res.json(); })
