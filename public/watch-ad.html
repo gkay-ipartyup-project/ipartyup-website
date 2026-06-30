@@ -373,7 +373,19 @@
         // If the user closes the ad tab, stop sending heartbeats immediately!
         if (adWindow && adWindow.closed) {
           clearInterval(pingInterval);
-          document.getElementById('phase-done').innerHTML = '<div class="title" style="color:#ef4444;">Ad Closed</div><div class="desc">You closed the ad. Reward cancelled.</div>';
+          document.getElementById('phase-done').innerHTML = '<div class="title" style="color:#ef4444; font-size: 28px; font-weight: bold; margin-bottom: 15px;">Ad Closed</div><div class="desc" style="max-width: 550px; line-height: 1.6;">You closed the ad window.<br><br>If you watched for at least 30 seconds, your reward will still be granted. Otherwise, the reward has been cancelled.</div>';
+          
+          // Tell the backend the user closed the window
+          fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + ANON_KEY,
+              'apikey': ANON_KEY
+            },
+            body: JSON.stringify({ token: token, action: 'cancel' })
+          }).catch(function(e) {});
+          
           return;
         }
 
