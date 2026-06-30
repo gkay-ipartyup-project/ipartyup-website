@@ -141,7 +141,7 @@
     return;
   }
 
-  // 0. Robust Ad Blocker Detection
+  // 0. Robust CSS-based Ad Blocker Detection
   var adBlockerDetected = false;
 
   function showAdBlockError() {
@@ -149,6 +149,18 @@
     adBlockerDetected = true;
     document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Ad Blocker Detected</div><div class="desc" style="font-size:14px;">Please disable your ad blocker (e.g. AdblockPlus, uBlock) for this site and refresh the page to watch the ad and earn your reward.</div>';
   }
+
+  // Create a bait element with classes that AdBlockPlus and uBlock Origin aggressively target
+  var bait = document.createElement('div');
+  bait.innerHTML = '&nbsp;';
+  bait.className = 'pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links ad-text adWrapper adBanner ad-banner ad-placement';
+  bait.style.display = 'block';
+  bait.style.position = 'absolute';
+  bait.style.top = '-1000px';
+  bait.style.left = '-1000px';
+  bait.style.height = '10px';
+  bait.style.width = '10px';
+  document.body.appendChild(bait);
 
   var startBtn = document.getElementById('start-btn');
   var phaseWatch = document.getElementById('phase-watch');
@@ -158,9 +170,9 @@
   startBtn.addEventListener('click', function() {
     if (clicked) return;
 
-    // Enforce ad blocker check right when they try to start
-    // By now, ads.js should have had plenty of time to load even on slow networks.
-    if (typeof window.canShowAds === 'undefined' || window.canShowAds !== true) {
+    // Check if the ad blocker's injected CSS rules hid the bait element
+    var isBlocked = (bait.offsetHeight === 0 || bait.clientHeight === 0 || window.getComputedStyle(bait).display === 'none');
+    if (isBlocked) {
       showAdBlockError();
       return;
     }
