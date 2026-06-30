@@ -151,21 +151,12 @@
   }
 
   // Method A: Check if ads.js loaded successfully
+  // Wait 1.5 seconds to allow network latency for the script to load
   setTimeout(function() {
     if (typeof window.canShowAds === 'undefined' || window.canShowAds !== true) {
       showAdBlockError();
     }
-  }, 200);
-
-  // Method B: Try fetching a known ad URL
-  fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
-    method: 'HEAD',
-    mode: 'no-cors',
-    cache: 'no-store'
-  }).catch(function(e) {
-    // If the network request is intercepted/fails, an adblocker is active
-    showAdBlockError();
-  });
+  }, 1500);
 
   var startBtn = document.getElementById('start-btn');
   var phaseWatch = document.getElementById('phase-watch');
