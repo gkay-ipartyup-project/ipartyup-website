@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPartyUp — Watch Ad</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a1a;
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+  .card {
+    background: linear-gradient(180deg, #111126 0%, #0d0d1d 100%);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 16px;
+    padding: 36px 24px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+  .logo {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #1db954, #1ed760);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .desc {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .btn-watch {
+    display: block;
+    width: 100%;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    transition: all 0.2s ease;
+  }
+  .btn-watch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  }
+  .btn-watch:active {
+    transform: translateY(0);
+  }
+  .btn-watch:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .done-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .brand {
+    position: fixed;
+    bottom: 16px;
+    font-size: 11px;
+    color: #334155;
+  }
+  @keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .pulse { animation: pulse 1.5s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">iPARTYUP</div>
+
+  <!-- PHASE 1: Click to Watch -->
+  <div id="phase-watch">
+    <div class="title">Watch Ad to Earn Tokens</div>
+    <div class="desc">Click the button below to launch the ad. The iPartyUp app will track your progress and grant your reward automatically.</div>
+    <button class="btn-watch" id="start-btn">🎬 Watch Ad Now</button>
+  </div>
+
+  <!-- PHASE 2: Ad Launched -->
+  <div id="phase-done" style="display: none;">
+    <div class="done-icon">✅</div>
+    <div class="title" style="color: #1db954; margin-bottom: 12px;">Ad Launched!</div>
+    <div class="desc" style="margin-bottom: 0px; line-height: 1.6;">
+      The ad has opened in a new tab.<br>
+      Switch back to the <strong>iPartyUp app</strong> to see your reward countdown.<br><br>
+      <span style="font-size: 11px; color: #4b5563;">You can close this tab now.</span>
+    </div>
+  </div>
+</div>
+
+<div class="brand">iPartyUp — Rewarded Ad</div>
+
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var token = params.get('token');
+  var adUrl = params.get('ad_url');
+
+  if (!token) {
+    document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Error</div><div class="desc">Missing session token. Please start over from the app.</div>';
+    return;
+  }
+
+  if (!adUrl) {
+    document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Error</div><div class="desc">Ad URL is not configured. Please contact the administrator.</div>';
+    return;
+  }
+
+  var startBtn = document.getElementById('start-btn');
+  var phaseWatch = document.getElementById('phase-watch');
+  var phaseDone = document.getElementById('phase-done');
+  var clicked = false;
+
+  startBtn.addEventListener('click', function() {
+    if (clicked) return;
+    clicked = true;
+    startBtn.disabled = true;
+    startBtn.textContent = 'Launching ad...';
+
+    // 1. Signal the Edge Function that the ad has been started
+    fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: token, action: 'start' })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.error) {
+        startBtn.textContent = 'Error: ' + data.error;
+        clicked = false;
+        startBtn.disabled = false;
+        return;
+      }
+
+      // 2. Open the Monetag Direct Link in a new tab
+      window.open(adUrl, '_blank');
+
+      // 3. Show done message
+      phaseWatch.style.display = 'none';
+      phaseDone.style.display = 'block';
+    })
+    .catch(function(err) {
+      startBtn.textContent = 'Error — try again';
+      clicked = false;
+      startBtn.disabled = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
