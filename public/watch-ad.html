@@ -179,7 +179,7 @@
       phaseWatch.style.display = 'none';
       phaseDone.style.display = 'block';
 
-      // 4. Start heartbeat ping every 3 seconds to keep the ad session alive
+      // 4. Start heartbeat ping every 1 second to keep the ad session alive
       setInterval(function() {
         fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
           method: 'POST',
@@ -191,7 +191,7 @@
           body: JSON.stringify({ token: token, action: 'heartbeat' }),
           keepalive: true
         }).catch(function(e) {});
-      }, 3000);
+      }, 1000);
     })
     .catch(function(err) {
       startBtn.textContent = 'Error — try again';
