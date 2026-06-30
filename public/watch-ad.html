@@ -141,6 +141,20 @@
     return;
   }
 
+  // 0. Ad Blocker Detection
+  var bait = document.createElement('div');
+  bait.className = 'ad-banner advertisement adsbox ad-placement';
+  bait.style.position = 'absolute';
+  bait.style.left = '-9999px';
+  bait.style.height = '1px';
+  document.body.appendChild(bait);
+
+  setTimeout(function() {
+    if (bait.offsetHeight === 0 || window.getComputedStyle(bait).display === 'none') {
+      document.getElementById('phase-watch').innerHTML = '<div class="title" style="color:#ef4444;">Ad Blocker Detected</div><div class="desc">Please disable your ad blocker to watch the ad and earn your reward.</div>';
+    }
+  }, 100);
+
   var startBtn = document.getElementById('start-btn');
   var phaseWatch = document.getElementById('phase-watch');
   var phaseDone = document.getElementById('phase-done');
