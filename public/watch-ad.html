@@ -173,14 +173,21 @@
       }
 
       // 2. Open the Monetag Direct Link in a new tab
-      window.open(adUrl, '_blank');
+      var adWindow = window.open(adUrl, '_blank');
 
       // 3. Show done message
       phaseWatch.style.display = 'none';
       phaseDone.style.display = 'block';
 
       // 4. Start heartbeat ping every 1 second to keep the ad session alive
-      setInterval(function() {
+      var pingInterval = setInterval(function() {
+        // If the user closes the ad tab, stop sending heartbeats immediately!
+        if (adWindow && adWindow.closed) {
+          clearInterval(pingInterval);
+          document.getElementById('phase-done').innerHTML = '<div class="title" style="color:#ef4444;">Ad Closed</div><div class="desc">You closed the ad. Reward cancelled.</div>';
+          return;
+        }
+
         fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
           method: 'POST',
           headers: {
