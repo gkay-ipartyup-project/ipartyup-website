@@ -91,13 +91,39 @@
     pointer-events: auto; /* ensure it gets clicks */
   }
 
-  .countdown-box {
-    background: rgba(30, 215, 101, 0.1);
-    border: 1px solid rgba(30, 215, 101, 0.3);
-    padding: 16px 24px;
+  .btn-watch {
+    background: #1ed765;
+    color: #fff;
+    border: none;
+    padding: 16px 40px;
     border-radius: 12px;
-    margin-bottom: 20px;
-    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(30, 215, 101, 0.25);
+  }
+  .btn-watch:hover {
+    background: #17b352;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(30, 215, 101, 0.35);
+  }
+  .btn-watch:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(30, 215, 101, 0.2);
+  }
+
+  .done-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
   }
 
 </style>
@@ -111,24 +137,22 @@
 </header>
 
 <main>
-  <div id="phase-watch">
-    <div class="countdown-box">
-      <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #1ed765; font-weight: 700; margin-bottom: 4px;">Time Remaining</div>
-      <div id="countdown-timer" style="font-size: 32px; font-weight: 800; font-family: monospace;">30s</div>
-    </div>
-    
-    <div class="title">Ad in Progress</div>
-    <div class="desc">
-      The ad overlay should appear shortly.<br><br>
-      Please watch for <strong style="color: #1ed765;">30 seconds</strong>. Once the timer reaches 0, you can safely close this browser window and return to the iPartyUp app to claim your reward.
-    </div>
+  <div id="phase-watch" style="margin: 40px 0;">
+    <div class="title">Watch Ad to Earn Tokens</div>
+    <div class="desc">Click the button below to launch the ad. The iPartyUp app will track your progress and grant your reward automatically.</div>
+    <button class="btn-watch" id="start-btn" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+      <i data-lucide="play-circle"></i> Watch Ad Now
+    </button>
   </div>
 
-  <div id="phase-done" style="display: none;">
-    <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
-    <div class="title" style="color: #1db954;">Reward Granted!</div>
-    <div class="desc">
-      You have successfully watched the ad. You may now close this browser tab and return to the iPartyUp app!
+  <div id="phase-done" style="display: none; margin: 60px 0;">
+    <div class="done-icon"><i data-lucide="check-circle" style="width: 64px; height: 64px; color: #1db954;"></i></div>
+    <div class="title" style="color: #1db954;">Ad Launched!</div>
+    <div class="desc" style="max-width: 550px; line-height: 1.6;">
+      The ad has opened on this page.<br><br>
+      <strong>iPartyUp creator humbly requests:</strong><br>
+      Please watch the ad for 30 seconds to get your reward on iPartyUp. This way we can keep maintaining our server and services cost and you can enjoy free content.<br><br>
+      Gkay, Appreciate your time and help!
     </div>
   </div>
 </main>
@@ -173,74 +197,78 @@
     }
   }, 100);
 
-  // 1. Inject the Clickadilla Script from the URL hash
-  try {
-    var hashParams = new URLSearchParams(window.location.hash.substring(1));
-    var encodedScript = hashParams.get('code');
-    if (encodedScript) {
-      var rawScript = atob(encodedScript);
-      
-      // Remove any <script> tags if the user pasted them, so we can run pure JS
-      rawScript = rawScript.replace(/<script[^>]*>/gi, '').replace(/<\/script>/gi, '');
+  lucide.createIcons();
 
-      var scriptEl = document.createElement('script');
-      scriptEl.type = 'text/javascript';
-      scriptEl.text = rawScript;
-      document.head.appendChild(scriptEl);
-      console.log("Injected ad script from hash.");
-    } else {
-      console.error("No script code provided in hash.");
-    }
-  } catch (e) {
-    console.error("Failed to decode/inject script from hash", e);
-  }
+  // Handle Start Click
+  document.getElementById('start-btn').addEventListener('click', function() {
+    var startBtn = document.getElementById('start-btn');
+    startBtn.disabled = true;
+    startBtn.innerHTML = '<i data-lucide="loader" class="animate-spin"></i> Launching...';
+    lucide.createIcons();
 
-  // 2. Start Heartbeat & Countdown
-  var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oc2l3cGt5a2tnbWF4c2l2aHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjMyNjEsImV4cCI6MjA4Njg5OTI2MX0.Qpwr6C53oIGjCfqNhBneVQm93kzfB8IQcdnzVA5zD9I';
-  
-  // Send start signal
-  fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
-    body: JSON.stringify({ token: token, action: 'start' })
-  }).catch(function(e){});
-
-  var timeLeft = 30;
-  var timerEl = document.getElementById('countdown-timer');
-  var phaseWatch = document.getElementById('phase-watch');
-  var phaseDone = document.getElementById('phase-done');
-
-  var heartbeatInterval = setInterval(function() {
-    // Send Heartbeat
+    // 1. Send start signal
+    var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oc2l3cGt5a2tnbWF4c2l2aHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjMyNjEsImV4cCI6MjA4Njg5OTI2MX0.Qpwr6C53oIGjCfqNhBneVQm93kzfB8IQcdnzVA5zD9I';
     fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
-      body: JSON.stringify({ token: token, action: 'heartbeat' }),
-      keepalive: true
+      body: JSON.stringify({ token: token, action: 'start' })
     }).catch(function(e){});
 
-    // Update Timer
-    if (timeLeft > 0) {
-      timeLeft--;
-      timerEl.textContent = timeLeft + "s";
+    // 2. Inject the Clickadilla Script from the URL hash safely
+    try {
+      var hashParams = new URLSearchParams(window.location.hash.substring(1));
+      var encodedScript = hashParams.get('code');
+      if (encodedScript) {
+        var rawScript = atob(encodedScript);
+        
+        // Use createContextualFragment to execute <script> tags when appending
+        var fragment = document.createRange().createContextualFragment(rawScript);
+        document.getElementById('clickadilla-ad').appendChild(fragment);
+        console.log("Injected ad script from hash.");
+      } else {
+        console.error("No script code provided in hash.");
+      }
+    } catch (e) {
+      console.error("Failed to decode/inject script from hash", e);
     }
 
-    if (timeLeft <= 0) {
-      clearInterval(heartbeatInterval);
-      phaseWatch.style.display = 'none';
-      phaseDone.style.display = 'block';
-      
-      // Optional: hide Clickadilla ad container so user can easily see they are done
-      var cAd = document.getElementById('clickadilla-ad');
-      if (cAd) cAd.style.display = 'none';
-    }
-  }, 1000);
+    // 3. Switch Phases
+    document.getElementById('phase-watch').style.display = 'none';
+    document.getElementById('phase-done').style.display = 'block';
+    lucide.createIcons();
 
-  // Cancel reward if they close the page before 30s
-  window.addEventListener('beforeunload', function() {
-    if (timeLeft > 0) {
-      navigator.sendBeacon('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', JSON.stringify({ token: token, action: 'cancel' }));
-    }
+    // 4. Start Heartbeat
+    var timeLeft = 30;
+    var heartbeatInterval = setInterval(function() {
+      // Send Heartbeat
+      fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
+        body: JSON.stringify({ token: token, action: 'heartbeat' }),
+        keepalive: true
+      }).catch(function(e){});
+
+      // Update Timer
+      if (timeLeft > 0) {
+        timeLeft--;
+      }
+
+      if (timeLeft <= 0) {
+        clearInterval(heartbeatInterval);
+        
+        // Optional: hide Clickadilla ad container so user can easily see they are done
+        var cAd = document.getElementById('clickadilla-ad');
+        if (cAd) cAd.style.display = 'none';
+      }
+    }, 1000);
+
+    // Cancel reward if they close the page before 30s
+    window.addEventListener('beforeunload', function() {
+      if (timeLeft > 0) {
+        navigator.sendBeacon('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', JSON.stringify({ token: token, action: 'cancel' }));
+      }
+    });
+
   });
 
 })();
