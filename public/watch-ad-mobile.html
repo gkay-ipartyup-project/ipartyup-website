@@ -162,6 +162,11 @@
 
 <script>
 (function() {
+  window.onerror = function(msg, url, lineNo, columnNo, error) {
+    alert("Script Error: " + msg + " at line " + lineNo);
+    return false;
+  };
+
   var params = new URLSearchParams(window.location.search);
   var token = params.get('token');
   
@@ -197,78 +202,96 @@
     }
   }, 100);
 
-  lucide.createIcons();
+  try {
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  } catch(e) {}
 
   // Handle Start Click
   document.getElementById('start-btn').addEventListener('click', function() {
-    var startBtn = document.getElementById('start-btn');
-    startBtn.disabled = true;
-    startBtn.innerHTML = '<i data-lucide="loader" class="animate-spin"></i> Launching...';
-    lucide.createIcons();
-
-    // 1. Send start signal
-    var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oc2l3cGt5a2tnbWF4c2l2aHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjMyNjEsImV4cCI6MjA4Njg5OTI2MX0.Qpwr6C53oIGjCfqNhBneVQm93kzfB8IQcdnzVA5zD9I';
-    fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
-      body: JSON.stringify({ token: token, action: 'start' })
-    }).catch(function(e){});
-
-    // 2. Inject the Clickadilla Script from the URL hash safely
     try {
-      var hashParams = new URLSearchParams(window.location.hash.substring(1));
-      var encodedScript = hashParams.get('code');
-      if (encodedScript) {
-        var rawScript = atob(encodedScript);
-        
-        // Use createContextualFragment to execute <script> tags when appending
-        var fragment = document.createRange().createContextualFragment(rawScript);
-        document.getElementById('clickadilla-ad').appendChild(fragment);
-        console.log("Injected ad script from hash.");
-      } else {
-        console.error("No script code provided in hash.");
-      }
-    } catch (e) {
-      console.error("Failed to decode/inject script from hash", e);
-    }
+      var startBtn = document.getElementById('start-btn');
+      startBtn.disabled = true;
+      startBtn.innerHTML = 'Launching...';
+      
+      try {
+        if (typeof lucide !== 'undefined') {
+          startBtn.innerHTML = '<i data-lucide="loader" class="animate-spin"></i> Launching...';
+          lucide.createIcons();
+        }
+      } catch(e) {}
 
-    // 3. Switch Phases
-    document.getElementById('phase-watch').style.display = 'none';
-    document.getElementById('phase-done').style.display = 'block';
-    lucide.createIcons();
-
-    // 4. Start Heartbeat
-    var timeLeft = 30;
-    var heartbeatInterval = setInterval(function() {
-      // Send Heartbeat
+      // 1. Send start signal
+      var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9oc2l3cGt5a2tnbWF4c2l2aHpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMjMyNjEsImV4cCI6MjA4Njg5OTI2MX0.Qpwr6C53oIGjCfqNhBneVQm93kzfB8IQcdnzVA5zD9I';
       fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
-        body: JSON.stringify({ token: token, action: 'heartbeat' }),
-        keepalive: true
+        body: JSON.stringify({ token: token, action: 'start' })
       }).catch(function(e){});
 
-      // Update Timer
-      if (timeLeft > 0) {
-        timeLeft--;
+      // 2. Inject the Clickadilla Script from the URL hash safely
+      try {
+        var hashParams = new URLSearchParams(window.location.hash.substring(1));
+        var encodedScript = hashParams.get('code');
+        if (encodedScript) {
+          var rawScript = atob(encodedScript);
+          
+          // Use createContextualFragment to execute <script> tags when appending
+          var fragment = document.createRange().createContextualFragment(rawScript);
+          document.getElementById('clickadilla-ad').appendChild(fragment);
+          console.log("Injected ad script from hash.");
+        } else {
+          console.error("No script code provided in hash.");
+        }
+      } catch (e) {
+        console.error("Failed to decode/inject script from hash", e);
       }
 
-      if (timeLeft <= 0) {
-        clearInterval(heartbeatInterval);
-        
-        // Optional: hide Clickadilla ad container so user can easily see they are done
-        var cAd = document.getElementById('clickadilla-ad');
-        if (cAd) cAd.style.display = 'none';
-      }
-    }, 1000);
+      // 3. Switch Phases
+      document.getElementById('phase-watch').style.display = 'none';
+      document.getElementById('phase-done').style.display = 'block';
+      
+      try {
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+      } catch(e) {}
 
-    // Cancel reward if they close the page before 30s
-    window.addEventListener('beforeunload', function() {
-      if (timeLeft > 0) {
-        navigator.sendBeacon('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', JSON.stringify({ token: token, action: 'cancel' }));
-      }
-    });
+      // 4. Start Heartbeat
+      var timeLeft = 30;
+      var heartbeatInterval = setInterval(function() {
+        // Send Heartbeat
+        fetch('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON_KEY, 'apikey': ANON_KEY },
+          body: JSON.stringify({ token: token, action: 'heartbeat' }),
+          keepalive: true
+        }).catch(function(e){});
 
+        // Update Timer
+        if (timeLeft > 0) {
+          timeLeft--;
+        }
+
+        if (timeLeft <= 0) {
+          clearInterval(heartbeatInterval);
+          
+          // Optional: hide Clickadilla ad container so user can easily see they are done
+          var cAd = document.getElementById('clickadilla-ad');
+          if (cAd) cAd.style.display = 'none';
+        }
+      }, 1000);
+
+      // Cancel reward if they close the page before 30s
+      window.addEventListener('beforeunload', function() {
+        if (timeLeft > 0) {
+          navigator.sendBeacon('https://ohsiwpkykkgmaxsivhzp.supabase.co/functions/v1/watch-ad', JSON.stringify({ token: token, action: 'cancel' }));
+        }
+      });
+    } catch(err) {
+      alert("Click Handler Error: " + err.message);
+    }
   });
 
 })();
