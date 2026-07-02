@@ -142,7 +142,7 @@ export default function PricingPage() {
         <div className="mx-auto max-w-[1320px] px-6 text-center">
           <p className="text-lg text-neutral-400">Have questions about our plans?</p>
           <a
-            href="/faq"
+            href="/#faq"
             className="mt-6 inline-flex items-center rounded-full border-2 border-stremio-green px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-stremio-green"
           >
             Read our FAQ
