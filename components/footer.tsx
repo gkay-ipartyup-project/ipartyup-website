@@ -37,19 +37,29 @@ function RedditIcon({ className }: { className?: string }) {
 const COLUMNS = [
   {
     title: "COMPANY",
-    links: ["Technology", "Downloads", "Addon SDK", "Partners"],
+    links: [
+      { label: "Technology", href: "#" },
+      { label: "Downloads", href: "/download" },
+      { label: "Addon SDK", href: "#" },
+      { label: "Partners", href: "#" },
+    ],
   },
   {
     title: "COMMUNITY",
-    links: ["Community", "Fanart Gallery", "Blog", "Careers"],
+    links: [
+      { label: "Community", href: "#" },
+      { label: "Fanart Gallery", href: "#" },
+      { label: "Blog", href: "#" },
+      { label: "Careers", href: "#" },
+    ],
   },
   {
     title: "CONTACTS",
     links: [
-      "Help center",
-      "Business inquiries",
-      "Terms & conditions",
-      "Privacy policy",
+      { label: "Help center", href: "#" },
+      { label: "Business inquiries", href: "#" },
+      { label: "Terms & conditions", href: "/terms" },
+      { label: "Privacy policy", href: "/privacy" },
     ],
   },
 ]
@@ -66,12 +76,12 @@ export function Footer() {
                 </h5>
                 <ul className="mt-5 space-y-3">
                   {col.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <a
-                        href="#"
+                        href={link.href}
                         className="text-[15px] text-white/90 transition-colors hover:text-white"
                       >
-                        {link}
+                        {link.label}
                       </a>
                     </li>
                   ))}
