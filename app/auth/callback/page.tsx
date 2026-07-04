@@ -197,8 +197,8 @@ export default function AuthCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-90" draggable={false} />
+                 <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                 <span className="text-white font-bold text-xl tracking-tight opacity-90">iPartyUp</span>
               </div>
 
               {/* Lottie tick */}
@@ -303,8 +303,8 @@ export default function AuthCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-70" draggable={false} />
+                 <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                 <span className="text-white font-bold text-xl tracking-tight opacity-70">iPartyUp</span>
               </div>
 
               {/* 3D image placeholder */}
