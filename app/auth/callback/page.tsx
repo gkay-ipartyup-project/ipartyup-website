@@ -20,22 +20,47 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const hash = window.location.hash;
-    const params = new URLSearchParams(window.location.search);
+    const hashParams = hash && hash.length > 1 ? new URLSearchParams(hash.substring(1)) : null;
+    const searchParams = new URLSearchParams(window.location.search);
 
-    if (hash && hash.includes("access_token")) {
-      const queryString = hash.substring(1);
-      const fullDeepLink = `ipartyup://auth/callback?${queryString}`;
+    // Supabase reports OAuth failures (e.g. access_denied, invalid redirect,
+    // bad_oauth_state) the same way it reports success: appended to the URL
+    // *hash*, not the query string. The previous version only checked
+    // `window.location.search`, so real errors were silently swallowed and
+    // this page always fell through to a fake "success" screen that linked
+    // to a deep link with no tokens in it.
+    const oauthError =
+      hashParams?.get("error_description") ||
+      hashParams?.get("error") ||
+      searchParams.get("error_description") ||
+      searchParams.get("error");
+
+    if (hashParams?.get("access_token")) {
+      const fullDeepLink = `ipartyup://auth/callback?${hash.substring(1)}`;
       setDeepLinkUrl(fullDeepLink);
       setStatus("success");
 
-      const timer = setTimeout(() => {
+      // Best-effort only: Chrome (and most Chromium/WebKit browsers) will
+      // only navigate to a non-http custom scheme like ipartyup:// when it's
+      // the direct result of a real click. A timer-fired `location.href`
+      // (no matter how short the delay) is silently swallowed -- no error,
+      // no prompt, nothing happens. So we still attempt it immediately in
+      // case the browser treats this navigation as part of the same user
+      // gesture chain that started the OAuth flow, but we never rely on it:
+      // the "Open iPartyUp" button below (a real <a href>, clicked directly
+      // by the user) is the reliable path.
+      try {
         window.location.href = fullDeepLink;
-      }, 2500);
-      return () => clearTimeout(timer);
-    } else if (params.get("error")) {
+      } catch {
+        // ignore — button below is the reliable fallback
+      }
+    } else if (oauthError) {
+      console.error("[AuthCallback] OAuth error:", oauthError);
       setStatus("error");
     } else {
-      setStatus("success");
+      // No tokens and no explicit error — treat as a failure instead of
+      // showing a misleading "success" screen with a dead deep link.
+      setStatus("error");
     }
   }, []);
 
