@@ -10,6 +10,7 @@ export default function AuthCallbackPage() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [tickData, setTickData] = useState<object | null>(null);
   const [deepLinkUrl, setDeepLinkUrl] = useState("ipartyup://");
+  const [debugInfo, setDebugInfo] = useState<string>("");
   const lottieRef = useRef<any>(null);
 
   useEffect(() => {
@@ -56,10 +57,16 @@ export default function AuthCallbackPage() {
       }
     } else if (oauthError) {
       console.error("[AuthCallback] OAuth error:", oauthError);
+      setDebugInfo(oauthError);
       setStatus("error");
     } else {
       // No tokens and no explicit error — treat as a failure instead of
-      // showing a misleading "success" screen with a dead deep link.
+      // showing a misleading "success" screen with a dead deep link. Shown
+      // on-screen (not just console) because a full-page redirect often
+      // clears the console before anyone gets a chance to read it.
+      const info = `No auth data received (hash: "${hash || "(empty)"}", search: "${window.location.search || "(empty)"}")`;
+      console.error("[AuthCallback]", info);
+      setDebugInfo(info);
       setStatus("error");
     }
   }, []);
@@ -368,6 +375,11 @@ export default function AuthCallbackPage() {
                 <p className="text-[13px] sm:text-sm text-white/30 leading-relaxed max-w-[280px] mx-auto">
                   Something went wrong during authentication. Please close this tab and try again from the app.
                 </p>
+                {debugInfo && (
+                  <p className="text-[10px] sm:text-[11px] text-white/20 leading-relaxed max-w-[320px] mx-auto break-words font-mono">
+                    {debugInfo}
+                  </p>
+                )}
               </div>
 
               {/* CTA */}
