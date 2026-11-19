@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { Logo } from "./logo"
 import { useLanguage } from "@/lib/language-context"
@@ -244,25 +243,80 @@ export function Footer() {
               ))}
             </div>
 
-            <div className="flex flex-col items-start lg:items-end gap-2">
+            <div className="flex flex-col items-start lg:items-end gap-3">
               <span className="text-xs font-medium text-white/55">
                 {t.footer.infoProvidedBy}
               </span>
-              <a
-                href="https://www.themoviedb.org/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="The Movie Database (TMDB)"
-                className="inline-block transition-opacity hover:opacity-85"
-              >
-                <Image
-                  src="/tmdb-logo.webp"
-                  alt="The Movie Database (TMDB)"
-                  width={240}
-                  height={173}
-                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
-                />
-              </a>
+              <div dir="ltr" className="flex items-center gap-4">
+                <a
+                  href="https://www.themoviedb.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="The Movie Database (TMDB)"
+                  title="The Movie Database (TMDB)"
+                  className="inline-flex items-center transition-opacity hover:opacity-85"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 71.4 512.02 369.1"
+                    className="h-11 sm:h-12 lg:h-14 w-auto"
+                    role="img"
+                    aria-label="TMDB"
+                  >
+                    <defs>
+                      <linearGradient
+                        id="tmdb-footer-grad"
+                        x1="0"
+                        x2="512"
+                        y1="258.6"
+                        y2="258.6"
+                        gradientTransform="matrix(1 0 0 -1 0 514.6)"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop offset="0" stopColor="#90cea1" />
+                        <stop offset="0.56" stopColor="#3cbec9" />
+                        <stop offset="1" stopColor="#00b3e5" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      fill="url(#tmdb-footer-grad)"
+                      d="M141.2 256c0-27 21.8-48.9 48.8-49h.1-.3c27 0 48.9 21.9 48.9 48.9v.1c0 27-21.9 48.9-48.9 48.9h.3c-27 0-48.9-21.9-48.9-48.9m228.7-86.7h91c27 0 48.9-21.9 48.9-48.9S488 71.5 461 71.4h-91.1c-27 0-48.9 21.9-48.9 48.9v.1c0 27.1 21.9 48.9 48.9 48.9M57.3 440.4h176.8c27 0 48.9-21.9 48.9-48.9s-21.8-48.9-48.8-49H57.3c-27 0-48.9 21.9-48.9 48.9v.1c.1 27 21.9 48.9 48.9 48.9m232.2-135.5h17.3l40.4-97.8h-23.1l-24.6 64.2h-.3L275 207h-24.6zm89.7 0h21.6V207h-21.6zm61.4 0h69V285h-47.4v-19.9h42.5v-19.9h-42.5V227h44.9v-20h-66.4zM27.9 169.4h21.6V90.6h27.9V71.5H0v19.1h27.9zm80 0h21.6v-42.3h41.8v42.3h21.6V71.5h-21.6V108h-41.9V71.5H108v97.9zm114.1 0h69.2v-19.9h-47.7v-19.9H286v-19.9h-42.5V91.4h44.9V71.5H222zM3.5 305h21.4v-75.1h.3L50.1 305h16.3l25.7-75.1h.3V305H114v-98H81.5l-22.7 63.9h-.3L36 207H3.3zm310 135.5h35c7.1 0 14.1-1 20.9-3.2 6.4-2 12.3-5.2 17.6-9.3 5.1-4.1 9.2-9.3 12.1-15.2 3.2-6.5 4.8-13.7 4.8-21 .2-7.9-1.4-15.7-4.6-22.8-2.9-6-7.2-11.3-12.5-15.3-5.6-4-11.9-6.8-18.6-8.4-7.3-1.8-14.8-2.8-22.3-2.8h-32.4zm21.6-78h12.7c4.4 0 8.7.6 12.9 1.7 3.9 1.1 7.5 2.8 10.7 5.2 3.1 2.3 5.5 5.3 7.2 8.8 1.9 3.9 2.8 8.2 2.8 12.5.1 4.8-.8 9.6-2.8 14.1-1.7 3.6-4.2 6.8-7.4 9.2-3.3 2.4-7.1 4.1-11.1 5.1-4.5 1-9.2 1.6-13.8 1.5H335zm100 78h40.1c4.4 0 8.8-.5 13.1-1.4 4.2-.8 8.2-2.4 11.8-4.6 3.5-2.1 6.4-4.9 8.6-8.3 2.3-3.9 3.5-8.4 3.3-12.9 0-3-.5-6-1.5-8.9-1-2.7-2.4-5.1-4.3-7.2s-4.2-3.8-6.8-5.1c-2.8-1.4-5.7-2.3-8.8-2.8v-.3c4.8-1.4 9-4.1 12.3-7.8 3.2-3.9 4.8-8.8 4.6-13.8.2-4.5-.9-9-3.2-12.9-2.1-3.2-4.9-5.8-8.3-7.6-3.6-1.8-7.5-3.1-11.5-3.6-4.2-.6-8.5-.9-12.8-.9h-36.5v98.1zm21.6-79.7h14.7c1.7 0 3.4.2 5.1.5 1.6.3 3.2.8 4.7 1.6 1.4.7 2.6 1.8 3.4 3.1.9 1.5 1.4 3.3 1.3 5 0 1.7-.4 3.4-1.2 5-.7 1.4-1.8 2.5-3.1 3.3-1.3.9-2.8 1.5-4.3 1.8-1.6.4-3.3.6-4.9.6h-15.9zm0 39.2H473c1.9 0 3.8.1 5.7.4s3.8.8 5.5 1.5 3.2 1.8 4.4 3.2c1.2 1.6 1.8 3.5 1.7 5.5.1 1.9-.4 3.7-1.3 5.4-.8 1.4-2 2.7-3.4 3.6s-3 1.6-4.6 1.9c-1.7.4-3.4.5-5.1.6h-19.4z"
+                    />
+                  </svg>
+                </a>
+
+                <span className="h-9 w-px bg-white/15" aria-hidden="true" />
+
+                <a
+                  href="https://www.thetvdb.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TheTVDB"
+                  title="TheTVDB"
+                  className="inline-flex items-center transition-opacity hover:opacity-85"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    className="h-11 sm:h-12 lg:h-14 w-auto"
+                    role="img"
+                    aria-label="TheTVDB"
+                  >
+                    <path
+                      fill="#555"
+                      d="M413.9 512H98.1C43.9 512 0 468.1 0 413.9V98.1C0 43.9 43.9 0 98.1 0H414c54.1 0 98 43.9 98 98.1V414c0 54.1-43.9 98-98.1 98"
+                    />
+                    <path
+                      fill="#6cd591"
+                      d="M38.2 160.7c0-14.3 12.9-24.1 28.1-21.9l198.7 26c8.9 1.3 16 10.9 16 21.4v27.1c-16.7 11.2-27.7 30-27.7 51.2 0 21.5 10.7 40.1 27.7 51.2v11.9c0 10.5-7.1 20.1-16 21.4L88.7 373.2c-15.2 2.2-28.1-7.6-28.1-21.9zm85.7 24.9H97.7v34.3H81.1v19.8h16.6v38.1c-.8 24 8.6 34.7 30.3 34.9h20.2v-19.8h-10.4c-11.7-.6-14.3-4-13.9-19.4v-33.7h32.2l29.8 73h28.2l41.1-92.8h-27.8l-26.6 63.9-24.2-63.9H124z"
+                    />
+                    <path
+                      fill="#fff"
+                      d="M423.9 218c17 0 28.3 4.2 36.9 13.7 7 7.6 10.7 18.9 10.7 31.5 0 18.3-7.4 32.6-20.9 40.8-8.8 5.3-16.4 6.9-33.6 6.9h-42.6V183.7h26.2V218zm-23.3 73.1H420c15.4 0 24.8-10.3 24.8-27.1 0-17.5-8.2-26.1-24.8-26.1h-19.4zm-66.4-107.4h26.2v127.1h-45.2c-18.4 0-27.2-2.7-36.6-10.9-9.6-8.6-14.5-20.8-14.5-36.2 0-16 5.3-28.2 16.4-37.2 7-5.7 16.6-8.6 28.9-8.6H334zm0 54.2h-19c-15.2 0-24.4 9.7-24.4 25.9 0 17 9.4 27.3 24.4 27.3h19z"
+                    />
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
         </div>
