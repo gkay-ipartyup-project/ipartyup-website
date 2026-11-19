@@ -47,7 +47,7 @@ const TERMS_EN: LegalSection[] = [
   {
     title: "4. Premium Supporter Membership & Virtual Items",
     paragraphs: [
-      "iPartyUp offers a Free Plan and an optional Premium Supporter Plan ($5.99/month) available via Patreon inside the app. All membership payments, renewals, pauses, and cancellations are processed and managed directly by Patreon under Patreon's Terms of Use. iPartyUp does not store your payment card details.",
+      "iPartyUp offers a Free Plan (plus a 7-day free Premium trial for new accounts) and an optional Premium Supporter Plan ($2.99/month) available inside the app via Patreon, Binance Pay, or Bybit Pay. Patreon recurring memberships, renewals, pauses, and cancellations are managed directly by Patreon under Patreon's Terms of Use. Crypto transfers via Binance Pay or Bybit Pay are non-recurring manual payments verified inside the app. iPartyUp does not store your payment card details.",
       "In-app virtual items, including Prime Tokens and Profile Decorations (avatar frames, profile banners, and custom avatars), are non-transferable, have no real-world monetary value, and cannot be exchanged for cash. Voluntary rewarded ads used to earn Prime Tokens are entirely optional.",
     ],
   },
@@ -125,7 +125,7 @@ const TERMS_AR: LegalSection[] = [
   {
     title: "4. عضوية الداعم المميز (Premium) والعناصر الافتراضية",
     paragraphs: [
-      "يوفر iPartyUp باقة مجانية دائمة وباقة اختيارية للداعم المميز (Premium Supporter بقيمة 5.99 دولار شهرياً) عبر Patreon من داخل التطبيق. تتم جميع عمليات الدفع والتجديد والإيقاف والإلغاء مباشرة عبر Patreon وفق شروطه، ولا يحتفظ iPartyUp ببيانات بطاقتك البنكية.",
+      "يوفر iPartyUp باقة مجانية دائمة (مع تجربة Premium مجانية لمدة 7 أيام للحسابات الجديدة) وباقة اختيارية للداعم المميز (Premium Supporter بقيمة 2.99 دولار شهرياً) من داخل التطبيق عبر Patreon أو Binance Pay أو Bybit Pay. تتم إدارة المدفوعات المتكررة والتجديد والإلغاء عبر Patreon وفق شروطه، بينما تكون تحويلات Binance Pay أو Bybit Pay دفعات يدوية غير متكررة يتم التحقق منها داخل التطبيق. ولا يحتفظ iPartyUp ببيانات بطاقتك البنكية.",
       "العناصر الافتراضية داخل التطبيق، بما في ذلك نقاط Prime Tokens وزينة الملف الشخصي (الإطارات المتحركة واللافتات والصور المخصصة)، غير قابلة للتحويل وليس لها قيمة نقدية حقيقية ولا يمكن استبدالها بمال. إعلانات المكافآت المستخدمة لكسب Prime Tokens اختيارية بالكامل.",
     ],
   },

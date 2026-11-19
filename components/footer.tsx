@@ -260,7 +260,7 @@ export function Footer() {
                   alt="The Movie Database (TMDB)"
                   width={240}
                   height={173}
-                  className="h-11 w-auto object-contain"
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain"
                 />
               </a>
             </div>

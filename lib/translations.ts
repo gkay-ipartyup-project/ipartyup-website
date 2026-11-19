@@ -235,7 +235,7 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
         },
         {
           q: "Do I get anything free when I sign up?",
-          a: "Yes! Every new account gets 24 hours of full Premium access the moment you sign up, with no payment and no card required. Explore the whole library, host bigger rooms, and test every Premium perk. After 24 hours you simply drop to the free tier with zero surprises.",
+          a: "Yes! Every new account gets a full 7-day Premium trial the moment you sign up, with no payment and no card required. Explore the whole HD library, host bigger rooms, and test every Premium perk. When the 7 days wrap up, you simply move to the free tier with zero surprises.",
         },
         {
           q: "What can we actually watch in a room?",
@@ -251,11 +251,11 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
         },
         {
           q: "How much does iPartyUp cost, and how do I become a Supporter?",
-          a: "The core app is free forever. If you want to help keep an independent app alive and unlock every perk in return, the Premium Supporter plan is $5.99/month through Patreon. Just download iPartyUp, open Support Developer from your dashboard, link your Patreon, and your perks unlock automatically. You can pause or cancel anytime on Patreon.",
+          a: "The core app is free forever. If you want to help keep an independent app alive and unlock every perk in return, the Premium Supporter plan is just $2.99/month right inside the app via Patreon, Binance Pay, or Bybit Pay. Download iPartyUp, tap Support Developer on your dashboard, and your perks unlock once confirmed. Patreon memberships can be paused or canceled anytime.",
         },
         {
           q: "What perks do Premium Supporters unlock?",
-          a: "Full access to the entire library, watch rooms up to 12 viewers, inviting a free-tier friend into Premium content, floating fullscreen chat, synced Continue Watching across sessions, exclusive Profile Decorations (animated avatar frames, profile banners, and custom avatars) plus the Supporter badge, priority content requests every 24 hours instead of 72, and direct chat with the developer.",
+          a: "Full access to the entire HD library, watch rooms up to 12 viewers, inviting 1 free-tier friend into Premium content, floating fullscreen chat, dashboard release notifications, synced Continue Watching across sessions, exclusive Profile Decorations and Supporter badge, priority content requests every 24 hours instead of 72, and direct chat with the developer.",
         },
         {
           q: "What are Profile Decorations and Prime Tokens?",
@@ -339,7 +339,7 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
       perMonth: "/month",
       supporterSubtitle: "Keep iPartyUp alive and unlock every perk in return",
       becomeSupporter: "Get the App to Subscribe",
-      supporterHint: "Open iPartyUp, tap Support Developer on your dashboard, and unlock instantly",
+      supporterHint: "Open iPartyUp, tap Support Developer (Patreon, Binance Pay, or Bybit Pay), and unlock instantly",
       getStartedFree: "Get Started Free",
       mostPopular: "MOST POPULAR",
       faqPrompt: "Still have questions before choosing?",
@@ -442,7 +442,7 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
         },
         {
           q: "هل أحصل على تجربة مجانية عند التسجيل؟",
-          a: "نعم! يحصل كل حساب جديد على 24 ساعة من الوصول الكامل لمزايا Premium فور التسجيل، بدون بطاقة بنكية وبدون أي التزام. جرّب المكتبة الكاملة والغرف الموسعة، وبعد 24 ساعة تنتقل ببساطة إلى الباقة المجانية بدون أي مفاجآت.",
+          a: "نعم! يحصل كل حساب جديد على تجربة مجانية كاملة لمدة 7 أيام لجميع مزايا Premium فور التسجيل، بدون بطاقة بنكية وبدون أي التزام. جرّب المكتبة الكاملة والغرف الموسعة، وبعد انتهاء الأيام السبعة تنتقل ببساطة إلى الباقة المجانية بدون أي مفاجآت.",
         },
         {
           q: "ما الذي يمكننا مشاهدته داخل الغرفة؟",
@@ -458,11 +458,11 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
         },
         {
           q: "كم تبلغ تكلفة التطبيق وكيف أشترك كداعم مميز؟",
-          a: "التطبيق مجاني للأبد مع الباقة الأساسية. وإذا أردت دعم استمرار هذا المشروع المستقل والحصول على كل المزايا بالمقابل، تبلغ باقة الداعم المميز 5.99 دولار شهرياً عبر Patreon. حمّل التطبيق، اضغط على زر دعم المطور في لوحة التحكم، اربط حساب Patreon، وستتفعل مزاياك تلقائياً. يمكنك الإيقاف أو الإلغاء في أي وقت.",
+          a: "التطبيق مجاني للأبد مع الباقة الأساسية. وإذا أردت دعم استمرار هذا المشروع المستقل والحصول على كل المزايا بالمقابل، تبلغ باقة الداعم المميز 2.99 دولار شهرياً فقط من داخل التطبيق عبر Patreon أو Binance Pay أو Bybit Pay. حمّل التطبيق، اضغط على زر دعم المطور في لوحة التحكم، وستتفعل مزاياك فور التأكيد، ويمكنك إيقاف أو إلغاء عضوية Patreon في أي وقت.",
         },
         {
           q: "ما هي المزايا التي يفتحها اشتراك الداعم المميز (Premium)؟",
-          a: "فتح كامل المكتبة الترفيهية، غرف مشاهدة حتى 12 شخصاً، دعوة صديق مجاني لمحتوى Premium، نافذة المحادثة العائمة بملء الشاشة، مزامنة متابعة المشاهدة بين الجلسات، زينة الملف الشخصي الحصرية (إطارات متحركة ولافتات وأفاتار مخصص) مع شارة الداعم، أولوية طلبات المحتوى كل 24 ساعة بدلاً من 72، والتواصل المباشر مع المطور.",
+          a: "فتح كامل المكتبة الترفيهية بجودة HD، غرف مشاهدة حتى 12 شخصاً، دعوة صديق مجاني لمحتوى Premium، نافذة المحادثة العائمة بملء الشاشة، لوحة إشعارات الإصدارات الجديدة، مزامنة متابعة المشاهدة بين الجلسات، زينة الملف الشخصي الحصرية وشارة الداعم، أولوية طلبات المحتوى كل 24 ساعة بدلاً من 72، والتواصل المباشر مع المطور.",
         },
         {
           q: "ما هي زينة الملف الشخصي ونقاط Prime Tokens؟",
@@ -546,7 +546,7 @@ export const translations: Record<"en" | "ar", TranslationSchema> = {
       perMonth: "/شهرياً",
       supporterSubtitle: "ساعد في إبقاء iPartyUp مستمراً وافتح كل المزايا بالمقابل",
       becomeSupporter: "حمّل التطبيق للاشتراك",
-      supporterHint: "افتح iPartyUp واضغط على دعم المطور في لوحة التحكم لتفعيل المزايا فوراً",
+      supporterHint: "افتح iPartyUp واضغط على دعم المطور (Patreon أو Binance Pay أو Bybit Pay) لتفعيل المزايا",
       getStartedFree: "ابدأ مجاناً الآن",
       mostPopular: "الأكثر طلباً",
       faqPrompt: "هل ما زال لديك أسئلة قبل الاختيار؟",

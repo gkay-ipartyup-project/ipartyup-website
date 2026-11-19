@@ -38,8 +38,8 @@ const PRIVACY_EN: LegalSection[] = [
         text: "Secure login tokens and session state used to keep your account authenticated and protect against unauthorized access.",
       },
       {
-        label: "Optional Support & Membership Links:",
-        text: "If you link your Patreon account inside the app to activate Premium Supporter perks, we store your Patreon link status and active membership tier. Billing itself is handled solely by Patreon.",
+        label: "Optional Support & Membership Verification:",
+        text: "If you link your Patreon account or submit a Binance Pay / Bybit Pay receipt screenshot inside the app to activate Premium Supporter perks, we store only your link status, verification record, and active tier. Card or wallet billing itself is never processed or stored by iPartyUp.",
       },
       {
         label: "Diagnostics & Bug Reports:",
@@ -133,8 +133,8 @@ const PRIVACY_AR: LegalSection[] = [
         text: "رموز تسجيل الدخول الآمنة وحالة الجلسة للحفاظ على أمان حسابك ومنع الوصول غير المصرح به.",
       },
       {
-        label: "الروابط الاختيارية للداعمين:",
-        text: "إذا قمت بربط حساب Patreon الخاص بك داخل التطبيق لتفعيل مزايا الداعم المميز (Premium Supporter)، نحفظ فقط حالة الربط ومستوى العضوية، بينما تتم جميع عمليات الفوترة والدفع عبر Patreon وحده.",
+        label: "الروابط الاختيارية والتحقق للداعمين:",
+        text: "إذا قمت بربط حساب Patreon أو رفع لقطة إيصال Binance Pay أو Bybit Pay داخل التطبيق لتفعيل مزايا الداعم المميز (Premium Supporter)، نحفظ فقط حالة الربط وسجل التحقق ومستوى العضوية، ولا نعالج أو نخزّن بيانات بطاقتك البنكية أبداً.",
       },
       {
         label: "سجلات الأعطال والبلاغات:",

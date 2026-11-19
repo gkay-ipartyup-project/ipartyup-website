@@ -29,19 +29,19 @@ export default function PricingPage() {
 
   const premiumFeatures = isArabic
     ? [
-        "وصول كامل وغير محدود لكافة محتويات مكتبة iPartyUp",
+        "وصول كامل وغير محدود لكافة محتويات مكتبة iPartyUp بجودة HD",
         "استضافة حفلات مشاهدة ضخمة تسع حتى 12 مستخدماً",
         "دعوة صديق من الفئة المجانية لمشاهدة محتوى Premium معك",
-        "زينة الملف الشخصي الحصرية (إطارات متحركة ولافتات) وشارة الداعم",
-        "نافذة محادثة عائمة بملء الشاشة ومزامنة متابعة المشاهدة",
+        "نافذة محادثة عائمة بملء الشاشة ولوحة إشعارات الإصدارات الجديدة",
+        "زينة الملف الشخصي الحصرية ومزامنة متابعة المشاهدة وشارة الداعم",
         "أولوية طلبات المحتوى (كل 24 ساعة بدلاً من 72) ومحادثة مباشرة مع المطور",
       ]
     : [
-        "Full access to the entire iPartyUp content library",
+        "Full access to the entire iPartyUp HD content library",
         "Host watch parties with up to 12 viewers",
-        "Invite a free-tier friend to enjoy Premium content with you",
-        "Exclusive Profile Decorations (animated frames & banners) and Supporter badge",
-        "Floating fullscreen chat panel and synced Continue Watching",
+        "Invite 1 free-tier friend to enjoy Premium content with you",
+        "Floating fullscreen chat overlay and dashboard release notifications",
+        "Synced Continue Watching, exclusive Profile Decorations, and Supporter badge",
         "Priority content requests (24h instead of 72h) and direct chat with the developer",
       ]
 
@@ -109,7 +109,7 @@ export default function PricingPage() {
               </div>
               <h3 className="text-2xl font-bold text-white">{t.pricing.supporterPlan}</h3>
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white">$5.99</span>
+                <span className="text-4xl sm:text-5xl font-extrabold text-white">$2.99</span>
                 <span className="text-base sm:text-lg text-white/75">{t.pricing.perMonth}</span>
               </div>
               <p className="mt-4 text-white/85">
