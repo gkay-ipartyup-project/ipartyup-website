@@ -1,16 +1,52 @@
+"use client"
+
+import Link from "next/link"
+import { Check } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
-import { Check } from "lucide-react"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "iPartyUp Pricing - Free Tier & Premium Supporter Plans",
-  description: "Explore iPartyUp subscription plans. Start watching for free, or become a Premium Supporter for just $5.99/month to unlock our entire curated content library and extra room perks.",
-}
+import { useLanguage } from "@/lib/language-context"
 
 export default function PricingPage() {
+  const { t, isArabic } = useLanguage()
+
+  const freeFeatures = isArabic
+    ? [
+        "الوصول الكامل إلى الباقة المجانية من مكتبة iPartyUp",
+        "تشغيل مقاطع YouTube وبثوثها المباشرة وملفات Google Drive مدمجة",
+        "استضافة غرف مشاهدة تسع حتى 3 مشاهدين",
+        "محادثة فورية وتفاعلات ودردشة صوتية وتحكم كامل للمضيف",
+        "قائمتي (المفضلة والمشاهدة لاحقاً) وفلاتر المكتبة والترجمة السحابية",
+        "إمكانية طلب محتوى جديد (تتجدد كل 72 ساعة)",
+      ]
+    : [
+        "Access to the free tier of the iPartyUp library",
+        "YouTube, YouTube Live, and Google Drive sync built in",
+        "Host watch rooms with up to 3 viewers",
+        "Real-time text chat, voice chat, reactions, and host controls",
+        "My List (Favorites & Watch Later), library filters, and cloud subtitles",
+        "Content requests (refreshes every 72 hours)",
+      ]
+
+  const premiumFeatures = isArabic
+    ? [
+        "وصول كامل وغير محدود لكافة محتويات مكتبة iPartyUp",
+        "استضافة حفلات مشاهدة ضخمة تسع حتى 12 مستخدماً",
+        "دعوة صديق من الفئة المجانية لمشاهدة محتوى Premium معك",
+        "زينة الملف الشخصي الحصرية (إطارات متحركة ولافتات) وشارة الداعم",
+        "نافذة محادثة عائمة بملء الشاشة ومزامنة متابعة المشاهدة",
+        "أولوية طلبات المحتوى (كل 24 ساعة بدلاً من 72) ومحادثة مباشرة مع المطور",
+      ]
+    : [
+        "Full access to the entire iPartyUp content library",
+        "Host watch parties with up to 12 viewers",
+        "Invite a free-tier friend to enjoy Premium content with you",
+        "Exclusive Profile Decorations (animated frames & banners) and Supporter badge",
+        "Floating fullscreen chat panel and synced Continue Watching",
+        "Priority content requests (24h instead of 72h) and direct chat with the developer",
+      ]
+
   return (
-    <main className="relative">
+    <main className="relative overflow-x-clip">
       <Navbar />
 
       {/* Hero Section */}
@@ -20,118 +56,84 @@ export default function PricingPage() {
           <div className="absolute inset-0 bg-[radial-gradient(80%_90%_at_15%_20%,#0d3d1a_0%,transparent_55%)]" />
         </div>
 
-        <div className="relative mx-auto max-w-[1320px] px-6 pb-[150px] pt-[200px] lg:pb-[180px]">
+        <div className="relative mx-auto max-w-[1320px] px-5 sm:px-6 pb-[120px] pt-[150px] sm:pt-[180px] lg:pb-[170px] lg:pt-[200px]">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl font-extrabold leading-[1.05] text-white sm:text-6xl">
-              Choose Your Plan
+            <h1 className="text-4xl font-extrabold leading-[1.12] text-white sm:text-5xl lg:text-6xl">
+              {t.pricing.title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/80">
-              Start free. Become a supporter when you&apos;re ready. One small monthly
-              instead of a stack of separate subscriptions. No hidden fees, pause anytime.
+            <p className="mt-5 sm:mt-6 text-base sm:text-lg leading-relaxed text-white/80">
+              {t.pricing.subtitle}
             </p>
           </div>
         </div>
       </section>
 
       {/* Pricing Cards - Skewed Green */}
-      <section className="relative pt-20 pb-20 lg:pt-28 lg:pb-28 -mt-24 z-10">
+      <section className="relative pt-16 pb-16 sm:pt-20 sm:pb-20 lg:pt-28 lg:pb-28 -mt-20 sm:-mt-24 z-10">
         <div className="absolute inset-0 bg-gradient-to-tr from-stremio-green to-stremio-green-dark [transform:skewY(-4deg)] z-0 pointer-events-none" />
 
-        <div className="relative z-10 mx-auto max-w-[1100px] px-6">
+        <div className="relative z-10 mx-auto max-w-[1100px] px-5 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Free Plan */}
-            <div className="rounded-3xl bg-white/10 backdrop-blur-sm border border-white/20 p-8">
-              <h3 className="text-2xl font-bold text-white">Free Plan</h3>
+            <div className="flex flex-col rounded-3xl border border-white/15 bg-[#0e0e0e]/95 p-7 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <h3 className="text-2xl font-bold text-white">{t.pricing.freePlan}</h3>
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-5xl font-extrabold text-white">$0</span>
-                <span className="text-lg text-white/80">forever</span>
+                <span className="text-4xl sm:text-5xl font-extrabold text-white">$0</span>
+                <span className="text-base sm:text-lg text-white/75">{t.pricing.forever}</span>
               </div>
-              <p className="mt-4 text-white/90">
-                Start watching together, no card required
+              <p className="mt-4 text-white/80">
+                {t.pricing.freeSubtitle}
               </p>
 
-              <ul className="mt-8 space-y-4">
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Access to the free tier of the iPartyUp library</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">YouTube, YouTube Live and Google Drive built in</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Host watch rooms with up to 3 viewers</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Real-time chat, reactions, and host controls</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Voice chat inside rooms</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Content requests (refreshes every 72 hours)</span>
-                </li>
+              <ul className="mt-8 flex-1 space-y-4">
+                {freeFeatures.map((feat, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <Check className="h-5 w-5 text-[#1ed765] flex-shrink-0 mt-0.5" strokeWidth={3} />
+                    <span className="text-[15px] text-white/90">{feat}</span>
+                  </li>
+                ))}
               </ul>
 
-              <a
+              <Link
                 href="/download"
-                className="mt-8 block w-full rounded-full border-2 border-white py-3 text-center text-base font-semibold text-white transition-colors hover:bg-white hover:text-stremio-green"
+                className="mt-8 block w-full rounded-full border-2 border-white py-3.5 text-center text-base font-bold text-white transition-colors hover:bg-white hover:text-black"
               >
-                Download Free
-              </a>
+                {t.pricing.getStartedFree}
+              </Link>
             </div>
 
             {/* Premium Plan */}
-            <div className="rounded-3xl bg-white/20 backdrop-blur-sm border-2 border-white p-8 relative">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-white px-4 py-1 text-sm font-bold text-stremio-green">
-                POPULAR
+            <div className="relative flex flex-col rounded-3xl border-2 border-[#1ed765] bg-[#0e0e0e]/98 p-7 sm:p-8 shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#1ed765] px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-black">
+                {t.pricing.mostPopular}
               </div>
-              <h3 className="text-2xl font-bold text-white">Premium Supporter</h3>
+              <h3 className="text-2xl font-bold text-white">{t.pricing.supporterPlan}</h3>
               <div className="mt-4 flex items-baseline gap-2">
-                <span className="text-5xl font-extrabold text-white">$5.99</span>
-                <span className="text-lg text-white/80">/month</span>
+                <span className="text-4xl sm:text-5xl font-extrabold text-white">$5.99</span>
+                <span className="text-base sm:text-lg text-white/75">{t.pricing.perMonth}</span>
               </div>
-              <p className="mt-4 text-white/90">
-                The whole library + every bonus perk
+              <p className="mt-4 text-white/85">
+                {t.pricing.supporterSubtitle}
               </p>
 
-              <ul className="mt-8 space-y-4">
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Full access to the entire iPartyUp content library</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Priority content request refresh — from 72 hours down to just 24 hours</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Host watch parties with up to 12 users</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Invite up to 2 free-tier friends to enjoy premium content with you</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Floating fullscreen chat panel</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" strokeWidth={3} />
-                  <span className="text-white/90">Premium Supporter badge & personal chat with the creator</span>
-                </li>
+              <ul className="mt-8 flex-1 space-y-4">
+                {premiumFeatures.map((feat, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <Check className="h-5 w-5 text-[#1ed765] flex-shrink-0 mt-0.5" strokeWidth={3} />
+                    <span className="text-[15px] text-white/90">{feat}</span>
+                  </li>
+                ))}
               </ul>
 
-              <a
-                href="#"
-                className="mt-8 block w-full rounded-full bg-white py-3 text-center text-base font-semibold text-stremio-green transition-opacity hover:opacity-90"
+              <Link
+                href="/download"
+                className="mt-8 block w-full rounded-full border border-[#1ed765]/50 bg-[#1ed765] py-3.5 text-center text-base font-bold text-black transition-colors hover:bg-[#4de087]"
               >
-                Get Premium
-              </a>
+                {t.pricing.becomeSupporter}
+              </Link>
+              <p className="mt-3 text-center text-xs text-white/60">
+                {t.pricing.supporterHint}
+              </p>
             </div>
           </div>
         </div>
@@ -139,14 +141,16 @@ export default function PricingPage() {
 
       {/* FAQ Link - Dark */}
       <section className="bg-stremio-dark pt-20 pb-20 lg:pt-28 lg:pb-28">
-        <div className="mx-auto max-w-[1320px] px-6 text-center">
-          <p className="text-lg text-neutral-400">Have questions about our plans?</p>
-          <a
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-6 text-center">
+          <p className="text-lg text-neutral-400">
+            {t.pricing.faqPrompt}
+          </p>
+          <Link
             href="/#faq"
-            className="mt-6 inline-flex items-center rounded-full border-2 border-stremio-green px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-stremio-green"
+            className="mt-6 inline-flex items-center rounded-full border-2 border-[#1ed765] px-8 py-3 text-base font-bold text-white transition-colors hover:bg-[#1ed765] hover:text-black"
           >
-            Read our FAQ
-          </a>
+            {t.pricing.readFaq}
+          </Link>
         </div>
       </section>
 

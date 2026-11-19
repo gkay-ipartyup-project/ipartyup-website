@@ -1,29 +1,39 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata } from 'next'
-import { Plus_Jakarta_Sans, Poppins } from 'next/font/google'
+import { Plus_Jakarta_Sans, Poppins, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import './globals.css'
 import SiteSettingsWrapper from '@/components/SiteSettingsWrapper'
+import { SmoothScroll } from '@/components/smooth-scroll'
+import { LanguageProvider } from '@/lib/language-context'
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
 })
 
 const poppins = Poppins({
   variable: '--font-poppins',
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+  variable: '--font-arabic',
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
   title: 'iPartyUp - Watch Together in Perfect Sync',
   description:
-    'iPartyUp is a premium synchronized streaming app. Watch movies, series, and anime together in frame-perfect sync with friends and family, no matter how far apart you live.',
-  generator: 'v0.app',
+    'iPartyUp is a synchronized watch-party streaming app for Windows, macOS, and Android. Watch movies, series, and anime together in frame-perfect sync with friends and family.',
   icons: {
     icon: '/favicon.png',
-    apple: '/favicon.png',
+    apple: '/apple-icon.png',
   },
 }
 
@@ -37,18 +47,14 @@ export default function RootLayout({
     "@type": "WebSite",
     "name": "iPartyUp",
     "url": "https://ipartyup.party",
-    "description": "iPartyUp is a premium synchronized streaming app. Watch movies, series, and anime together in frame-perfect sync with friends and family, no matter how far apart you live.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://ipartyup.party/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "description":
+      "iPartyUp is a synchronized watch-party streaming app for Windows, macOS, and Android. Watch movies, series, and anime together in frame-perfect sync with friends and family.",
   }
 
   const sitelinksSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "iPartyUp Features & Resources",
+    "name": "iPartyUp Pages & Resources",
     "numberOfItems": 4,
     "itemListElement": [
       {
@@ -57,8 +63,8 @@ export default function RootLayout({
         "item": {
           "@type": "WebPage",
           "@id": "https://ipartyup.party/about",
-          "name": "iPartyUp App",
-          "description": "A synchronized streaming app currently available for Windows, macOS, and Android. Soon coming to iOS."
+          "name": "About iPartyUp",
+          "description": "Learn about iPartyUp, available on Windows, macOS, and Android, with iOS on the way."
         }
       },
       {
@@ -68,7 +74,7 @@ export default function RootLayout({
           "@type": "WebPage",
           "@id": "https://ipartyup.party/pricing",
           "name": "Pricing",
-          "description": "Start watching for free, or support the developer with the Premium Supporter plan."
+          "description": "Start watching for free, or support independent development with the Premium Supporter plan."
         }
       },
       {
@@ -78,7 +84,7 @@ export default function RootLayout({
           "@type": "WebPage",
           "@id": "https://ipartyup.party/download",
           "name": "Download",
-          "description": "Get the official iPartyUp installers for Windows, macOS, and Android and watch in sync."
+          "description": "Get the official iPartyUp apps for Windows, macOS, and Android on Google Play."
         }
       },
       {
@@ -88,15 +94,20 @@ export default function RootLayout({
           "@type": "WebPage",
           "@id": "https://ipartyup.party/updates",
           "name": "What's New",
-          "description": "View iPartyUp release notes, new streaming features, bug fixes, and improvements."
+          "description": "View live iPartyUp release notes, new features, bug fixes, and improvements."
         }
       }
     ]
   }
 
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${poppins.variable} bg-background`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${plusJakarta.variable} ${poppins.variable} ${ibmPlexSansArabic.variable} bg-background`}
+      suppressHydrationWarning
+    >
       <head>
+        <link rel="preload" as="image" href="/hero-cards.webp" type="image/webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -107,10 +118,13 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        <SiteSettingsWrapper>
-          {children}
-          {process.env.NODE_ENV === 'production' && <Analytics />}
-        </SiteSettingsWrapper>
+        <LanguageProvider>
+          <SmoothScroll />
+          <SiteSettingsWrapper>
+            {children}
+            {process.env.NODE_ENV === 'production' && <Analytics />}
+          </SiteSettingsWrapper>
+        </LanguageProvider>
       </body>
     </html>
   )

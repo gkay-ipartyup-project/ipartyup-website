@@ -1,30 +1,24 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/language-context"
 
 interface UnderConstructionProps {
-  launchDate: string;
+  launchDate: string
 }
 
 export default function UnderConstruction({ launchDate }: UnderConstructionProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <div className="min-h-screen bg-[#0A0A0A]" />;
-  }
+  const { isArabic } = useLanguage()
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center p-6 text-center select-none font-poppins">
+    <div
+      dir={isArabic ? "rtl" : "ltr"}
+      className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center p-6 text-center select-none"
+    >
       <div className="max-w-xl w-full space-y-8 flex flex-col items-center">
-        
         {/* Brand Logo */}
-        <div className="flex items-center gap-3">
+        <div dir="ltr" className="flex items-center gap-3">
           <img
-            src="/favicon.png"
+            src="/favicon.webp"
             alt="iPartyUp"
             className="w-10 h-10 rounded-xl"
           />
@@ -33,27 +27,43 @@ export default function UnderConstruction({ launchDate }: UnderConstructionProps
           </span>
         </div>
 
-        {/* 3D Under Construction Png Image (Bigger & Main Attention) */}
-        <div className="w-96 h-96 max-w-full flex items-center justify-center transition-transform hover:scale-105 duration-700">
+        {/* 3D Under Construction Illustration */}
+        <div className="w-80 h-80 sm:w-96 sm:h-96 max-w-full flex items-center justify-center">
           <img
-            src="/under-construction.png"
+            src="/under-construction.webp"
             alt="Website Under Construction"
-            className="w-full h-full object-contain filter drop-shadow-[0_10px_30px_rgba(30,215,101,0.15)]"
+            className="w-full h-full object-contain"
             draggable={false}
           />
         </div>
 
-        {/* Messaging (Poppins font, friendly & simple) */}
+        {/* Messaging */}
         <div className="space-y-4">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            Website Under Construction
+          <h1 className="text-3xl font-bold text-white sm:text-4xl">
+            {isArabic ? "الموقع قيد التطوير حالياً" : "Website Under Construction"}
           </h1>
-          <p className="text-white/60 text-base max-w-md mx-auto leading-relaxed font-normal font-poppins">
-            I am currently working on polishing iPartyUp to deliver a better user experience. The platform will be live and ready for everyone on <strong style={{ color: "#1ed765" }} className="font-bold whitespace-nowrap">{launchDate || "July 20th, 2026"}</strong>. Stay tuned!
+          <p className="text-white/65 text-base max-w-md mx-auto leading-relaxed">
+            {isArabic ? (
+              launchDate ? (
+                <>
+                  نعمل حالياً على تحسين iPartyUp لتقديم تجربة أفضل. سنعود إليكم في{" "}
+                  <strong className="font-bold text-[#1ed765] whitespace-nowrap">{launchDate}</strong>.
+                  ابقوا بالقرب!
+                </>
+              ) : (
+                "نعمل حالياً على تحسين iPartyUp لتقديم تجربة أفضل. سنعود قريباً!"
+              )
+            ) : launchDate ? (
+              <>
+                We&apos;re polishing iPartyUp to deliver an even better experience. The site will be back on{" "}
+                <strong className="font-bold text-[#1ed765] whitespace-nowrap">{launchDate}</strong>. Stay tuned!
+              </>
+            ) : (
+              "We're polishing iPartyUp to deliver an even better experience. We'll be right back soon!"
+            )}
           </p>
         </div>
-        
       </div>
     </div>
-  );
+  )
 }

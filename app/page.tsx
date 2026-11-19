@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 
 export default function Page() {
   return (
-    <main className="relative">
+    <main className="relative overflow-x-clip">
       <Navbar />
       <Hero />
       <StreamingEnhanced />

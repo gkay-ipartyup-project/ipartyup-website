@@ -150,8 +150,13 @@ export default function PatreonCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-90" draggable={false} />
+                <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                <span
+                  className="text-white text-xl font-semibold tracking-[0.04em] opacity-90"
+                  style={{ fontFamily: "'Brolink', sans-serif" }}
+                >
+                  iParty<span className="text-[#1ed765]">Up</span>
+                </span>
               </div>
 
               {/* 3D image placeholder */}
@@ -190,21 +195,11 @@ export default function PatreonCallbackPage() {
               {/* CTA */}
               <button
                 onClick={() => window.close()}
-                className="w-full py-3.5 sm:py-4 rounded-2xl font-bold text-[14px] sm:text-[15px] text-black transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_12px_40px_rgba(29,185,84,0.35)] active:scale-[0.97] relative overflow-hidden"
+                className="w-full py-3.5 sm:py-4 rounded-2xl font-bold text-[14px] sm:text-[15px] text-black bg-[#1ed765] border border-[#1ed765]/50 shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-colors duration-200 hover:bg-[#4de087] active:scale-[0.98] relative overflow-hidden cursor-pointer"
                 style={{
-                  background: "linear-gradient(145deg, #22c55e 0%, #1db954 50%, #16a34a 100%)",
-                  boxShadow: "0 8px 32px rgba(29,185,84,0.25), 0 0 0 1px rgba(29,185,84,0.1)",
                   animation: "fadeUp 0.6s ease 0.55s both",
                 }}
               >
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    background: "linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.5), transparent 70%)",
-                    backgroundSize: "200% 100%",
-                    animation: "shimmerBtn 3.5s ease-in-out infinite",
-                  }}
-                />
                 <span className="relative z-10">Close This Tab</span>
               </button>
             </div>
@@ -218,8 +213,13 @@ export default function PatreonCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-90" draggable={false} />
+                <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                <span
+                  className="text-white text-xl font-semibold tracking-[0.04em] opacity-90"
+                  style={{ fontFamily: "'Brolink', sans-serif" }}
+                >
+                  iParty<span className="text-[#1ed765]">Up</span>
+                </span>
               </div>
 
               {/* 3D image placeholder */}
@@ -258,21 +258,11 @@ export default function PatreonCallbackPage() {
               {/* CTA */}
               <button
                 onClick={() => window.close()}
-                className="w-full py-3.5 sm:py-4 rounded-2xl font-bold text-[14px] sm:text-[15px] text-black transition-all duration-300 hover:translate-y-[-2px] hover:shadow-[0_12px_40px_rgba(29,185,84,0.35)] active:scale-[0.97] relative overflow-hidden"
+                className="w-full py-3.5 sm:py-4 rounded-2xl font-bold text-[14px] sm:text-[15px] text-black bg-[#1ed765] border border-[#1ed765]/50 shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-colors duration-200 hover:bg-[#4de087] active:scale-[0.98] relative overflow-hidden cursor-pointer"
                 style={{
-                  background: "linear-gradient(145deg, #22c55e 0%, #1db954 50%, #16a34a 100%)",
-                  boxShadow: "0 8px 32px rgba(29,185,84,0.25), 0 0 0 1px rgba(29,185,84,0.1)",
                   animation: "fadeUp 0.6s ease 0.55s both",
                 }}
               >
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    background: "linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.5), transparent 70%)",
-                    backgroundSize: "200% 100%",
-                    animation: "shimmerBtn 3.5s ease-in-out infinite",
-                  }}
-                />
                 <span className="relative z-10">Close This Tab</span>
               </button>
             </div>
@@ -286,8 +276,13 @@ export default function PatreonCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-70" draggable={false} />
+                <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                <span
+                  className="text-white text-xl font-semibold tracking-[0.04em] opacity-70"
+                  style={{ fontFamily: "'Brolink', sans-serif" }}
+                >
+                  iParty<span className="text-[#1ed765]">Up</span>
+                </span>
               </div>
 
               {/* 3D image placeholder */}
@@ -341,8 +336,13 @@ export default function PatreonCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
-                <Image src="/logo-text.png" alt="iPartyUp" width={100} height={24} className="opacity-70" draggable={false} />
+                <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                <span
+                  className="text-white text-xl font-semibold tracking-[0.04em] opacity-70"
+                  style={{ fontFamily: "'Brolink', sans-serif" }}
+                >
+                  iParty<span className="text-[#1ed765]">Up</span>
+                </span>
               </div>
 
               {/* 3D image placeholder */}

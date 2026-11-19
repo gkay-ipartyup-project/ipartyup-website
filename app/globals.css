@@ -139,14 +139,73 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/*
+ * Override Tailwind v4 font custom properties outside @layer base so
+ * utility classes like .font-sans on <body> resolve directly to IBM Plex Sans Arabic
+ * instead of falling back to Windows default Arabic fonts.
+ */
+html[dir="rtl"],
+html[lang="ar"],
+html.rtl {
+  --font-sans: var(--font-arabic), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-arabic), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="ar"] body,
+html[dir="rtl"] body {
+  font-family: var(--font-arabic), var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3 {
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: 0;
+}
+
+/* Prevent tracking utilities from breaking Arabic script ligatures */
+[dir="rtl"] .tracking-wider,
+[dir="rtl"] .tracking-widest,
+[dir="rtl"] .tracking-wide,
+[dir="rtl"] .tracking-tight,
+[dir="rtl"] .tracking-tighter {
+  letter-spacing: 0 !important;
+}
+
+/* Lenis smooth scroll base */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
   }
   body {
     @apply bg-background text-foreground;
   }
   html {
+    scroll-behavior: smooth;
     @apply font-sans;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

@@ -4,7 +4,18 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+import type { ComponentType } from "react";
+
+const Lottie = dynamic<Record<string, any>>(
+  () =>
+    import("lottie-react").then(
+      (mod) =>
+        ((mod as unknown as { default?: ComponentType<Record<string, any>> })
+          .default ??
+          (mod as unknown as ComponentType<Record<string, any>>))
+    ),
+  { ssr: false }
+);
 
 export default function AuthCallbackPage() {
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -229,7 +240,7 @@ export default function AuthCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both" }}
               >
-                  <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                  <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
                   <span
                     className="text-white text-xl font-semibold tracking-[0.04em] opacity-90"
                     style={{ fontFamily: "'Brolink', sans-serif" }}
@@ -340,7 +351,7 @@ export default function AuthCallbackPage() {
                 className="flex items-center justify-center gap-3"
                 style={{ animation: "fadeUp 0.6s ease 0.1s both" }}
               >
-                  <Image src="/favicon.png" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
+                  <Image src="/favicon.webp" alt="iPartyUp" width={40} height={40} className="rounded-xl" draggable={false} />
                   <span
                     className="text-white text-xl font-semibold tracking-[0.04em] opacity-70"
                     style={{ fontFamily: "'Brolink', sans-serif" }}

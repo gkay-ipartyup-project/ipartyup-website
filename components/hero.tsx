@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Download } from "lucide-react"
+import Link from "next/link"
+import { useLanguage } from "@/lib/language-context"
+import { GOOGLE_PLAY_URL, SUPABASE_PUBLIC_URL } from "@/lib/constants"
 
 interface PlatformDownload {
   version: string
@@ -19,13 +21,11 @@ interface LatestDownloads {
 }
 
 async function getLatestDownloads(): Promise<LatestDownloads | null> {
-  const base = process.env.NEXT_PUBLIC_SUPABASE_URL
-  if (!base) return null
-
   try {
-    const res = await fetch(`${base.replace(/\/$/, "")}/functions/v1/website-download`, {
-      method: "GET",
-    })
+    const res = await fetch(
+      `${SUPABASE_PUBLIC_URL.replace(/\/$/, "")}/functions/v1/website-download`,
+      { method: "GET" }
+    )
     if (!res.ok) return null
     return (await res.json()) as LatestDownloads
   } catch {
@@ -39,23 +39,20 @@ export function Hero() {
     windows: null,
     macos: null,
   })
+  const { t, isArabic } = useLanguage()
 
   useEffect(() => {
-    // Detect operating system
     const ua = navigator.userAgent.toLowerCase()
-    if (/ipad|iphone|ipod/.test(ua) && !(window as any).MSStream) {
+    if (/ipad|iphone|ipod/.test(ua) && !(window as unknown as { MSStream?: unknown }).MSStream) {
       setPlatform("ios")
     } else if (/android/.test(ua)) {
       setPlatform("android")
     } else if (/macintosh|mac os x/.test(ua)) {
       setPlatform("mac")
-    } else if (/windows|win32|win64/.test(ua)) {
-      setPlatform("windows")
     } else {
       setPlatform("windows")
     }
 
-    // Fetch latest downloads from Supabase
     getLatestDownloads().then((data) => {
       if (data) {
         setDownloadUrls({
@@ -66,74 +63,81 @@ export function Hero() {
     })
   }, [])
 
+  const primaryCtaClasses =
+    "inline-flex h-[54px] w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-[#1ed765]/50 bg-[#1ed765] px-7 text-base font-bold text-black shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-colors duration-200 hover:bg-[#4de087]"
+
   const renderDownloadButton = () => {
     switch (platform) {
       case "mac":
         return (
-          <a
-            href={downloadUrls.macos || "/download"}
-            className="inline-flex h-[56px] items-center gap-3 rounded-full border-2 border-stremio-green bg-stremio-green px-7 text-base font-semibold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(30,215,101,0.4)]"
-          >
+          <a href={downloadUrls.macos || "/download"} className={primaryCtaClasses}>
             <Image
-              src="/apple-logo.png"
-              alt="Mac logo"
+              src="/apple-logo.webp"
+              alt="macOS logo"
               width={20}
               height={20}
-              className="h-5 w-5 object-contain brightness-0 invert"
+              className="h-5 w-5 object-contain brightness-0"
+              priority
             />
-            <span>Download Free</span>
+            <span>{t.hero.downloadFree}</span>
           </a>
         )
       case "android":
         return (
           <a
-            href="/download"
-            className="inline-flex h-[56px] items-center gap-3 rounded-full border-2 border-stremio-green bg-stremio-green px-7 text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(30,215,101,0.4)]"
+            href={GOOGLE_PLAY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            dir="ltr"
+            className={primaryCtaClasses}
           >
             <Image
-              src="/playstore.png"
-              alt="Play Store logo"
+              src="/playstore.webp"
+              alt="Google Play logo"
               width={24}
               height={24}
-              className="h-6 w-6 object-contain brightness-0 invert"
+              className="h-6 w-6 object-contain brightness-0"
+              priority
             />
             <div className="flex flex-col items-start text-left leading-none">
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-white/80">Get it on</span>
-              <span className="text-sm sm:text-base font-black text-white mt-0.5">Play Store</span>
+              <span className="text-[10px] uppercase tracking-wider font-bold text-black/75">
+                {t.hero.getItOn}
+              </span>
+              <span className="text-sm sm:text-base font-extrabold text-black mt-0.5">
+                {t.hero.playStore}
+              </span>
             </div>
           </a>
         )
       case "ios":
         return (
-          <div className="inline-flex h-[56px] items-center gap-3 rounded-full border-2 border-white/20 bg-white/5 px-7 text-white/60 transition-all duration-300 cursor-default">
+          <div className="inline-flex h-[54px] w-full sm:w-auto items-center justify-center gap-3 rounded-full border border-white/15 bg-white/[0.07] px-7 text-white/60 cursor-default">
             <Image
-              src="/apple-logo.png"
+              src="/apple-logo.webp"
               alt="Apple logo"
               width={20}
               height={20}
-              className="h-5 w-5 object-contain opacity-40 brightness-0 invert"
+              className="h-5 w-5 object-contain opacity-50 brightness-0 invert"
             />
-            <div className="flex flex-col items-start text-left leading-none">
-              <span className="text-sm font-bold text-white/70">Coming Soon</span>
-              <span className="text-[10px] font-medium text-white/50 mt-0.5">for iPhones</span>
+            <div className="flex flex-col items-start text-start leading-none">
+              <span className="text-sm font-bold text-white/75">{t.hero.comingSoon}</span>
+              <span className="text-[10px] font-medium text-white/50 mt-0.5">{t.hero.forIphones}</span>
             </div>
           </div>
         )
       case "windows":
       default:
         return (
-          <a
-            href={downloadUrls.windows || "/download"}
-            className="inline-flex h-[56px] items-center gap-3 rounded-full border-2 border-stremio-green bg-stremio-green px-7 text-base font-semibold text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(30,215,101,0.4)]"
-          >
+          <a href={downloadUrls.windows || "/download"} className={primaryCtaClasses}>
             <Image
-              src="/windows.png"
+              src="/windows.webp"
               alt="Windows logo"
               width={20}
               height={20}
-              className="h-5 w-5 object-contain brightness-0 invert"
+              className="h-5 w-5 object-contain brightness-0"
+              priority
             />
-            <span>Download Free</span>
+            <span>{t.hero.downloadFree}</span>
           </a>
         )
     }
@@ -147,36 +151,51 @@ export function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(80%_90%_at_15%_110%,#0d3d1a_0%,transparent_55%)]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1320px] px-4 pb-[390px] pt-[200px] lg:pb-[340px]">
-        {/* floating cards image */}
-        <div className="pointer-events-none absolute -right-12 top-16 hidden w-[58%] md:block lg:w-[90%] lg:top-20 lg:-right-120 z-40">
+      <div className="relative mx-auto max-w-[1320px] px-5 sm:px-6 pt-32 pb-24 sm:pt-40 sm:pb-32 md:pt-44 md:pb-[260px] lg:pt-[200px] lg:pb-[340px]">
+        {/* Floating hero cards (flipped horizontally in Arabic so 3D perspective fans cleanly toward RTL copy) */}
+        <div
+          className={`pointer-events-none absolute top-16 hidden w-[58%] md:block lg:w-[90%] lg:top-20 z-30 transition-all duration-300 ${
+            isArabic
+              ? "-left-12 lg:-left-120 [transform:scaleX(-1)]"
+              : "-right-12 lg:-right-120"
+          }`}
+        >
           <img
-            src="/hero-cards.png"
-            alt="Stremio content posters"
+            src="/hero-cards.webp"
+            alt="iPartyUp movies, series, and anime posters"
+            width={1600}
+            height={724}
             className="h-auto w-full"
             loading="eager"
+            fetchPriority="high"
+            decoding="sync"
           />
         </div>
-        <div className="max-w-2xl lg:max-w-3xl">
-          <h1 className="text-balance text-3xl font-extrabold leading-[1.1] text-white sm:text-4xl lg:text-5xl">
-            Watch Together, <br className="hidden sm:inline" />
-            No Matter the Distance
+
+        <div className="relative z-40 max-w-xl md:max-w-[56%] lg:max-w-2xl">
+          <h1
+            className={`text-balance text-[32px] text-white sm:text-4xl lg:text-5xl ${
+              isArabic ? "font-bold leading-[1.32]" : "font-extrabold leading-[1.18]"
+            }`}
+          >
+            {t.hero.titleLine1} <br className="hidden sm:inline" />
+            {t.hero.titleLine2}
           </h1>
-          <p className="mt-4 text-lg sm:text-xl font-semibold text-stremio-green">
-            Watch anything together in perfect sync across all your devices.
+          <p className="mt-4 text-base sm:text-lg lg:text-xl font-semibold text-stremio-green">
+            {t.hero.subtitle}
           </p>
-          <p className="mt-3 text-base leading-relaxed text-white/80 max-w-xl">
-            iPartyUp bring friends, families, and long-distance couples closer, lets you watch anything together seamlessly without the hassle of switching platforms.
+          <p className="mt-3 text-[15px] sm:text-base leading-relaxed text-white/80 max-w-xl">
+            {t.hero.description}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="mt-7 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
             {renderDownloadButton()}
-            <a
+            <Link
               href="/download#platforms"
-              className="inline-flex h-[56px] items-center rounded-full border-2 border-white px-7 text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-stremio-dark"
+              className="inline-flex h-[54px] w-full sm:w-auto items-center justify-center rounded-full border border-white/30 bg-white/[0.07] px-7 text-base font-semibold text-white transition-colors duration-200 hover:border-white hover:bg-white hover:text-stremio-dark"
             >
-              Supported Devices
-            </a>
+              {t.hero.supportedDevices}
+            </Link>
           </div>
         </div>
       </div>
