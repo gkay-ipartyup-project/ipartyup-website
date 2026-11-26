@@ -50,14 +50,20 @@ function isDeveloperNote(category: string): boolean {
   )
 }
 
-export function UpdatesClient() {
+export function UpdatesClient({
+  initialUpdates = null,
+}: {
+  initialUpdates?: AppUpdateRow[] | null
+}) {
   const { t, isArabic } = useLanguage()
-  const [updates, setUpdates] = useState<AppUpdateRow[]>([])
-  const [loading, setLoading] = useState(true)
+  const [updates, setUpdates] = useState<AppUpdateRow[]>(initialUpdates ?? [])
+  const [loading, setLoading] = useState(initialUpdates === null)
   const [error, setError] = useState(false)
 
-  const fetchUpdates = useCallback(async () => {
-    setLoading(true)
+  const fetchUpdates = useCallback(async (background = false) => {
+    if (!background) {
+      setLoading(true)
+    }
     setError(false)
     try {
       const { data, error: queryError } = await supabase
@@ -71,22 +77,26 @@ export function UpdatesClient() {
         .limit(20)
 
       if (queryError) {
-        setError(true)
-        setUpdates([])
+        if (!background) {
+          setError(true)
+          setUpdates([])
+        }
       } else {
         setUpdates((data ?? []) as AppUpdateRow[])
       }
     } catch {
-      setError(true)
-      setUpdates([])
+      if (!background) {
+        setError(true)
+        setUpdates([])
+      }
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    fetchUpdates()
-  }, [fetchUpdates])
+    fetchUpdates(initialUpdates !== null)
+  }, [fetchUpdates, initialUpdates])
 
   return (
     <main className="relative overflow-x-clip bg-stremio-dark min-h-screen">
@@ -141,7 +151,7 @@ export function UpdatesClient() {
               <p className="mt-2 text-sm text-white/60">{t.updates.errorDesc}</p>
               <button
                 type="button"
-                onClick={fetchUpdates}
+                onClick={() => fetchUpdates(false)}
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#1ed765]/50 bg-[#1ed765] px-6 py-2.5 text-sm font-bold text-black transition-colors hover:bg-[#4de087] cursor-pointer"
               >
                 <RefreshCw className="h-4 w-4" />

@@ -176,6 +176,24 @@ html[dir="rtl"] h3 {
   letter-spacing: 0 !important;
 }
 
+/* Native <details> FAQ progressive slide disclosure (searchable & crawlable) */
+.faq-details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+.faq-details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq-details::details-content {
+    transition: block-size 0.25s ease-out, content-visibility 0.25s ease-out;
+    transition-behavior: allow-discrete;
+  }
+}
+
 /* Lenis smooth scroll base */
 html.lenis,
 html.lenis body {

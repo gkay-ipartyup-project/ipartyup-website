@@ -7,6 +7,8 @@ Allow: /
 
 User-agent: Google-adstxt
 Allow: /
+
+Sitemap: https://ipartyup.party/sitemap.xml
 `;
   return new Response(robots, {
     status: 200,

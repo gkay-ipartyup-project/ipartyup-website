@@ -6,6 +6,8 @@ import SiteSettingsWrapper from '@/components/SiteSettingsWrapper'
 import { SmoothScroll } from '@/components/smooth-scroll'
 import { LanguageProvider } from '@/lib/language-context'
 
+import { DEFAULT_OG_IMAGE, SITE_URL } from '@/lib/seo'
+
 const plusJakarta = Plus_Jakarta_Sans({
   variable: '--font-jakarta',
   subsets: ['latin'],
@@ -28,11 +30,44 @@ const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'iPartyUp - Watch Together in Perfect Sync',
   description:
     'iPartyUp is a synchronized watch-party streaming app for Windows, macOS, and Android. Watch movies, series, and anime together in frame-perfect sync with friends and family.',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    siteName: 'iPartyUp',
+    locale: 'en_US',
+    url: SITE_URL,
+    title: 'iPartyUp - Watch Together in Perfect Sync',
+    description:
+      'iPartyUp is a synchronized watch-party streaming app for Windows, macOS, and Android. Watch movies, series, and anime together in frame-perfect sync with friends and family.',
+    images: [{ ...DEFAULT_OG_IMAGE }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'iPartyUp - Watch Together in Perfect Sync',
+    description:
+      'iPartyUp is a synchronized watch-party streaming app for Windows, macOS, and Android. Watch movies, series, and anime together in frame-perfect sync with friends and family.',
+    images: [DEFAULT_OG_IMAGE.url],
+  },
   icons: {
-    icon: '/favicon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
     apple: '/apple-icon.png',
   },
 }
@@ -107,7 +142,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="preload" as="image" href="/hero-cards.webp" type="image/webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
