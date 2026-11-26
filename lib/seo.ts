@@ -3,11 +3,11 @@ import type { Metadata } from "next"
 export const SITE_URL = "https://ipartyup.party"
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/og-image.jpg",
+  url: "/og-image.jpg?v=2",
   width: 1200,
   height: 630,
   type: "image/jpeg",
-  alt: "iPartyUp - Watch Movies, Series & Anime Together in Perfect Sync",
+  alt: "iPartyUp - Watch Together Anywhere in Perfect Sync",
 } as const
 
 export const NOINDEX_ROBOTS: Metadata["robots"] = {
